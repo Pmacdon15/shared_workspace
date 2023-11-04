@@ -1,6 +1,7 @@
 const mysql = require("mysql2");
 const dotenv = require("dotenv");
 const path = require("path");
+const { get } = require("http");
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -13,6 +14,7 @@ const pool = mysql
   })
   .promise();
 
+// * Login function
 async function login(email, password) {
   try {
     const [rows] = await pool.query(
@@ -28,6 +30,7 @@ async function login(email, password) {
   }
 }
 
+// * User Functions
 async function getUserByEmail(email) {
   try {
     const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
@@ -57,7 +60,38 @@ async function createUser(email, first_name, password) {
     }
 }
 
+async function deleteUserByEmail(email) {
+    try {
+        const [rows] = await pool.query("DELETE FROM users WHERE email = ?", [
+        email,
+        ]);
+        console.log("Delete result:", rows);
+        return rows;
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        pool.end(); // Close the database connection when done
+    }
+}
+
+// * Building functions
+async function getBuildingsByEmail(email) {
+    try {
+        const [rows] = await pool.query("SELECT * FROM buildings WHERE user_email = ?", [
+            email,
+        ]);
+        console.log("Buildings result:", rows);
+        return rows;
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        pool.end(); // Close the database connection when done
+    }
+}
+
 
 //login("user1@example.com", "password1");
 //getUserByEmail("user1@example.com");
-createUser("pat@gmail.com", "bob","password1");
+//createUser("pat@gmail.com", "bob","password1");
+//deleteUserByEmail("pat@gmail.com");
+getBuildingsByEmail("user1@example.com");

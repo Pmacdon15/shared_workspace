@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS shared_workspace;
-USE shared_workspace;
+CREATE DATABASE IF NOT EXISTS shared_workspaces;
+USE shared_workspaces;
 
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -8,7 +8,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE building (
+CREATE TABLE buildings (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL UNIQUE,
@@ -23,11 +23,11 @@ CREATE TABLE building (
     public_transport BOOLEAN NOT NULL
 );
 
-CREATE TABLE workspace (
+CREATE TABLE workspaces (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    building_id INT NOT NULL,
-    FOREIGN KEY (building_id) REFERENCES building(id),
+    buildings_id INT NOT NULL,
+    FOREIGN KEY (buildings_id) REFERENCES buildings(id),
     number_of_seats INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     lease_term INT NOT NULL,
@@ -42,14 +42,14 @@ VALUES
     ('user2@example.com', 'User2', 'password2'),
     ('user3@example.com', 'User3', 'password3');
 
-INSERT INTO building (name, user_email, street, street_number, city, province, postal_code, location, parking, public_transport)
+INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, parking, public_transport)
 VALUES 
     ('Building1', 'user1@example.com', 'Street1', '1', 'City1', 'Province1', 'PostalCode1', 'Location1', 1, 1), 
     ('Building2', 'user2@example.com', 'Street2', '2', 'City2', 'Province2', 'PostalCode2', 'Location2', 0, 1),
     ('Building3', 'user3@example.com', 'Street3', '3', 'City3', 'Province3', 'PostalCode3', 'Location3', 1, 0);
 
-INSERT INTO workspace (name, building_id, number_of_seats, price, lease_term, Available, size, type)
+INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, Available, size, type)
 VALUES 
-    ('Workspace1', 1, 1, 1, 100, 1, 100, 'Desk'),
-    ('Workspace2', 2, 2, 2, 200, 2, 200, 'Room'),
-    ('Workspace3', 3, 3, 3, 300, 3, 300, 'Meeting Room');
+    ('Workspace1', 1, 1, 10.00, 100, 1, 100, 'Desk'),
+    ('Workspace2', 2, 2, 20.00, 200, 2, 200, 'Room'),
+    ('Workspace3', 3, 3, 30.00, 300, 3, 300, 'Meeting Room');
