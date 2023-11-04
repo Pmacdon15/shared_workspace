@@ -3,15 +3,16 @@ USE shared_workspaces;
 
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(255) NOT NULL UNIQUE,  -- Make email column unique
+    email VARCHAR(255) NOT NULL UNIQUE,
     first_name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    owner BOOLEAN NOT NULL
 );
 
 CREATE TABLE buildings (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    user_email VARCHAR(255) NOT NULL UNIQUE,
+    user_email VARCHAR(255) NOT NULL, -- Remove UNIQUE constraint
     FOREIGN KEY (user_email) REFERENCES users(email),
     street VARCHAR(255) NOT NULL,
     street_number VARCHAR(255) NOT NULL,
@@ -36,11 +37,11 @@ CREATE TABLE workspaces (
     type VARCHAR(255) NOT NULL
 );
 
-INSERT INTO users (email, first_name, password)
+INSERT INTO users (email, first_name, password, owner)
 VALUES 
-    ('user1@example.com', 'User1', 'password1'),
-    ('user2@example.com', 'User2', 'password2'),
-    ('user3@example.com', 'User3', 'password3');
+    ('user1@example.com', 'User1', 'password1', 1),
+    ('user2@example.com', 'User2', 'password2', 0),
+    ('user3@example.com', 'User3', 'password3',1);
 
 INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, parking, public_transport)
 VALUES 

@@ -1,7 +1,7 @@
 const mysql = require("mysql2");
 const dotenv = require("dotenv");
 const path = require("path");
-const { get } = require("http");
+//const { get } = require("http");
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -45,11 +45,11 @@ async function getUserByEmail(email) {
   }
 }
 
-async function createUser(email, first_name, password) {
+async function createUser(email, first_name, password, owner) {
     try {
         const [rows] = await pool.query(
-        "INSERT INTO users (email, first_name, password) VALUES (?, ?, ?)",
-        [email, first_name, password]
+        "INSERT INTO users (email, first_name, password, owner) VALUES (?, ?, ?, ?)",
+        [email, first_name, password, owner]
         );
         console.log("Create user result:", rows);
         return rows;
@@ -89,9 +89,39 @@ async function getBuildingsByEmail(email) {
     }
 }
 
+async function createBuilding(email, name, street, street_number, city, province, postal_code, location, parking, public_transport) {
+    try {
+        const [rows] = await pool.query(
+        "INSERT INTO buildings (user_email, name, street, street_number, city, province, postal_code, location, parking, public_transport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [email, name, street, street_number, city, province, postal_code, location, parking, public_transport]
+        );
+        console.log("Create building result:", rows);
+        return rows;
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        pool.end(); // Close the database connection when done
+    }
+}
+
+async function deleteBuildingByName(name) {
+    try {
+        const [rows] = await pool.query("DELETE FROM buildings WHERE name = ?", [
+        name,
+        ]);
+        console.log("Delete result:", rows);
+        return rows;
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        pool.end(); // Close the database connection when done
+    }
+}
 
 //login("user1@example.com", "password1");
 //getUserByEmail("user1@example.com");
-//createUser("pat@gmail.com", "bob","password1");
+//createUser("pat@gmail.com", "bob","password1", 1 );
 //deleteUserByEmail("pat@gmail.com");
-getBuildingsByEmail("user1@example.com");
+//getBuildingsByEmail("user1@example.com");
+//createBuilding("user1@example.com", "The Building", "St pats", "123","Toronto", "Ontario","M5V 2T6", "Down Town", 1,1);
+deleteBuildingByName("The Building");
