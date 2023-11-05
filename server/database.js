@@ -15,8 +15,9 @@ const pool = mysql
   })
   .promise();
 
+module.exports = {
 // * Login function
-async function login(email, password) {
+async login(email, password) {
   try {
     const [rows] = await pool.query(
       "SELECT * FROM users WHERE email = ? AND password = ?",
@@ -27,14 +28,14 @@ async function login(email, password) {
     }
     console.log("Login result:", rows);
   } catch (error) {
-    console.error("Error:", error);
-    return null;
+    console.error("Error:", error);   
+    return null; 
   }
-}
-//login("user2@example.com", "password");
+},
+//login("user2@example.com", "password2");
 
 // * User Functions
-async function getUserByEmail(email) {
+async getUserByEmail(email) {
   try {
     const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
       email,
@@ -47,10 +48,10 @@ async function getUserByEmail(email) {
   } catch (error) {
     console.error("Error:", error);
   }
-}
+},
 //getUserByEmail("user2@example.com");
 
-async function createUser(email, first_name, password, owner) {
+async createUser(email, first_name, password, owner) {
   try {
     const [rows] = await pool.query(
       "INSERT INTO users (email, first_name, password, owner) VALUES (?, ?, ?, ?)",
@@ -62,10 +63,10 @@ async function createUser(email, first_name, password, owner) {
   } catch (error) {
     console.error("Error:", error);
   }
-}
+},
 //createUser("pat4@gmail.com", "bob", "password1", 1);
 
-async function deleteUserByEmail(email) {
+async deleteUserByEmail(email) {
   try {
     const [rows] = await pool.query("DELETE FROM users WHERE email = ?", [email]);
     if (rows.affectedRows === 0) {
@@ -79,11 +80,11 @@ async function deleteUserByEmail(email) {
   } finally {
     pool.end(); // Close the database connection when done
   }
-}
+},
 //deleteUserByEmail("pat4@gmail.com");
 
 // * Building functions
-async function getBuildingsByEmail(email) {
+async getBuildingsByEmail(email) {
   try {
     const [rows] = await pool.query(
       "SELECT * FROM buildings WHERE user_email = ?",
@@ -97,10 +98,10 @@ async function getBuildingsByEmail(email) {
   } catch (error) {
     console.error("Error:", error);
   }
-}
+},
 //getBuildingsByEmail("user2@example.com");
 
-async function getBuildingByName(name) {
+async getBuildingByName(name) {
   try {    
     const [rows] = await pool.query("SELECT * FROM buildings WHERE name = ?", [
       name,
@@ -115,10 +116,10 @@ async function getBuildingByName(name) {
     console.error("Error:", error);
     
   } 
-}
+},
 //getBuildingByName("Building2");
 
-async function createBuilding(
+async createBuilding(
   email,
   name,
   street,
@@ -152,10 +153,10 @@ async function createBuilding(
   } catch (error) {
     console.error("Error:", error);
   } 
-}
+},
 //createBuilding("user2@example.com", "The Building1", "St pats", "123","Toronto", "Ontario","M5V 2T6", "Down Town", 1,1);
 
-async function updateBuildingByName(
+async updateBuildingByName(
   name,
   street,
   street_number,
@@ -190,10 +191,10 @@ async function updateBuildingByName(
   } catch (error) {
     console.error("Error:", error);
   } 
-}
+},
 //updateBuildingByName("Building2", "St pats", "124", "Hell Street", "New York aha", "Alberta", "M5V 2T6", 1, 1);
 
-async function deleteBuildingByName(name) {
+async deleteBuildingByName(name) {
   try {
     const building = await getBuildingByName(name);
     const [rows] = await pool.query("DELETE FROM buildings WHERE name = ?", [
@@ -208,32 +209,64 @@ async function deleteBuildingByName(name) {
   } catch (error) {
     console.error("Error:", error);
   } 
-}
+},
 //deleteBuildingByName("Building2");
 
-async function getWorkspacesByBuildingIdAndWorkspaceName(building_id, name) {
+async getWorkspaces() {
+  try {   
+    const [rows] = await pool.query("SELECT * FROM workspaces");
+    if (rows.length === 0) {
+      throw new Error("Workspace not found");
+    }
+    console.log("Workspace result:", rows);
+    return rows;
+  }
+  catch (error) {
+    console.error("Error:", error);
+  }
+},
+//getWorkspaces();
+
+async getWorkspacesByBuildingNameAndWorkSpaceName(building_name, name) {
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM workspaces WHERE buildings_id = ? AND name = ?",
-      [building_id, name]
+      "SELECT * FROM workspaces WHERE buildings_id = (SELECT id FROM buildings WHERE name = ?) AND name = ?",
+      [building_name, name]
     );
     if (rows.length === 0) {
       throw new Error("Workspace not found");
     }
-   
     console.log("Workspace result:", rows);
     return rows;
   } catch (error) {
     console.error("Error:", error);
   }
-}
+},
+//getWorkspacesByBuildingNameAndWorkSpaceName("Building1", "Workspace69");
+// !! don't think I need this one.
+// async getWorkspacesByBuildingIdAndWorkspaceName(building_id, name) {
+//   try {
+//     const [rows] = await pool.query(
+//       "SELECT * FROM workspaces WHERE buildings_id = ? AND name = ?",
+//       [building_id, name]
+//     );
+//     if (rows.length === 0) {
+//       throw new Error("Workspace not found");
+//     }
+   
+//     console.log("Workspace result:", rows);
+//     return rows;
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// },
 //getWorkspacesByBuildingIdAndWorkspaceName(3, "Workspace");
 
-async function getWorkspacesByBuildingId(building_id) {
+async getWorkspacesByBuildingName(building_name) {
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM workspaces WHERE buildings_id = ?",
-      [building_id]
+      "SELECT * FROM workspaces WHERE buildings_id = (SELECT id FROM buildings WHERE name = ?)",
+      [building_name]
     );
     if (rows.length === 0) {
       throw new Error("Workspace not found");
@@ -243,10 +276,26 @@ async function getWorkspacesByBuildingId(building_id) {
   } catch (error) {
     console.error("Error:", error);
   }
-}
-//getWorkspacesByBuildingId(0);
+},
+// !! don't think I need this one.
+// async getWorkspacesByBuildingId(building_id) {
+//   try {
+//     const [rows] = await pool.query(
+//       "SELECT * FROM workspaces WHERE buildings_id = ?",
+//       [building_id]
+//     );
+//     if (rows.length === 0) {
+//       throw new Error("Workspace not found");
+//     }
+//     console.log("Workspace result:", rows);
+//     return rows;
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// },
+// //getWorkspacesByBuildingId(0);
 
-async function getWorkspaceByName(name) {
+async getWorkspaceByName(name) {
   try {
     const [rows] = await pool.query("SELECT * FROM workspaces WHERE name = ?", [
       name,
@@ -259,10 +308,10 @@ async function getWorkspaceByName(name) {
   } catch (error) {
     console.error("Error:", error);
   }
-}
+},
 //getWorkspaceByName("Workspace");
 
-async function createWorkspace(
+async createWorkspace(
   building_id,
   name,
   number_of_seats,
@@ -282,10 +331,10 @@ async function createWorkspace(
   } catch (error) {
     console.error("Error:", error);
   }
-}
+},
 //createWorkspace(1, "Workspace6901", 1, 1, 1, 1, 1, "Office");
 
-async function updateWorkspaceByName(
+async updateWorkspaceByName(
   name,
   number_of_seats,
   price,
@@ -308,10 +357,10 @@ async function updateWorkspaceByName(
   } catch (error) {
     console.error("Error:", error);
   }
-}
+},
 //updateWorkspaceByName("Workspace6901", 69, 7.99, 2, 0, 2, "Office");
 
-async function deleteWorkspaceByName(name) {
+async  deleteWorkspaceByName(name) {
   try {
     const workspace = await getWorkspaceByName(name);
     const [rows] = await pool.query("DELETE FROM workspaces WHERE name = ?", [
@@ -326,4 +375,5 @@ async function deleteWorkspaceByName(name) {
     console.error("Error:", error);
   }
 }
-deleteWorkspaceByName("Workspace6901");
+//deleteWorkspaceByName("Workspace6901");
+};
