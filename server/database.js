@@ -28,9 +28,10 @@ async function login(email, password) {
     console.log("Login result:", rows);
   } catch (error) {
     console.error("Error:", error);
+    return null;
   }
 }
-//login("user2@example.com", "password2");
+//login("user2@example.com", "password");
 
 // * User Functions
 async function getUserByEmail(email) {
@@ -226,5 +227,103 @@ async function getWorkspacesByBuildingIdAndWorkspaceName(building_id, name) {
     console.error("Error:", error);
   }
 }
-
 //getWorkspacesByBuildingIdAndWorkspaceName(3, "Workspace");
+
+async function getWorkspacesByBuildingId(building_id) {
+  try {
+    const [rows] = await pool.query(
+      "SELECT * FROM workspaces WHERE buildings_id = ?",
+      [building_id]
+    );
+    if (rows.length === 0) {
+      throw new Error("Workspace not found");
+    }
+    console.log("Workspace result:", rows);
+    return rows;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+//getWorkspacesByBuildingId(0);
+
+async function getWorkspaceByName(name) {
+  try {
+    const [rows] = await pool.query("SELECT * FROM workspaces WHERE name = ?", [
+      name,
+    ]);
+    if (rows.length === 0) {
+      throw new Error("Workspace not found");
+    }
+    console.log("Workspace result:", rows);
+    return rows;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+//getWorkspaceByName("Workspace");
+
+async function createWorkspace(
+  building_id,
+  name,
+  number_of_seats,
+  price,
+  lease_term,
+  available,
+  size,type
+) {
+  try {
+    const [rows] = await pool.query(
+      "INSERT INTO workspaces (buildings_id, name, number_of_seats, price, lease_term, available, size, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      [building_id, name, number_of_seats, price, lease_term, available, size, type]
+    );
+    //console.log("Create workspace result:", rows);
+    const workspace = await getWorkspaceByName(name);
+    return workspace;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+//createWorkspace(1, "Workspace6901", 1, 1, 1, 1, 1, "Office");
+
+async function updateWorkspaceByName(
+  name,
+  number_of_seats,
+  price,
+  lease_term,
+  available,
+  size,
+  type
+) {
+  try {
+    const [rows] = await pool.query(
+      "UPDATE workspaces SET number_of_seats = ?, price = ?, lease_term = ?, available = ?, size = ?, type = ? WHERE name = ?",
+      [number_of_seats, price, lease_term, available, size, type, name]
+    );
+    if (rows.affectedRows === 0) {
+      throw new Error("Workspace does not exist");
+    }
+    //console.log("Update workspace result:", rows);
+    const workspace = await getWorkspaceByName(name);
+    return workspace;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+//updateWorkspaceByName("Workspace6901", 69, 7.99, 2, 0, 2, "Office");
+
+async function deleteWorkspaceByName(name) {
+  try {
+    const workspace = await getWorkspaceByName(name);
+    const [rows] = await pool.query("DELETE FROM workspaces WHERE name = ?", [
+      name,
+    ]);
+    if (rows.affectedRows === 0) {
+      throw new Error("Workspace does not exist");
+    }
+    console.log("Workspace:", name, "deleted");
+    return workspace;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+deleteWorkspaceByName("Workspace6901");

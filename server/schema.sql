@@ -32,7 +32,7 @@ CREATE TABLE workspaces (
     number_of_seats INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     lease_term INT NOT NULL,
-    Available BOOLEAN NOT NULL,
+    available BOOLEAN NOT NULL,
     size INT NOT NULL,
     type VARCHAR(255) NOT NULL
 );
