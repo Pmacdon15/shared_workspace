@@ -19,14 +19,26 @@ const {
     getWorkspaces,
     getWorkspaceByName,
     getWorkspacesByBuildingNameAndWorkSpaceName,
-    getWorkspaceByName,
+    getWorkspacesByBuildingName,
     createWorkspace,
     updateWorkspaceByName,
     deleteWorkspaceByName
 } = require("./database");
 
 
-pp.post("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.login(email, password);
+    const user = await login(email, password);
+    if (user == null ){
+        res.status(400).send("Wrong email or password");
+    }
+    res.json(user);
+});
 
+
+
+
+
+app.listen(5544, () => {
+    console.log("Server is listening on port 5544");
+});
