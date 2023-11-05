@@ -209,11 +209,10 @@ async updateBuildingByName(
     return null;
   } 
 },
-//updateBuildingByName("Building2", "St pats", "124", "Hell Street", "New York aha", "Alberta", "M5V 2T6", 1, 1);
 
 async deleteBuildingByName(name) {
   try {
-    const building = await getBuildingByName(name);
+    const building = await module.exports.getBuildingByName(name);
     const [rows] = await pool.query("DELETE FROM buildings WHERE name = ?", [
       name,
     ]);
@@ -225,6 +224,7 @@ async deleteBuildingByName(name) {
     return building;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   } 
 },
 //deleteBuildingByName("Building2");
