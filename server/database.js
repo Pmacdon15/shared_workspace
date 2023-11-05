@@ -47,6 +47,7 @@ async getUserByEmail(email) {
     return rows;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   }
 },
 //getUserByEmail("user2@example.com");
