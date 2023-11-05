@@ -58,7 +58,7 @@ async createUser(email, first_name, password, owner) {
       "INSERT INTO users (email, first_name, password, owner) VALUES (?, ?, ?, ?)",
       [email, first_name, password, owner]
     );
-    const user = await getUserByEmail(email);
+    const user = await module.exports.getUserByEmail(email);
     console.log("Create user result:", user);
     return user;
   } catch (error) {
