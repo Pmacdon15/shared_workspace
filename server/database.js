@@ -124,7 +124,6 @@ async getBuildingByName(name) {
     return null;    
   } 
 },
-//getBuildingByName("Building2");
 
 async createBuilding(
   email,
@@ -135,12 +134,13 @@ async createBuilding(
   province,
   postal_code,
   location,
+  smoking,
   parking,
   public_transport
 ) {
   try {
     const [rows] = await pool.query(
-      "INSERT INTO buildings (user_email, name, street, street_number, city, province, postal_code, location, parking, public_transport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO buildings (user_email, name, street, street_number, city, province, postal_code, location, smoking, parking, public_transport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         email,
         name,
@@ -150,17 +150,26 @@ async createBuilding(
         province,
         postal_code,
         location,
+        smoking,
         parking,
         public_transport,
       ]
     );
-    console.log("Create building result:", rows);
-    const building = await getBuildingByName(name);
+    if (rows.affectedRows === 0) {
+      throw new Error("Building does not exist");
+    }
+    const building = await module.exports.getBuildingByName(name);
+    console.log("Create building result:", building);
+    
+    // You can return a success message or the newly created building data here
     return building;
   } catch (error) {
     console.error("Error:", error);
-  } 
+    // In case of an error, you can return an error message or null
+    return null;
+  }
 },
+
 //createBuilding("user2@example.com", "The Building1", "St pats", "123","Toronto", "Ontario","M5V 2T6", "Down Town", 1,1);
 
 async updateBuildingByName(

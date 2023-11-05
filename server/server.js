@@ -24,31 +24,31 @@ const {
 
 // * Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 
 //* Http requests
 //* User requests
 // Login
 app.get("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await login(email, password);
+  const { email, password } = req.body
+  const user = await login(email, password)
 
   if (user === null) {
-    res.status(400).send("Wrong email or password");
+    res.status(400).send("Wrong email or password")
   } else {
-    res.json(user);
+    res.json(user)
 }
 });
 
 // Get user by email
 app.get("/users/:email", async (req, res) => {
   const { email } = req.params;
-  const user = await getUserByEmail(email);
+  const user = await getUserByEmail(email)
 
   if (user === null) {
-    res.status(400).send("User not found");
+    res.status(400).send("User not found")
   }  else {
-    res.json(user);
+    res.json(user)
 }
 
 });
@@ -56,56 +56,89 @@ app.get("/users/:email", async (req, res) => {
 // Create user
 app.post("/users", async (req, res) => {
   const { email, first_name, password, owner } = req.body;
-  const user = await createUser(email, first_name, password, owner);
+  const user = await createUser(email, first_name, password, owner)
 
   if (user === null) {
-    res.status(400).send("User not created");
+    res.status(400).send("User not created")
   } else {
-    res.json(user);
+    res.json(user)
   }
 });
 
 // Delete user by e mail
 app.delete("/users/:email", async (req, res) => {
   const { email } = req.params;
-  const user = await deleteUserByEmail(email);
+  const user = await deleteUserByEmail(email)
 
   if (user === null) {
-    res.status(400).send("User not found");
+    res.status(400).send("User not found")
   } else {
-    res.json(user);
+    res.json(user)
 }
 });
 
 //* Building requests
 // Get buildings by email
 app.get("/buildings/:email", async (req, res) => {
-  const { email } = req.params;
-  const buildings = await getBuildingsByEmail(email);
+  const { email } = req.params
+  const buildings = await getBuildingsByEmail(email)
 
   if (buildings === null) {
-    res.status(400).send("Buildings not found");
+    res.status(400).send("Buildings not found")
   } else {
-    res.json(buildings);
+    res.json(buildings)
 }
 });
 
 // Get building by name
 app.get("/building/:name", async (req, res) => {
   const { name } = req.params;
-  const building = await getBuildingByName(name);
+  const building = await getBuildingByName(name)
 
   if (building === null) {
-    res.status(400).send("Building not found");
+    res.status(400).send("Building not found")
   } else {
     res.json(building);
 }
 });
 
+// Create building
+app.post("/buildings", async (req, res) => {
+  const { 
+    email,
+    name,     
+    street,
+    street_number,
+    city,
+    province,
+    postal_code,
+    location,
+    smoking,
+    parking,
+    public_transport } = req.body
+
+  const building = await createBuilding(
+    email,
+    name,    
+    street,
+    street_number,
+    city,
+    province,
+    postal_code,
+    location,
+    smoking,
+    parking,
+    public_transport)
+
+  if (building === null) {
+    res.status(400).send("Building not created")
+  } else {
+    res.json(building)
+}
+})
+
 
 app.listen(5544, () => {
   console.log("Server is listening on port 5544");
 });
-
-
-//createUser("pat12@gmail.com", "bob", "password1", 1);
+    

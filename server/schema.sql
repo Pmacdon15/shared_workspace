@@ -15,11 +15,12 @@ CREATE TABLE buildings (
     user_email VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_email) REFERENCES users(email) ON DELETE CASCADE,
     street VARCHAR(255) NOT NULL,
-    street_number VARCHAR(255) NOT NULL,
+    street_number INT NOT NULL,
     city VARCHAR(255) NOT NULL,
     province VARCHAR(255) NOT NULL,
     postal_code VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
+    smoking BOOLEAN NOT NULL,
     parking BOOLEAN NOT NULL,
     public_transport BOOLEAN NOT NULL
 );
@@ -43,11 +44,11 @@ VALUES
     ('user2@example.com', 'User2', 'password2', 0),
     ('user3@example.com', 'User3', 'password3', 1);
 
-INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, parking, public_transport)
+INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, smoking, parking, public_transport)
 VALUES 
-    ('Building1', 'user1@example.com', 'Street1', '1', 'City1', 'Province1', 'PostalCode1', 'Location1', 1, 1), 
-    ('Building2', 'user2@example.com', 'Street2', '2', 'City2', 'Province2', 'PostalCode2', 'Location2', 0, 1),
-    ('Building3', 'user3@example.com', 'Street3', '3', 'City3', 'Province3', 'PostalCode3', 'Location3', 1, 0);
+    ('Building1', 'user1@example.com', 'Street1', 1, 'City1', 'Province1', 'PostalCode1', 'Location1', 1, 1, 1), 
+    ('Building2', 'user2@example.com', 'Street2', 2, 'City2', 'Province2', 'PostalCode2', 'Location2', 0, 1, 1),
+    ('Building3', 'user3@example.com', 'Street3', 3, 'City3', 'Province3', 'PostalCode3', 'Location3', 1, 0, 0);
 
 INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, Available, size, type)
 VALUES 
