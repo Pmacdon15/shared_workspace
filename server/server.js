@@ -44,9 +44,9 @@ app.get("/users/:email", async (req, res) => {
 
   if (user === null) {
     res.status(400).send("User not found");
-  } 
-  // this will redirect to the user page later
+  }  else {
     res.json(user);
+}
 
 });
 
@@ -56,7 +56,7 @@ app.post("/users", async (req, res) => {
   const user = await createUser(email, first_name, password, owner);
 
   if (user === null) {
-    res.status(400).send("User already exists");
+    res.status(400).send("User not created");
   } else {
     res.json(user);
   }
