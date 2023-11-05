@@ -206,6 +206,7 @@ async updateBuildingByName(
     return building;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   } 
 },
 //updateBuildingByName("Building2", "St pats", "124", "Hell Street", "New York aha", "Alberta", "M5V 2T6", 1, 1);

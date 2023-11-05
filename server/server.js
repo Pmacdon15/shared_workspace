@@ -170,6 +170,18 @@ app.put("/building/:name", async (req, res) => {
 }
 })
 
+// Delete building by name
+app.delete("/building/:name", async (req, res) => {
+  const { name } = req.params;
+  const building = await deleteBuildingByName(name)
+
+  if (building === null) {
+    res.status(400).send("Building not found")
+  } else {
+    res.json(building)
+}
+});
+
 
 app.listen(5544, () => {
   console.log("Server is listening on port 5544");
