@@ -1,7 +1,6 @@
 const mysql = require("mysql2");
 const dotenv = require("dotenv");
 const path = require("path");
-const { get } = require("http");
 //const { get } = require("http");
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
@@ -26,14 +25,16 @@ async login(email, password) {
     if (rows.length === 0) {
       throw new Error("User and/or password incorrect");
     }
-    console.log("Login result:", rows);
+    // remove password from result
+    delete rows[0].password;
+    //console.log("Login result:", rows);
+    console.log("Login successful"+ rows[0].email);
     return rows;
   } catch (error) {
     console.error("Error:", error);   
     return null; 
   }
 },
-//login("user2@example.com", "password2");
 
 // * User Functions
 async getUserByEmail(email) {
@@ -44,14 +45,14 @@ async getUserByEmail(email) {
     if (rows.length === 0) {
       throw new Error("User not found");
     }
-    console.log("Result:", rows);
+    //console.log("User:", rows);
+    console.log("User found"+ rows[0].email);
     return rows;
   } catch (error) {
     console.error("Error:", error);
     return null;
   }
 },
-//getUserByEmail("user2@example.com");
 
 async createUser(email, first_name, password, owner) {
   try {
@@ -59,29 +60,34 @@ async createUser(email, first_name, password, owner) {
       "INSERT INTO users (email, first_name, password, owner) VALUES (?, ?, ?, ?)",
       [email, first_name, password, owner]
     );
+    // This function console logs the result of the query
     const user = await module.exports.getUserByEmail(email);
-    console.log("Create user result:", user);
+    delete rows[0].password;    
+    
+    console.log("Create user result:", email);
+
     return user;
   } catch (error) {
     console.error("Error:", error);
     return null;
   }
 },
-//createUser("pat4@gmail.com", "bob", "password1", 1);
 
 async deleteUserByEmail(email) {
   try {
-    const user = await module.exports.getUserByEmail(email);
+    let user = await module.exports.getUserByEmail(email);
 
     if (user === null) {
       throw new Error("User does not exist");
-    }
-    
-    const [rows] = await pool.query("DELETE FROM users WHERE email = ?", [email]);    
+    }    
+    const [rows] = await pool.query("DELETE FROM users WHERE email = ?", [email]);  
     console.log("User:", email, "deleted");
+    delete user[0].password;
+
     return user;
   } catch (error) {
-    console.error("Error:", error);    
+    console.error("Error:", error);   
+    return null; 
   } 
 },
 //deleteUserByEmail("pat4@gmail.com");

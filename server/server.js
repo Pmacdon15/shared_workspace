@@ -62,7 +62,6 @@ app.post("/users", async (req, res) => {
   }
 });
 
-
 // Delete user by e mail
 app.delete("/users/:email", async (req, res) => {
   const { email } = req.params;
