@@ -1,7 +1,6 @@
 const mysql = require("mysql2");
 const dotenv = require("dotenv");
 const path = require("path");
-//const { get } = require("http");
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -90,7 +89,6 @@ async deleteUserByEmail(email) {
     return null; 
   } 
 },
-//deleteUserByEmail("pat4@gmail.com");
 
 // * Building functions
 async getBuildingsByEmail(email) {
@@ -106,6 +104,7 @@ async getBuildingsByEmail(email) {
     return rows;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   }
 },
 //getBuildingsByEmail("user2@example.com");

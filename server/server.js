@@ -27,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //* Http requests
+//* User requests
 // Login
 app.get("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -73,6 +74,19 @@ app.delete("/users/:email", async (req, res) => {
     res.status(400).send("User not found");
   } else {
     res.json(user);
+}
+});
+
+//* Building requests
+// Get buildings by email
+app.get("/buildings/:email", async (req, res) => {
+  const { email } = req.params;
+  const buildings = await getBuildingsByEmail(email);
+
+  if (buildings === null) {
+    res.status(400).send("Buildings not found");
+  } else {
+    res.json(buildings);
 }
 });
 
