@@ -90,6 +90,17 @@ app.get("/buildings/:email", async (req, res) => {
 }
 });
 
+// Get building by name
+app.get("/building/:name", async (req, res) => {
+  const { name } = req.params;
+  const building = await getBuildingByName(name);
+
+  if (building === null) {
+    res.status(400).send("Building not found");
+  } else {
+    res.json(building);
+}
+});
 
 
 app.listen(5544, () => {

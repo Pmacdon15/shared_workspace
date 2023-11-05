@@ -107,7 +107,6 @@ async getBuildingsByEmail(email) {
     return null;
   }
 },
-//getBuildingsByEmail("user2@example.com");
 
 async getBuildingByName(name) {
   try {    
@@ -122,7 +121,7 @@ async getBuildingByName(name) {
     return rows;
   } catch (error) {
     console.error("Error:", error);
-    
+    return null;    
   } 
 },
 //getBuildingByName("Building2");
