@@ -11,9 +11,9 @@ CREATE TABLE users (
 
 CREATE TABLE buildings (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    user_email VARCHAR(255) NOT NULL, -- Remove UNIQUE constraint
-    FOREIGN KEY (user_email) REFERENCES users(email),
+    name VARCHAR(255) NOT NULL UNIQUE,
+    user_email VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_email) REFERENCES users(email) ON DELETE CASCADE,
     street VARCHAR(255) NOT NULL,
     street_number VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
@@ -26,9 +26,9 @@ CREATE TABLE buildings (
 
 CREATE TABLE workspaces (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    buildings_id INT NOT NULL,
-    FOREIGN KEY (buildings_id) REFERENCES buildings(id),
+    name VARCHAR(255) NOT NULL UNIQUE,
+    buildings_id INT NOT NULL,  
+    FOREIGN KEY (buildings_id) REFERENCES buildings(id) ON DELETE CASCADE,
     number_of_seats INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     lease_term INT NOT NULL,
@@ -41,7 +41,7 @@ INSERT INTO users (email, first_name, password, owner)
 VALUES 
     ('user1@example.com', 'User1', 'password1', 1),
     ('user2@example.com', 'User2', 'password2', 0),
-    ('user3@example.com', 'User3', 'password3',1);
+    ('user3@example.com', 'User3', 'password3', 1);
 
 INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, parking, public_transport)
 VALUES 
@@ -52,5 +52,5 @@ VALUES
 INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, Available, size, type)
 VALUES 
     ('Workspace1', 1, 1, 10.00, 100, 1, 100, 'Desk'),
-    ('Workspace2', 2, 2, 20.00, 200, 2, 200, 'Room'),
-    ('Workspace3', 3, 3, 30.00, 300, 3, 300, 'Meeting Room');
+    ('Workspace2', 2, 2, 20.00, 200, 1, 200, 'Room'),
+    ('Workspace3', 3, 3, 30.00, 300, 0, 300, 'Meeting Room'); 
