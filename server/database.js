@@ -27,6 +27,7 @@ async login(email, password) {
       throw new Error("User and/or password incorrect");
     }
     console.log("Login result:", rows);
+    return rows;
   } catch (error) {
     console.error("Error:", error);   
     return null; 
@@ -43,7 +44,7 @@ async getUserByEmail(email) {
     if (rows.length === 0) {
       throw new Error("User not found");
     }
-    console.log("Login result:", rows);
+    console.log("Result:", rows);
     return rows;
   } catch (error) {
     console.error("Error:", error);
@@ -58,29 +59,30 @@ async createUser(email, first_name, password, owner) {
       "INSERT INTO users (email, first_name, password, owner) VALUES (?, ?, ?, ?)",
       [email, first_name, password, owner]
     );
-    const user = await module.exports.getUserByEmail(email);
+    
     console.log("Create user result:", user);
     return user;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   }
 },
 //createUser("pat4@gmail.com", "bob", "password1", 1);
 
 async deleteUserByEmail(email) {
   try {
-    const [rows] = await pool.query("DELETE FROM users WHERE email = ?", [email]);
-    if (rows.affectedRows === 0) {
-      console.log("User does not exist");
+    const user = await module.exports.getUserByEmail(email);
+
+    if (user === null) {
       throw new Error("User does not exist");
     }
+    
+    const [rows] = await pool.query("DELETE FROM users WHERE email = ?", [email]);    
     console.log("User:", email, "deleted");
-    return rows;
+    return user;
   } catch (error) {
-    console.error("Error:", error);
-  } finally {
-    pool.end(); // Close the database connection when done
-  }
+    console.error("Error:", error);    
+  } 
 },
 //deleteUserByEmail("pat4@gmail.com");
 
