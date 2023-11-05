@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 const {
   login,
@@ -24,9 +22,13 @@ const {
   deleteWorkspaceByName,
 } = require("./database");
 
+// * Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 //* Http requests
 // Login
-app.post("/login", async (req, res) => {
+app.get("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await login(email, password);
 
