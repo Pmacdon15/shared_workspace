@@ -70,9 +70,9 @@ app.delete("/users/:email", async (req, res) => {
 
   if (user === null) {
     res.status(400).send("User not found");
-  } 
+  } else {
     res.json(user);
-
+}
 });
 
 
