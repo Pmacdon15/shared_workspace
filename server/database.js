@@ -100,7 +100,7 @@ async getBuildingsByEmail(email) {
     if (rows.length === 0) {
       throw new Error("Building not found");
     }
-    console.log("Buildings result:", rows);
+    console.log("Buildings from email:", email, "found");
     return rows;
   } catch (error) {
     console.error("Error:", error);
@@ -117,7 +117,7 @@ async getBuildingByName(name) {
     if (rows.length === 0) {
       throw new Error("Building not found");
     }
-    console.log("Building result:", rows);
+    console.log("Building named:", name, "found");
     return rows;
   } catch (error) {
     console.error("Error:", error);
@@ -158,8 +158,8 @@ async createBuilding(
     if (rows.affectedRows === 0) {
       throw new Error("Building does not exist");
     }
-    const building = await module.exports.getBuildingByName(name);
-    console.log("Create building result:", building);
+    const building = await module.exports.getBuildingByName(name)
+    console.log("Create building: ", name)
     
     // You can return a success message or the newly created building data here
     return building;
