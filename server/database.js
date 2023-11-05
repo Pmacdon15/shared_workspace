@@ -227,7 +227,6 @@ async deleteBuildingByName(name) {
     return null;
   } 
 },
-//deleteBuildingByName("Building2");
 
 async getWorkspaces() {
   try {   
@@ -235,49 +234,48 @@ async getWorkspaces() {
     if (rows.length === 0) {
       throw new Error("Workspace not found");
     }
-    console.log("Workspace result:", rows);
+    //console.log("Workspace result:", rows);
+    console.log("Workspaces found");
     return rows;
   }
   catch (error) {
     console.error("Error:", error);
+    return null;
   }
 },
-//getWorkspaces();
 
-async getWorkspacesByBuildingNameAndWorkSpaceName(building_name, name) {
+async getWorkSpaceByName(name) {
   try {
-    const [rows] = await pool.query(
-      "SELECT * FROM workspaces WHERE buildings_id = (SELECT id FROM buildings WHERE name = ?) AND name = ?",
-      [building_name, name]
-    );
+    const [rows] = await pool.query("SELECT * FROM workspaces WHERE name = ?", [
+      name,
+    ]);
     if (rows.length === 0) {
       throw new Error("Workspace not found");
     }
-    console.log("Workspace result:", rows);
+    //console.log("Workspace result:", rows);
+    console.log(name," found");
     return rows;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   }
 },
-//getWorkspacesByBuildingNameAndWorkSpaceName("Building1", "Workspace69");
-// !! don't think I need this one.
-// async getWorkspacesByBuildingIdAndWorkspaceName(building_id, name) {
-//   try {
-//     const [rows] = await pool.query(
-//       "SELECT * FROM workspaces WHERE buildings_id = ? AND name = ?",
-//       [building_id, name]
-//     );
-//     if (rows.length === 0) {
-//       throw new Error("Workspace not found");
-//     }
-   
-//     console.log("Workspace result:", rows);
-//     return rows;
-//   } catch (error) {
-//     console.error("Error:", error);
-//   }
-// },
-//getWorkspacesByBuildingIdAndWorkspaceName(3, "Workspace");
+
+async getWorkspaceByName(name) {
+  try {
+    const [rows] = await pool.query("SELECT * FROM workspaces WHERE name = ?", [
+      name,
+    ]);
+    if (rows.length === 0) {
+      throw new Error("Workspace not found");
+    }
+    console.log(name + " found")
+    return rows;
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+},
 
 async getWorkspacesByBuildingName(building_name) {
   try {
@@ -288,45 +286,14 @@ async getWorkspacesByBuildingName(building_name) {
     if (rows.length === 0) {
       throw new Error("Workspace not found");
     }
-    console.log("Workspace result:", rows);
+    console.log("Workspaces from building:", building_name, "found")
     return rows;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   }
 },
-// !! don't think I need this one.
-// async getWorkspacesByBuildingId(building_id) {
-//   try {
-//     const [rows] = await pool.query(
-//       "SELECT * FROM workspaces WHERE buildings_id = ?",
-//       [building_id]
-//     );
-//     if (rows.length === 0) {
-//       throw new Error("Workspace not found");
-//     }
-//     console.log("Workspace result:", rows);
-//     return rows;
-//   } catch (error) {
-//     console.error("Error:", error);
-//   }
-// },
-// //getWorkspacesByBuildingId(0);
 
-async getWorkspaceByName(name) {
-  try {
-    const [rows] = await pool.query("SELECT * FROM workspaces WHERE name = ?", [
-      name,
-    ]);
-    if (rows.length === 0) {
-      throw new Error("Workspace not found");
-    }
-    console.log("Workspace result:", rows);
-    return rows;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-},
-//getWorkspaceByName("Workspace");
 
 async createWorkspace(
   building_id,

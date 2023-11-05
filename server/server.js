@@ -15,7 +15,6 @@ const {
   deleteBuildingByName,
   getWorkspaces,
   getWorkspaceByName,
-  getWorkspacesByBuildingNameAndWorkSpaceName,
   getWorkspacesByBuildingName,
   createWorkspace,
   updateWorkspaceByName,
@@ -180,7 +179,43 @@ app.delete("/building/:name", async (req, res) => {
   } else {
     res.json(building)
 }
-});
+})
+
+//* Workspace requests
+// Get workspaces
+app.get("/workspaces", async (req, res) => {
+  const workspaces = await getWorkspaces()
+
+  if (workspaces === null) {
+    res.status(400).send("Workspaces not found")
+  } else {
+    res.json(workspaces)
+}
+})
+
+// Get workspace by name
+app.get("/workspace/:name", async (req, res) => {
+  const { name } = req.params;
+  const workspace = await getWorkspaceByName(name)
+
+  if (workspace === null) {
+    res.status(400).send("Workspace not found")
+  } else {
+    res.json(workspace)
+}
+})
+
+// Get workspaces by building name
+app.get("/workspaces/:building_name", async (req, res) => {
+  const { building_name } = req.params;
+  const workspaces = await getWorkspacesByBuildingName(building_name)
+
+  if (workspaces === null) {
+    res.status(400).send("Workspaces not found")
+  } else {
+    res.json(workspaces);
+}
+})
 
 
 app.listen(5544, () => {

@@ -42,16 +42,25 @@ INSERT INTO users (email, first_name, password, owner)
 VALUES 
     ('user1@example.com', 'User1', 'password1', 1),
     ('user2@example.com', 'User2', 'password2', 0),
-    ('user3@example.com', 'User3', 'password3', 1);
+    ('user3@example.com', 'User3', 'password3', 1),
+    ('user4@example.com', 'User4', 'password4', 0);
+
 
 INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, smoking, parking, public_transport)
 VALUES 
     ('Building1', 'user1@example.com', 'Street1', 1, 'City1', 'Province1', 'PostalCode1', 'Location1', 1, 1, 1), 
-    ('Building2', 'user2@example.com', 'Street2', 2, 'City2', 'Province2', 'PostalCode2', 'Location2', 0, 1, 1),
-    ('Building3', 'user3@example.com', 'Street3', 3, 'City3', 'Province3', 'PostalCode3', 'Location3', 1, 0, 0);
+    ('Building2', 'user2@example.com', 'Street2', 1, 'City2', 'Province2', 'PostalCode2', 'Location2', 0, 1, 1),
+    ('Building3', 'user3@example.com', 'Street3', 2, 'City3', 'Province3', 'PostalCode3', 'Location3', 1, 0, 0),
+    ('Building4', 'user4@example.com', 'Street4', 3, 'City4', 'Province4', 'PostalCode4', 'Location4', 0, 0, 1);
 
-INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, Available, size, type)
+
+INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, available, size, type)
 VALUES 
     ('Workspace1', 1, 1, 10.00, 100, 1, 100, 'Desk'),
-    ('Workspace2', 2, 2, 20.00, 200, 1, 200, 'Room'),
-    ('Workspace3', 3, 3, 30.00, 300, 0, 300, 'Meeting Room'); 
+    ('Workspace2', 1, 2, 20.00, 200, 1, 200, 'Room'),
+    ('Workspace3', 2, 3, 30.00, 300, 0, 300, 'Meeting Room'),
+    ('Workspace4', 2, 3, 35.00, 350, 0, 380, 'Meeting Room'),
+    ('Workspace5', 3, 1, 30.00, 300, 0, 300, 'Desk'),
+    ('Workspace6', 3, 2, 40.00, 400, 1, 400, 'Room'),
+    ('Workspace7', 4, 3, 50.00, 500, 1, 500, 'Meeting Room'),
+    ('Workspace8', 4, 3, 55.00, 550, 0, 550, 'Meeting Room');
