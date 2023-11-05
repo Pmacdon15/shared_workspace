@@ -103,7 +103,7 @@ app.get("/building/:name", async (req, res) => {
 });
 
 // Create building
-app.post("/buildings", async (req, res) => {
+app.post("/building", async (req, res) => {
   const { 
     email,
     name,     
@@ -132,6 +132,39 @@ app.post("/buildings", async (req, res) => {
 
   if (building === null) {
     res.status(400).send("Building not created")
+  } else {
+    res.json(building)
+}
+})
+
+// Update building by name
+app.put("/building/:name", async (req, res) => {
+  const { name } = req.params
+  const { 
+    street,
+    street_number,
+    city,
+    province,
+    postal_code,
+    location,
+    smoking,
+    parking,
+    public_transport } = req.body
+
+  const building = await updateBuildingByName(
+    name,
+    street,
+    street_number,
+    city,
+    province,
+    postal_code,
+    location,
+    smoking,
+    parking,
+    public_transport)
+
+  if (building === null) {
+    res.status(400).send("Building not updated")
   } else {
     res.json(building)
 }

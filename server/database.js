@@ -202,7 +202,7 @@ async updateBuildingByName(
       throw new Error("Building does not exist");
     }
     //console.log("Update building result:", rows);
-    const building = await getBuildingByName(name);
+    const building = await module.exports.getBuildingByName(name);
     return building;
   } catch (error) {
     console.error("Error:", error);
