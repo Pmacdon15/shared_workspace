@@ -1,4 +1,4 @@
-# shared Workspaces
+# Shared Workspaces
 
 This app Shared Workspaces is made with My Sql and Node.js(Express). The back end talks to the Database and serve all the information to the client side. Currently there is no front end but that will be next. 
  

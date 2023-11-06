@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }))
 
 //* Http requests
 //* User requests
-// If any database.js function returns null, send a 400 status code and a message becuase there was an error
+// If any database.js function returns null, send a 400 status code and a message because there was an error
 // Login
 app.get("/login", async (req, res) => {
   const { email, password } = req.body
