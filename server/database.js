@@ -15,19 +15,22 @@ const pool = mysql
 
 module.exports = {
   // * Login function
+  // All functions return null if there is an error. You can send error an message on the upper level
   async login(email, password) {
     try {
       const [rows] = await pool.query(
         "SELECT * FROM users WHERE email = ? AND password = ?",
         [email, password]
       );
+
       if (rows.length === 0) {
         throw new Error("User and/or password incorrect");
       }
       // remove password from result
       delete rows[0].password;
-      //console.log("Login result:", rows);
+
       console.log("Login successful" + rows[0].email);
+
       return rows;
     } catch (error) {
       console.error("Error:", error);
@@ -41,11 +44,13 @@ module.exports = {
       const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
         email,
       ]);
+
       if (rows.length === 0) {
         throw new Error("User not found");
       }
-      //console.log("User:", rows);
+
       console.log("User found" + rows[0].email);
+
       return rows;
     } catch (error) {
       console.error("Error:", error);
@@ -82,7 +87,10 @@ module.exports = {
       const [rows] = await pool.query("DELETE FROM users WHERE email = ?", [
         email,
       ]);
+
       console.log("User:", email, "deleted");
+
+      // remove password from result
       delete user[0].password;
 
       return user;
@@ -99,10 +107,13 @@ module.exports = {
         "SELECT * FROM buildings WHERE user_email = ?",
         [email]
       );
+
       if (rows.length === 0) {
         throw new Error("Building not found");
       }
+
       console.log("Buildings from email:", email, "found");
+
       return rows;
     } catch (error) {
       console.error("Error:", error);
@@ -121,6 +132,7 @@ module.exports = {
         throw new Error("Building not found");
       }
       console.log("Building named:", name, "found");
+
       return rows;
     } catch (error) {
       console.error("Error:", error);
@@ -158,17 +170,17 @@ module.exports = {
           public_transport,
         ]
       );
+
       if (rows.affectedRows === 0) {
         throw new Error("Building does not exist");
       }
+
       const building = await module.exports.getBuildingByName(name);
       console.log("Create building: ", name);
 
-      // You can return a success message or the newly created building data here
       return building;
     } catch (error) {
       console.error("Error:", error);
-      // In case of an error, you can return an error message or null
       return null;
     }
   },
@@ -199,11 +211,13 @@ module.exports = {
           name,
         ]
       );
+
       if (rows.affectedRows === 0) {
         throw new Error("Building does not exist");
       }
-      //console.log("Update building result:", rows);
+
       const building = await module.exports.getBuildingByName(name);
+
       return building;
     } catch (error) {
       console.error("Error:", error);
@@ -235,8 +249,9 @@ module.exports = {
       if (rows.length === 0) {
         throw new Error("Workspace not found");
       }
-      //console.log("Workspace result:", rows)
+
       console.log("Workspaces found");
+
       return rows;
     } catch (error) {
       console.error("Error:", error);
@@ -250,10 +265,13 @@ module.exports = {
         "SELECT * FROM workspaces WHERE name = ?",
         [name]
       );
+
       if (rows.length === 0) {
         throw new Error("Workspace not found");
       }
+
       console.log(name + " found");
+
       return rows;
     } catch (error) {
       console.error("Error:", error);
@@ -267,10 +285,13 @@ module.exports = {
         "SELECT * FROM workspaces WHERE buildings_id = (SELECT id FROM buildings WHERE name = ?)",
         [building_name]
       );
+
       if (rows.length === 0) {
         throw new Error("Workspace not found");
       }
+
       console.log("Workspaces from building:", building_name, "found");
+
       return rows;
     } catch (error) {
       console.error("Error:", error);
@@ -302,11 +323,14 @@ module.exports = {
           type,
         ]
       );
+
       if (rows.affectedRows === 0) {
         throw new Error("Workspace not created");
       }
+
       const workspace = await module.exports.getWorkspaceByName(name);
       console.log("Create workspace result:", name);
+
       return workspace;
     } catch (error) {
       console.error("Error:", error);
@@ -328,10 +352,13 @@ module.exports = {
         "UPDATE workspaces SET number_of_seats = ?, price = ?, lease_term = ?, available = ?, size = ?, type = ? WHERE name = ?",
         [number_of_seats, price, lease_term, available, size, type, name]
       );
+
       if (rows.affectedRows === 0) {
         throw new Error("Workspace does not exist");
       }
+
       const workspace = await module.exports.getWorkspaceByName(name);
+
       return workspace;
     } catch (error) {
       console.error("Error:", error);
@@ -346,9 +373,11 @@ module.exports = {
       const [rows] = await pool.query("DELETE FROM workspaces WHERE name = ?", [
         name,
       ]);
+
       if (rows.affectedRows === 0) {
         throw new Error("Workspace does not exist");
-      }      
+      }
+
       return workspace;
     } catch (error) {
       console.error("Error:", error);

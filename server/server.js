@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: true }))
 
 //* Http requests
 //* User requests
+// If any database.js function returns null, send a 400 status code and a message becuase there was an error
 // Login
 app.get("/login", async (req, res) => {
   const { email, password } = req.body
@@ -284,9 +285,6 @@ app.delete("/workspace/:name", async (req, res) => {
     res.json(workspace)
 }
 })
-
-
-
 
 app.listen(5544, () => {
   console.log("Server is listening on port 5544");
