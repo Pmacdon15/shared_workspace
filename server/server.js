@@ -101,7 +101,7 @@ app.get("/building/:name", async (req, res) => {
 }
 });
 
-// Create building
+// Create building by email
 app.post("/building", async (req, res) => {
   const { 
     email,
@@ -196,6 +196,7 @@ app.get("/workspaces", async (req, res) => {
 // Get workspace by name
 app.get("/workspace/:name", async (req, res) => {
   const { name } = req.params;
+  //const decodedName = decodeURIComponent(name)
   const workspace = await getWorkspaceByName(name)
 
   if (workspace === null) {
@@ -244,6 +245,46 @@ app.post("/workspace", async (req, res) => {
       res.json(workspace)
   }
 })
+
+// Update workspace by name
+app.put("/workspace/:name", async (req, res) => {
+  const { name } = req.params
+  const {     
+    number_of_seats,
+    price,
+    lease_term,
+    available,
+    size,
+    type } = req.body
+    
+  const workspace = await updateWorkspaceByName(
+    name,
+    number_of_seats,
+    price,
+    lease_term,
+    available,
+    size,
+    type)
+
+  if (workspace === null) {
+    res.status(400).send("Workspace not updated")
+  } else {
+    res.json(workspace)
+}
+})
+
+// Delete workspace by name
+app.delete("/workspace/:name", async (req, res) => {
+  const { name } = req.params;
+  const workspace = await deleteWorkspaceByName(name)
+  
+  if (workspace === null) {
+    res.status(400).send("Workspace not found")
+  } else {
+    res.json(workspace)
+}
+})
+
 
 
 
