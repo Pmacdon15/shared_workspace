@@ -1,8 +1,7 @@
-# Todo
+# shared Workspaces
 
-This repository contains a simple to app that I have created in phases. The first two are complete and hopefully I will be able to start on the third soon. Phase 1 was put together fast just to get an idea how to 
-put this project together. It only handles client side Functionality, no server side code or database. Phase 2 is a Node.js Express app, with connectivity to a Mysql database and Bootstrap css. Phase 3 will be building 
-off the last phase but with users and a login.  
+This app Shared Workspaces is made with My Sql and Node.js(Express). The back end talks to the Database and serve all the information to the client side. Currently there is no front end but that will be next. 
+ 
 
 ## Table of Contents
 
@@ -30,7 +29,7 @@ Next we will need to install the Node Modules, I will list the commands here:
 
 ```bash
 
-cd todo
+cd shared_workspaces
 
 ```
 
@@ -42,7 +41,7 @@ npm install
 
 ## Database
 
-This project requires a My Sql database connection. After downloading and installing MySql, Configure your database and take note of the credentials. There is a file in the repository, in /phase2/server, named schema.sql that has the configuration for the My Sql database. Simply copy and paste this code in to the My Sql terminal after logging on to the database.
+This project requires a My Sql database connection. After downloading and installing MySql, Configure your database and take note of the credentials. There is a file in the repository, in shared_workspaces/server, named schema.sql that has the configuration for the My Sql database. Simply copy and paste this code in to the My Sql terminal after logging on to the database.
 
 This project Requires a .env file setup in the following manner to connect to the database(using the credentials that you set up the database with): 
 
@@ -70,7 +69,7 @@ node server.js
 
 ```
 
-If you are in the root directory of the project run:
+If you are in the any directory of the project run:
 
 ```bash
 
