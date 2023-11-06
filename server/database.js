@@ -294,28 +294,33 @@ async getWorkspacesByBuildingName(building_name) {
   }
 },
 
-
 async createWorkspace(
-  building_id,
   name,
+  building_name,  
   number_of_seats,
   price,
   lease_term,
   available,
-  size,type
+  size,
+  type
 ) {
   try {
     const [rows] = await pool.query(
-      "INSERT INTO workspaces (buildings_id, name, number_of_seats, price, lease_term, available, size, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-      [building_id, name, number_of_seats, price, lease_term, available, size, type]
+      "INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, available, size, type) VALUES (?, (SELECT id FROM buildings WHERE name = ?), ?, ?, ?, ?, ?, ?)",
+      [name, building_name, number_of_seats, price, lease_term, available, size, type]
     );
-    //console.log("Create workspace result:", rows);
-    const workspace = await getWorkspaceByName(name);
+    if (rows.affectedRows === 0) {
+      throw new Error("Workspace not created");
+    }
+    const workspace = await module.exports.getWorkspaceByName(name);
+    console.log("Create workspace result:", name);
     return workspace;
-  } catch (error) {
-    console.error("Error:", error);
   }
-},
+  catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+},  
 //createWorkspace(1, "Workspace6901", 1, 1, 1, 1, 1, "Office");
 
 async updateWorkspaceByName(

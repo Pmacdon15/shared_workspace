@@ -217,6 +217,35 @@ app.get("/workspaces/:building_name", async (req, res) => {
 }
 })
 
+// Create workspace
+app.post("/workspace", async (req, res) => {
+  const { 
+    name,
+    building_name,    
+    number_of_seats,
+    price,
+    lease_term,
+    available,
+    size,
+    type } = req.body
+
+  const workspace = await createWorkspace(
+    name,
+    building_name, 
+    number_of_seats, 
+    price, 
+    lease_term, 
+    available,
+    size, 
+    type)
+    if (workspace === null) {
+      res.status(400).send("Workspace not created")
+    } else {
+      res.json(workspace)
+  }
+})
+
+
 
 app.listen(5544, () => {
   console.log("Server is listening on port 5544");
