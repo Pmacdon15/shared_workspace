@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require('cors');
+
 
 
 const {
@@ -25,11 +27,18 @@ const {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
+app.use(cors({
+  origin: 'http://localhost:3000', // Update with the actual URL of your frontend
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+}));
+
+
+
 //* Http requests
 //* User requests
 // If any database.js function returns null, send a 400 status code and a message because there was an error
 // Login
-app.get("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, password } = req.body
   const user = await login(email, password)
 
