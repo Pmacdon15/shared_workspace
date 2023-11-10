@@ -69,7 +69,7 @@ node server.js
 
 ```
 
-If you are in the any directory of the project run:
+If you are in the root directory of the project run:
 
 ```bash
 
