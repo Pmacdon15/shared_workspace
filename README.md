@@ -59,16 +59,6 @@ MYSQL_DATABASE='shared_workspaces'
 
 ## Startup
 
-If you are already in shared_workspaces/server
-
-Then run:
-
-```bash
-
-node server.js
-
-```
-
 If you are in the root directory of the project run:
 
 ```bash
