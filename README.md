@@ -39,6 +39,18 @@ npm install
 
 ```
 
+```bash
+
+cd client
+
+```
+
+```bash
+
+npm install
+
+```
+
 ## Database
 
 This project requires a My Sql database connection. After downloading and installing MySql, Configure your database and take note of the credentials. There is a file in the repository, in shared_workspaces/server, named schema.sql that has the configuration for the My Sql database. Simply copy and paste this code in to the My Sql terminal after logging on to the database.
