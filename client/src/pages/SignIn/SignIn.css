@@ -5,7 +5,7 @@
     gap: 9px;
     width: 100%;
     margin-top: 30px;
-    
+
 }
 
 .text {
@@ -22,39 +22,39 @@
     border-radius: 9px;
 }
 
-/* .inputs {
-    margin-top: 10%;
-    display: flex;    
-    align-items: center;
-    flex-direction: column;
-   
-    gap: 15px;     
-} */
-    
-.forgot-password{
+
+.forgot-password {
     /* padding-left: 62px; */
-    margin: top 27px;
+    margin-top: 5%;
     color: rgba(4, 81, 88, 0.534);
     font-size: 18px;
 }
-.forgot-password span{
+.register {
+   
+    color: rgba(4, 81, 88, 0.534);
+    font-size: 18px;
+}
+
+.forgot-password span {
     color: rgba(4, 162, 176, 0.534);
     cursor: pointer;
 }
-    
-.submit-container{
+
+.register span {
+    color: rgba(4, 162, 176, 0.534);
+    cursor: pointer;
+}
+.submit-container {
     display: flex;
     gap: 3px;
-    margin:30px;
+    margin: 30px;
 }
 
-/* SignIn.css */
 .custom-form {
     margin-top: 10%;
-    display: flex;    
+    display: flex;
     align-items: center;
     flex-direction: column;
-   
+
     gap: 15px;
-  }
-  
+}

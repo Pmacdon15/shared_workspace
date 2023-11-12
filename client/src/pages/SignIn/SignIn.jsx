@@ -10,7 +10,6 @@ import axios from "axios";
 import "./SignIn.css";
 
 const SignIn = () => {
-
   const { register, handleSubmit, reset } = useForm(); // Initialize useForm
 
   const onSubmit = async (data) => {
@@ -23,8 +22,8 @@ const SignIn = () => {
       console.error("Error while submitting the form:", error);
     }
   };
-    return (
-      <React.Fragment>
+  return (
+    <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm">
         <Box
@@ -55,7 +54,10 @@ const SignIn = () => {
             />
 
             <div className="forgot-password">
-              Lost your password? <span>Click Here!</span>
+              Lost your password? <span>Click Here!</span>              
+            </div>
+            <div className="register">              
+              Don't have an account? <span>Click Here!</span>
             </div>
 
             <div className="submit-container">
@@ -67,7 +69,7 @@ const SignIn = () => {
         </Box>
       </Container>
     </React.Fragment>
-    );
-    };  
+  );
+};
 
 export default SignIn;

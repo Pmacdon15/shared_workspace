@@ -1,18 +1,17 @@
 import './App.css';
 
-//import SignIn from './Components/SignIn/SignIn';
-//import Something  from './Components/Something/Something';
-import SignIn from './Components/SignIn/SignIn';
+import {Routes, Route} from 'react-router-dom';
 
-
+//import Home from './pages/Home';
+import SignIn from './pages/SignIn/SignIn';
 
 function App() {
-  return (
-    <div>
-      <SignIn />
-    </div>
+  return (<Routes>      
+    <Route path="/" element={<SignIn />} />
+    
+  </Routes>
+    
   );
 }
-
 
 export default App;
