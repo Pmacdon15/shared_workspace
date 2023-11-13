@@ -37,6 +37,29 @@ module.exports = {
       return null;
     }
   },
+  //* testing
+  // Get user by building id
+  async getUserByBuildingId(id) {
+    try {
+      const [rows] = await pool.query(
+        "SELECT * FROM users WHERE email = (SELECT user_email FROM buildings WHERE id = ?)",
+        [id]
+      );
+
+      if (rows.length === 0) {
+        throw new Error("User not found");
+      }
+
+      console.log("User found" + rows[0].email);
+
+      return rows;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  },
+ 
+  //* end testing
 
   // * User Functions
   async getUserByEmail(email) {

@@ -11,6 +11,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+import Button from "@mui/material/Button";
+
+import "./CoworkersPage.css";
+
 function CoworkersPage() {
   const [workspaces, setWorkspaces] = useState([]);
   const boxRef = useRef(null);
@@ -47,40 +51,55 @@ function CoworkersPage() {
             overflowY: "scroll", // Add overflowY: scroll to enable scrolling
           }}
         >
-          {workspaces.map((workspace) => (
-            <div>
-              <h2>{workspace.name}</h2>
-              <TableContainer sx={{width: 750}} component={Paper}>
-                <Table
-                  sx={{ minWidth: 250 }}
-                  size="small"
-                  aria-label="a dense table"
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="center">Number Of Seats</TableCell>
-                      <TableCell align="center">Price</TableCell>
-                      <TableCell align="center">Lease Term in Days</TableCell>
-                      <TableCell align="center">Available</TableCell>
-                      <TableCell align="center">Size(Sqr Feet):</TableCell>
-                      <TableCell align="center">Type</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell  align="center"component="th" scope="row">{workspace.number_of_seats}</TableCell>
-                      <TableCell align="center">{workspace.price}</TableCell>
-                      <TableCell align="center"> {workspace.lease_term}</TableCell>
-                      <TableCell align="center"> {workspace.available}</TableCell>
-                      <TableCell align="center">{workspace.size}</TableCell>
-                      <TableCell align="center">{workspace.type}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              {/* <pre>{JSON.stringify(workspace, null, 2)}</pre> */}
-            </div>
-          ))}
+          
+            
+              {workspaces.map((workspace) => (
+                <div className="display-container">
+                <Container maxWidth="md">
+                <Box sx={{ bgcolor: '#cfe8fc' }} >
+                  <h2>{workspace.name}</h2>
+                  <TableContainer sx={{ width: 750 }} component={Paper}>
+                    <Table
+                      sx={{ minWidth: 250 }}
+                      size="small"
+                      aria-label="a dense table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">Number Of Seats</TableCell>
+                          <TableCell align="center">Price</TableCell>
+                          <TableCell align="center">Lease Term in Days</TableCell>
+                          <TableCell align="center">Available</TableCell>
+                          <TableCell align="center">Size(Sqr Feet):</TableCell>
+                          <TableCell align="center">Type</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="center" component="th" scope="row">
+                            {workspace.number_of_seats}
+                          </TableCell>
+                          <TableCell align="center">{workspace.price}</TableCell>
+                          <TableCell align="center">{workspace.lease_term}</TableCell>
+                          <TableCell align="center">{workspace.available}</TableCell>
+                          <TableCell align="center">{workspace.size}</TableCell>
+                          <TableCell align="center">{workspace.type}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <div className="submit-container">
+                    <Button type="submit" variant="contained">
+                      Get Owner Info
+                    </Button>
+                  </div>
+                  <pre>{JSON.stringify(workspace, null, 2)}</pre>
+                  </Box>
+                </Container>
+                </div>
+              ))}
+            
+          
         </Box>
       </Container>
     </React.Fragment>

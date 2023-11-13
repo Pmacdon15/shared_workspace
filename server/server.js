@@ -7,7 +7,7 @@ const cors = require('cors');
 
 const {
   login,
-  getUserByEmail,
+  getUserByBuildingId,
   createUser,
   deleteUserByEmail,
   getBuildingsByEmail,
@@ -49,18 +49,31 @@ app.post("/login", async (req, res) => {
 }
 });
 
-// Get user by email
-app.get("/users/:email", async (req, res) => {
-  const { email } = req.params;
-  const user = await getUserByEmail(email)
+// Get user by building id
+app.get("/user/:buildingId", async (req, res) => {
+  const { buildingId } = req.params;
+  const user = await getUserByBuildingId(buildingId)
 
   if (user === null) {
     res.status(400).send("User not found")
-  }  else {
+  } else {
     res.json(user)
 }
-
 });
+
+
+// // Get user by email
+// app.get("/users/:email", async (req, res) => {
+//   const { email } = req.params;
+//   const user = await getUserByEmail(email)
+
+//   if (user === null) {
+//     res.status(400).send("User not found")
+//   }  else {
+//     res.json(user)
+// }
+
+//});
 
 // Create user
 app.post("/users", async (req, res) => {
