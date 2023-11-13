@@ -13,6 +13,8 @@ import Paper from "@mui/material/Paper";
 
 import Button from "@mui/material/Button";
 
+import { Link } from "react-router-dom";
+
 import "./CoworkersPage.css";
 
 function CoworkersPage() {
@@ -48,20 +50,26 @@ function CoworkersPage() {
             height: "90vh",
             marginTop: " 3%",
             borderRadius: "9px",
-            padding:'1%',
-            overflowY: "scroll", // Add overflowY: scroll to enable scrolling
+            padding: "1%",
+            overflowY: "scroll",
+            // overflowX: "scroll",
           }}
         >
-          
-            
-              {workspaces.map((workspace) => (
-                <div key={workspace.id} className="display-container">
-                <Container maxWidth="md">
-                <Box sx={{ bgcolor: '#90caf9' , borderRadius: "9px", paddingBottom:'1%', paddingLeft:'1%'}} >
+          {workspaces.map((workspace) => (
+            <div key={workspace.id} className="display-container">
+              <Container maxWidth="md">
+                <Box
+                  sx={{
+                    bgcolor: "#90caf9",
+                    borderRadius: "9px",
+                    paddingBottom: "1%",
+                    paddingLeft: "1%",
+                  }}
+                >
                   <h2>{workspace.name}</h2>
                   <TableContainer sx={{ width: 750 }} component={Paper}>
                     <Table
-                      sx={{ minWidth: 250 }}
+                      sx={{ minWidth: 650 }}
                       size="small"
                       aria-label="a dense table"
                     >
@@ -80,9 +88,15 @@ function CoworkersPage() {
                           <TableCell align="center" component="th" scope="row">
                             {workspace.number_of_seats}
                           </TableCell>
-                          <TableCell align="center">${workspace.price}</TableCell>
-                          <TableCell align="center">{workspace.lease_term}</TableCell>                          
-                          <TableCell align="center">{workspace.available === 1 ? 'Yes' : 'No'}</TableCell>
+                          <TableCell align="center">
+                            ${workspace.price}
+                          </TableCell>
+                          <TableCell align="center">
+                            {workspace.lease_term}
+                          </TableCell>
+                          <TableCell align="center">
+                            {workspace.available === 1 ? "Yes" : "No"}
+                          </TableCell>
                           <TableCell align="center">{workspace.size}</TableCell>
                           <TableCell align="center">{workspace.type}</TableCell>
                         </TableRow>
@@ -90,17 +104,19 @@ function CoworkersPage() {
                     </Table>
                   </TableContainer>
                   <div className="submit-container">
-                    <Button type="submit" variant="contained">
-                      Get Owner Info
-                    </Button>
+                    <Link
+                      to={`/ownerInfo/${workspace.id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Button variant="contained">Get Owner Info</Button>
+                    </Link>
+                    <Button variant="contained">Book</Button>
                   </div>
                   {/* <pre>{JSON.stringify(workspace, null, 2)}</pre> */}
-                  </Box>
-                </Container>
-                </div>
-              ))}
-            
-          
+                </Box>
+              </Container>
+            </div>
+          ))}
         </Box>
       </Container>
     </React.Fragment>
