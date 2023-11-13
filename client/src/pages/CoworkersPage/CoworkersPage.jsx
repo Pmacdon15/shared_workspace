@@ -57,7 +57,7 @@ function CoworkersPage() {
               {workspaces.map((workspace) => (
                 <div className="display-container">
                 <Container maxWidth="md">
-                <Box sx={{ bgcolor: '#64b5f6' , borderRadius: "9px", paddingBottom:'1%', paddingLeft:'1%'}} >
+                <Box sx={{ bgcolor: '#90caf9' , borderRadius: "9px", paddingBottom:'1%', paddingLeft:'1%'}} >
                   <h2>{workspace.name}</h2>
                   <TableContainer sx={{ width: 750 }} component={Paper}>
                     <Table
@@ -69,7 +69,7 @@ function CoworkersPage() {
                         <TableRow>
                           <TableCell align="center">Number Of Seats</TableCell>
                           <TableCell align="center">Price</TableCell>
-                          <TableCell align="center">Lease Term in Days</TableCell>
+                          <TableCell align="center">Lease Term(Days)</TableCell>
                           <TableCell align="center">Available</TableCell>
                           <TableCell align="center">Size(Sqr Feet):</TableCell>
                           <TableCell align="center">Type</TableCell>
@@ -80,9 +80,9 @@ function CoworkersPage() {
                           <TableCell align="center" component="th" scope="row">
                             {workspace.number_of_seats}
                           </TableCell>
-                          <TableCell align="center">{workspace.price}</TableCell>
-                          <TableCell align="center">{workspace.lease_term}</TableCell>
-                          <TableCell align="center">{workspace.available}</TableCell>
+                          <TableCell align="center">${workspace.price}</TableCell>
+                          <TableCell align="center">{workspace.lease_term}</TableCell>                          
+                          <TableCell align="center">{workspace.available === 1 ? 'Yes' : 'No'}</TableCell>
                           <TableCell align="center">{workspace.size}</TableCell>
                           <TableCell align="center">{workspace.type}</TableCell>
                         </TableRow>

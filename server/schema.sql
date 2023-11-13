@@ -58,11 +58,11 @@ VALUES
 
 INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, available, size, type)
 VALUES 
-    ('Workspace 1', 1, 1, 10.00, 100, 1, 100, 'Desk'),
-    ('Workspace 2', 1, 2, 20.00, 200, 1, 200, 'Room'),
-    ('Workspace 3', 2, 3, 30.00, 300, 0, 300, 'Meeting Room'),
-    ('Workspace 4', 2, 3, 35.00, 350, 0, 380, 'Meeting Room'),
-    ('Workspace 5', 3, 1, 30.00, 300, 0, 300, 'Desk'),
-    ('Workspace 6', 3, 2, 40.00, 400, 1, 400, 'Room'),
-    ('Workspace 7', 4, 3, 50.00, 500, 1, 500, 'Meeting Room'),
-    ('Workspace 8', 4, 3, 55.00, 550, 0, 550, 'Meeting Room');
+    ('Workspace 1', 1, 1, 10.00, 1, 1, 100, 'Desk'),
+    ('Workspace 2', 1, 2, 20.00, 2, 1, 200, 'Room'),
+    ('Workspace 3', 2, 3, 30.00, 3, 0, 300, 'Meeting Room'),
+    ('Workspace 4', 2, 3, 35.00, 13, 0, 380, 'Meeting Room'),
+    ('Workspace 5', 3, 1, 30.00, 1, 0, 300, 'Desk'),
+    ('Workspace 6', 3, 2, 40.00, 15, 1, 400, 'Room'),
+    ('Workspace 7', 4, 3, 50.00, 5, 1, 500, 'Meeting Room'),
+    ('Workspace 8', 4, 3, 55.00, 7, 0, 550, 'Meeting Room');
