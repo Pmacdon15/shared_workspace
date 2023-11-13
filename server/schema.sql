@@ -41,9 +41,11 @@ CREATE TABLE workspaces (
 INSERT INTO users (email, first_name, password, owner)
 VALUES 
     ('user1@example.com', 'User1', 'password1', 1),
-    ('user2@example.com', 'User2', 'password2', 0),
+    ('user2@example.com', 'User2', 'password2', 1),
     ('user3@example.com', 'User3', 'password3', 1),
-    ('user4@example.com', 'User4', 'password4', 0);
+    ('user4@example.com', 'User4', 'password4', 1),
+    ('user5@example.com', 'User5', 'password5', 0),
+    ('user6@example.com', 'User6', 'password6', 0);
 
 
 INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, smoking, parking, public_transport)
