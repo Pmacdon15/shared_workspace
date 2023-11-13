@@ -29,7 +29,7 @@ module.exports = {
       // remove password from result
       delete rows[0].password;
 
-      console.log("Login successful" + rows[0].email);
+      console.log("Login successful from user: " + rows[0].email);
 
       return rows;
     } catch (error) {
@@ -50,7 +50,7 @@ module.exports = {
         throw new Error("User not found");
       }
 
-      console.log("User found :" + rows[0].email);
+      console.log("User found: " + rows[0].email);
       delete rows[0].password;
 
       return rows;

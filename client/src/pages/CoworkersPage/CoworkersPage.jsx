@@ -105,7 +105,7 @@ function CoworkersPage() {
                   </TableContainer>
                   <div className="submit-container">
                     <Link
-                      to={`/ownerInfo/${workspace.id}`}
+                      to={`/ownerInfo/${workspace.buildings_id}`}
                       style={{ textDecoration: "none" }}
                     >
                       <Button variant="contained">Get Owner Info</Button>
