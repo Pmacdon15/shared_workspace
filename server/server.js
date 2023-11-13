@@ -61,7 +61,7 @@ app.get("/user/:buildingId", async (req, res) => {
 }
 });
 
-
+//! on its way out - not used
 // // Get user by email
 // app.get("/users/:email", async (req, res) => {
 //   const { email } = req.params;

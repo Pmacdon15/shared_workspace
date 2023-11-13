@@ -27,8 +27,8 @@ function CoworkersPage() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setWorkspaces(data); // Assuming the response is an array of workspaces
-        boxRef.current.scrollTop = boxRef.current.scrollHeight; // Set the scroll position to the bottom
+        setWorkspaces(data);
+        boxRef.current.scrollTop = 0; // Set the scroll position to the top
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -48,6 +48,7 @@ function CoworkersPage() {
             height: "90vh",
             marginTop: " 3%",
             borderRadius: "9px",
+            padding:'1%',
             overflowY: "scroll", // Add overflowY: scroll to enable scrolling
           }}
         >
@@ -56,7 +57,7 @@ function CoworkersPage() {
               {workspaces.map((workspace) => (
                 <div className="display-container">
                 <Container maxWidth="md">
-                <Box sx={{ bgcolor: '#cfe8fc' }} >
+                <Box sx={{ bgcolor: '#64b5f6' , borderRadius: "9px", paddingBottom:'1%', paddingLeft:'1%'}} >
                   <h2>{workspace.name}</h2>
                   <TableContainer sx={{ width: 750 }} component={Paper}>
                     <Table
@@ -93,7 +94,7 @@ function CoworkersPage() {
                       Get Owner Info
                     </Button>
                   </div>
-                  <pre>{JSON.stringify(workspace, null, 2)}</pre>
+                  {/* <pre>{JSON.stringify(workspace, null, 2)}</pre> */}
                   </Box>
                 </Container>
                 </div>

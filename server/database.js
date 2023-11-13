@@ -50,7 +50,7 @@ module.exports = {
         throw new Error("User not found");
       }
 
-      console.log("User found" + rows[0].email);
+      console.log("User found :" + rows[0].email);
 
       return rows;
     } catch (error) {
