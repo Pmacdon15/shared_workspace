@@ -55,7 +55,7 @@ function CoworkersPage() {
           
             
               {workspaces.map((workspace) => (
-                <div className="display-container">
+                <div key={workspace.id} className="display-container">
                 <Container maxWidth="md">
                 <Box sx={{ bgcolor: '#90caf9' , borderRadius: "9px", paddingBottom:'1%', paddingLeft:'1%'}} >
                   <h2>{workspace.name}</h2>
