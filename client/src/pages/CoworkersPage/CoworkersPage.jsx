@@ -3,13 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper} from '@mui/material';
 
 import Button from "@mui/material/Button";
 
@@ -52,6 +46,8 @@ function CoworkersPage() {
             borderRadius: "9px",
             padding: "1%",
             overflowY: "scroll",
+           
+            
             // overflowX: "scroll",
           }}
         >
@@ -64,10 +60,18 @@ function CoworkersPage() {
                     borderRadius: "9px",
                     paddingBottom: "1%",
                     paddingLeft: "1%",
+                                        
                   }}
                 >
                   <h2>{workspace.name}</h2>
-                  <TableContainer sx={{ width: 750 }} component={Paper}>
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      // maxHeight: "70vh", // Set a maximum height for the table
+                      overflowY: "auto", // Enable scrolling for the table if needed
+                      maxWidth: 710,
+                    }}
+                  >
                     <Table
                       sx={{ minWidth: 650 }}
                       size="small"
