@@ -27,6 +27,8 @@ const SignIn = () => {
         if (response.data[0].owner === 1 ) {
           // User is an owner, handle accordingly (redirect or other actions)
           console.log("User is an owner");
+          
+          navigate("/ownerspage/" + response.data[0].email);
         } else {
           // User is not an owner, redirect to CoworkersPage
           console.log("User is not an owner. Redirecting to CoworkersPage.");
