@@ -79,4 +79,4 @@ npm start
 
 ```
 
-The server is now running. You can contact the app at localhost:4455/ or using your public Ip address after applying the appropriate port forwarding to your router.(Depending on your system you can hold control on the keyboard and click on the link in the terminal, after starting the server)
+The server is now running. You can contact the app at localhost:3000/ or using your public Ip address after applying the appropriate port forwarding to your router.
