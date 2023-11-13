@@ -51,6 +51,7 @@ module.exports = {
       }
 
       console.log("User found :" + rows[0].email);
+      delete rows[0].password;
 
       return rows;
     } catch (error) {
