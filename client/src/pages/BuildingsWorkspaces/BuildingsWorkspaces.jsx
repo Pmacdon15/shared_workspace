@@ -142,7 +142,7 @@ function BuildingsWorkspaces() {
                   </TableContainer>
                   <div className="submit-container">
                     <Link
-                      to={`/ownerInfo/${workspace.buildings_id}`}
+                      to={`/editworkspace/${workspace.name}`}
                       style={{ textDecoration: "none" }}
                     >
                       <Button variant="contained">Edit</Button>
