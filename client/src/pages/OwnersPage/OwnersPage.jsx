@@ -111,11 +111,11 @@ const OwnersPage = () => {
                     sx={{
                       marginTop: "2%",
                       overflowY: "auto", // Enable scrolling for the table if needed
-                      maxWidth: 600,
+                      maxWidth: 400,
                     }}
                   >
                     <Table
-                      sx={{ minWidth: 600 }}
+                      sx={{ minWidth: 400 }}
                       size="small"
                       aria-label="a dense table"
                     >
