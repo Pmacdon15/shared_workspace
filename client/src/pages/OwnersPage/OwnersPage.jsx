@@ -2,14 +2,20 @@ import React, { useEffect, useState, useRef } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper} from '@mui/material';
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 const OwnersPage = () => {
-    const [userBuildings, setUserBuildings] = useState([]);
-
+  const [userBuildings, setUserBuildings] = useState([]);
   const boxRef = useRef(null);
 
   useEffect(() => {
@@ -19,35 +25,58 @@ const OwnersPage = () => {
         console.log("user e mail: " + userEmail);
         const response = await fetch(
           `http://localhost:5544/buildings/${userEmail}`
-            );
+        );
         if (!response.ok) {
-            throw new Error("Network response was not ok");
-            }   
+          throw new Error("Network response was not ok");
+        }
         const data = await response.json();
         setUserBuildings(data);
         boxRef.current.scrollTop = 0; // Set the scroll position to the top
-        }
-        catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
     fetchData();
-    }, []);
+  }, []);
 
-    return (
-        <React.Fragment>
+  const handleDeleteBuilding = async (buildingName) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5544/building/${buildingName}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Update state to trigger re-render after successful deletion
+      setUserBuildings((prevBuildings) =>
+        prevBuildings.filter((building) => building.name !== buildingName)
+      );
+    } catch (error) {
+      console.error("Error deleting building:", error);
+    }
+  };
+
+  return (
+    <React.Fragment>
       <CssBaseline />
       <Container fixed>
         <Box
-          ref={boxRef} // Get a reference to the Box element
+          ref={boxRef}
           sx={{
             bgcolor: "#cfe8fc",
             height: "90vh",
             marginTop: " 3%",
             borderRadius: "9px",
             padding: "1%",
-            overflowY: "scroll",     
-            // overflowX: "scroll",
+            overflowY: "scroll",
           }}
         >
           {userBuildings.map((building) => (
@@ -59,15 +88,13 @@ const OwnersPage = () => {
                     borderRadius: "9px",
                     paddingBottom: "1%",
                     paddingLeft: "1%",
-                                        
                   }}
                 >
                   <h2>{building.name}</h2>
                   <TableContainer
                     component={Paper}
                     sx={{
-                      // maxHeight: "70vh", // Set a maximum height for the table
-                      overflowY: "auto", // Enable scrolling for the table if needed
+                      overflowY: "auto",
                       maxWidth: 600,
                     }}
                   >
@@ -94,14 +121,16 @@ const OwnersPage = () => {
                           <TableCell align="center">
                             {building.street_number}
                           </TableCell>
-                          <TableCell align="center">
-                            {building.city}
-                          </TableCell>
+                          <TableCell align="center">{building.city}</TableCell>
                           <TableCell align="center">
                             {building.province}
                           </TableCell>
-                          <TableCell align="center">{building.postal_code} </TableCell>
-                          <TableCell align="center">{building.location}</TableCell>
+                          <TableCell align="center">
+                            {building.postal_code}{" "}
+                          </TableCell>
+                          <TableCell align="center">
+                            {building.location}
+                          </TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
@@ -110,7 +139,7 @@ const OwnersPage = () => {
                     component={Paper}
                     sx={{
                       marginTop: "2%",
-                      overflowY: "auto", // Enable scrolling for the table if needed
+                      overflowY: "auto",
                       maxWidth: 400,
                     }}
                   >
@@ -136,7 +165,7 @@ const OwnersPage = () => {
                           </TableCell>
                           <TableCell align="center">
                             {building.public_transport === 1 ? "Yes" : "No"}
-                          </TableCell>                          
+                          </TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
@@ -148,9 +177,13 @@ const OwnersPage = () => {
                     >
                       <Button variant="contained">Edit</Button>
                     </Link>
-                    <Button variant="contained">Delete</Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => handleDeleteBuilding(building.name)}
+                    >
+                      Delete
+                    </Button>
                   </div>
-                  {/* <pre>{JSON.stringify(workspace, null, 2)}</pre> */}
                 </Box>
               </Container>
             </div>
@@ -158,13 +191,7 @@ const OwnersPage = () => {
         </Box>
       </Container>
     </React.Fragment>
-        // <div>
-        //      <pre>{JSON.stringify(userBuildingsInfo, null, 2)}</pre>
-        // </div>
-
-    )
+  );
 };
-
-
 
 export default OwnersPage;
