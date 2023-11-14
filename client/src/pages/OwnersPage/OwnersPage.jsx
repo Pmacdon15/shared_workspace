@@ -1,9 +1,170 @@
-function OwnersPage() {
-  return (
-    <div>
-      <h1>OwnersPage</h1>
-    </div>
-  );
-}
+import React, { useEffect, useState, useRef } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper} from '@mui/material';
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+
+const OwnersPage = () => {
+    const [userBuildings, setUserBuildings] = useState([]);
+
+  const boxRef = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userEmail = window.location.pathname.split("/").pop();
+        console.log("user e mail: " + userEmail);
+        const response = await fetch(
+          `http://localhost:5544/buildings/${userEmail}`
+            );
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+            }   
+        const data = await response.json();
+        setUserBuildings(data);
+        boxRef.current.scrollTop = 0; // Set the scroll position to the top
+        }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    fetchData();
+    }, []);
+
+    return (
+        <React.Fragment>
+      <CssBaseline />
+      <Container fixed>
+        <Box
+          ref={boxRef} // Get a reference to the Box element
+          sx={{
+            bgcolor: "#cfe8fc",
+            height: "90vh",
+            marginTop: " 3%",
+            borderRadius: "9px",
+            padding: "1%",
+            overflowY: "scroll",     
+            // overflowX: "scroll",
+          }}
+        >
+          {userBuildings.map((building) => (
+            <div key={building.name} className="display-container">
+              <Container maxWidth="md">
+                <Box
+                  sx={{
+                    bgcolor: "#90caf9",
+                    borderRadius: "9px",
+                    paddingBottom: "1%",
+                    paddingLeft: "1%",
+                                        
+                  }}
+                >
+                  <h2>{building.name}</h2>
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      // maxHeight: "70vh", // Set a maximum height for the table
+                      overflowY: "auto", // Enable scrolling for the table if needed
+                      maxWidth: 600,
+                    }}
+                  >
+                    <Table
+                      sx={{ minWidth: 600 }}
+                      size="small"
+                      aria-label="a dense table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">Street</TableCell>
+                          <TableCell align="center">Street Number</TableCell>
+                          <TableCell align="center">City</TableCell>
+                          <TableCell align="center">Province</TableCell>
+                          <TableCell align="center">Postal Code</TableCell>
+                          <TableCell align="center">location</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="center" component="th" scope="row">
+                            {building.street}
+                          </TableCell>
+                          <TableCell align="center">
+                            {building.street_number}
+                          </TableCell>
+                          <TableCell align="center">
+                            {building.city}
+                          </TableCell>
+                          <TableCell align="center">
+                            {building.province}
+                          </TableCell>
+                          <TableCell align="center">{building.postal_code} </TableCell>
+                          <TableCell align="center">{building.location}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      marginTop: "2%",
+                      overflowY: "auto", // Enable scrolling for the table if needed
+                      maxWidth: 600,
+                    }}
+                  >
+                    <Table
+                      sx={{ minWidth: 600 }}
+                      size="small"
+                      aria-label="a dense table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">Smoking</TableCell>
+                          <TableCell align="center">Parking</TableCell>
+                          <TableCell align="center">Public Transport</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="center" component="th" scope="row">
+                            {building.smoking === 1 ? "Yes" : "No"}
+                          </TableCell>
+                          <TableCell align="center">
+                            {building.parking === 1 ? "Yes" : "No"}
+                          </TableCell>
+                          <TableCell align="center">
+                            {building.public_transport === 1 ? "Yes" : "No"}
+                          </TableCell>                          
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <div className="submit-container">
+                    <Link
+                      to={`/editbuilding/${building.name}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Button variant="contained">Edit</Button>
+                    </Link>
+                    <Button variant="contained">Delete</Button>
+                  </div>
+                  {/* <pre>{JSON.stringify(workspace, null, 2)}</pre> */}
+                </Box>
+              </Container>
+            </div>
+          ))}
+        </Box>
+      </Container>
+    </React.Fragment>
+        // <div>
+        //      <pre>{JSON.stringify(userBuildingsInfo, null, 2)}</pre>
+        // </div>
+
+    )
+};
+
+
 
 export default OwnersPage;

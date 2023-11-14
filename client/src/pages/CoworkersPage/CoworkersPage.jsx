@@ -45,9 +45,7 @@ function CoworkersPage() {
             marginTop: " 3%",
             borderRadius: "9px",
             padding: "1%",
-            overflowY: "scroll",
-           
-            
+            overflowY: "scroll",     
             // overflowX: "scroll",
           }}
         >

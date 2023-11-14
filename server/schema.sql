@@ -51,9 +51,12 @@ VALUES
 INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, smoking, parking, public_transport)
 VALUES 
     ('Building 1', 'user1@example.com', 'Street1', 1, 'City1', 'Province1', 'PostalCode1', 'Location1', 1, 1, 1), 
-    ('Building 2', 'user2@example.com', 'Street2', 1, 'City2', 'Province2', 'PostalCode2', 'Location2', 0, 1, 1),
-    ('Building 3', 'user3@example.com', 'Street3', 2, 'City3', 'Province3', 'PostalCode3', 'Location3', 1, 0, 0),
-    ('Building 4', 'user4@example.com', 'Street4', 3, 'City4', 'Province4', 'PostalCode4', 'Location4', 0, 0, 1);
+    ('Building 2', 'user1@example.com', 'Street2', 1, 'City2', 'Province2', 'PostalCode2', 'Location2', 0, 1, 1),
+    ('Building 3', 'user2@example.com', 'Street3', 2, 'City3', 'Province3', 'PostalCode3', 'Location3', 1, 0, 0),
+    ('Building 4', 'user3@example.com', 'Street4', 3, 'City4', 'Province4', 'PostalCode4', 'Location4', 0, 0, 1);
+    ('Building 5', 'user3@example.com', 'Street5', 4, 'City5', 'Province5', 'PostalCode5', 'Location5', 1, 1, 0);
+    ('Building 6', 'user4@example.com', 'street6', 5, 'City6', 'Province6', 'PostalCode6', 'Location6', 0, 1, 0);
+    
 
 
 INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, available, size, type)
