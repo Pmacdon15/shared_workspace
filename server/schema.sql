@@ -50,22 +50,22 @@ VALUES
 
 INSERT INTO buildings (name, user_email, street, street_number, city, province, postal_code, location, smoking, parking, public_transport)
 VALUES 
-    ('Building 1', 'user1@example.com', 'Street1', 1, 'City1', 'Province1', 'PostalCode1', 'Location1', 1, 1, 1), 
-    ('Building 2', 'user1@example.com', 'Street2', 1, 'City2', 'Province2', 'PostalCode2', 'Location2', 0, 1, 1),
-    ('Building 3', 'user1@example.com', 'Street3', 2, 'City3', 'Province3', 'PostalCode3', 'Location3', 1, 0, 0),
-    ('Building 4', 'user2@example.com', 'Street4', 3, 'City4', 'Province4', 'PostalCode4', 'Location4', 0, 0, 1),
-    ('Building 5', 'user3@example.com', 'Street5', 4, 'City5', 'Province5', 'PostalCode5', 'Location5', 1, 1, 0),
-    ('Building 6', 'user4@example.com', 'street6', 5, 'City6', 'Province6', 'PostalCode6', 'Location6', 0, 1, 0);
+    ('The Apollo', 'user1@example.com', 'Oliver road', 1, 'Thunder Bay', 'Ontario', 'P7B 4M2', 'Port Arthur', 1, 1, 1), 
+    ('The Daily Grind', 'user1@example.com', 'Banning St', 1, 'Nippon', 'Alberta', 'P7B 4M3', 'Fort William', 0, 1, 1),
+    ('Studio Bell', 'user1@example.com', 'High St', 2, 'Kelowna', 'British Columbia', 'P7B 4M5', 'Current River', 1, 0, 0),
+    ('The Event Centre', 'user2@example.com', 'Hill St', 3, 'North Bay', 'New Brunswick', 'P7B 4M6', 'East End', 0, 0, 1),
+    ('Some Would Call it an Arena', 'user3@example.com', 'Memorial Ave', 4, 'Toronto', 'Newfoundland', 'P7B 4M7', 'Downtown', 1, 1, 0),
+    ('Saddle Dome', 'user4@example.com', 'Cumberland st', 5, 'Kenora', 'Manitoba', 'P7B 4M8', 'North End', 0, 1, 0);
 
 
 
 INSERT INTO workspaces (name, buildings_id, number_of_seats, price, lease_term, available, size, type)
 VALUES 
-    ('Workspace 1', 1, 1, 10.00, 1, 1, 100, 'Desk'),
-    ('Workspace 2', 1, 2, 20.00, 2, 1, 200, 'Room'),
-    ('Workspace 3', 2, 3, 30.00, 3, 0, 300, 'Meeting Room'),
-    ('Workspace 4', 2, 3, 35.00, 13, 0, 380, 'Meeting Room'),
-    ('Workspace 5', 3, 1, 30.00, 1, 0, 300, 'Desk'),
-    ('Workspace 6', 3, 2, 40.00, 15, 1, 400, 'Room'),
-    ('Workspace 7', 4, 3, 50.00, 5, 1, 500, 'Meeting Room'),
-    ('Workspace 8', 4, 3, 55.00, 7, 0, 550, 'Meeting Room');
+    ('The Quite Place', 1, 1, 10.00, 1, 1, 100, 'Desk'),
+    ('Conferences Palooza', 1, 2, 20.00, 2, 1, 200, 'Room'),
+    ('Meeting Room A', 2, 3, 30.00, 3, 0, 300, 'Meeting Room'),
+    ('Not Your Average Meeting Room', 2, 3, 35.00, 13, 0, 380, 'Meeting Room'),
+    ('This Desk Makes You More Productive', 3, 1, 30.00, 1, 0, 300, 'Desk'),
+    ('The Cabana Room', 3, 2, 40.00, 15, 1, 400, 'Room'),
+    ('Collaboration Town', 4, 3, 50.00, 5, 1, 500, 'Meeting Room'),
+    ('Work Gets Done Here', 4, 3, 55.00, 7, 0, 550, 'Meeting Room');
