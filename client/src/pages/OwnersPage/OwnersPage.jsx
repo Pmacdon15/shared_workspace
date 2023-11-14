@@ -177,6 +177,12 @@ const OwnersPage = () => {
                     >
                       <Button variant="contained">Edit</Button>
                     </Link>
+                    <Link
+                      to={`/workspaces/${building.name}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Button variant="contained">View Workspaces</Button>
+                    </Link>
                     <Button
                       variant="contained"
                       onClick={() => handleDeleteBuilding(building.name)}
