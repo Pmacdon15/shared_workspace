@@ -1,16 +1,6 @@
-// const EditBuilding = () => {
-//     return (
-//         <div>
-//             <h1>Edit Building</h1>
-//         </div>
-//     )
-// }
-
-// export default EditBuilding
-
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom"; // Import useForm hook
+import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -18,9 +8,29 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-import "./EditBuilding.css";
+const EditBuilding = () => {
+  const [buildingToEdit, setBuildingToEdit] = useState({});
 
-const  EditBuilding = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const building_name = window.location.pathname.split("/").pop();
+        const response = await fetch(
+          `http://localhost:5544/building/${building_name}`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        //console.log("Fetched Data:", JSON.stringify(data, null, 2));
+        setBuildingToEdit(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const { register, handleSubmit, reset } = useForm(); // Initialize useForm
   const navigate = useNavigate();
 
@@ -60,63 +70,8 @@ const  EditBuilding = () => {
               {...register("street")}
               label="Street"
               variant="outlined"
+              value={buildingToEdit[0]?.street || ""} // Use optional chaining to prevent errors
             />
-            <TextField
-              sx={{ width: "80%" }}
-              {...register("street_number")}
-              label="Street Number"
-              variant="outlined"
-              type="password"
-            />
-            <TextField
-              sx={{ width: "80%" }}
-              {...register("city")}
-              label="City"
-              variant="outlined"
-              type="password"
-            />
-            <TextField
-              sx={{ width: "80%" }}
-              {...register("province")}
-              label="Province"
-              variant="outlined"
-              type="password"
-            />
-            <TextField
-              sx={{ width: "80%" }}
-              {...register("postal_code")}
-              label="Postal Code"
-              variant="outlined"
-              type="password"
-            />
-            <TextField
-              sx={{ width: "80%" }}
-              {...register("location")}
-              label="Location"
-              variant="outlined"
-              type="password"
-            />
-            <TextField
-              sx={{ width: "80%" }}
-              {...register("smoking")}
-              label="Smoking"
-              variant="outlined"
-              type="password"
-            />
-            <TextField
-              sx={{ width: "80%" }}
-              {...register("public_transport")}
-              label="Public Transport"
-              variant="outlined"
-              type="password"
-            />
-
-            {/* <div className="forgot-password">
-              Lost your password? <span>Click Here!</span>
-            </div>
-            <div className="register">
-              Don't have an account? <span>Click Here!</span>
-            </div> */}
 
             <div className="submit-container">
               <Button type="submit" variant="contained">
