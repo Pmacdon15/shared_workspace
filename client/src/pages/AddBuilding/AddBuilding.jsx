@@ -48,10 +48,13 @@ const AddBuilding = () => {
 //     checkboxStateSetter(event.target.checked);
 //   };
 
+
+
   const renderCheckbox = (label) => {
+    const labelWithOutUnderScore = label.replace("_", " ");
     return (
-      <div>
-        <label>{label}</label>
+      <div>        
+        <label>{labelWithOutUnderScore}</label>
         <Checkbox
           {...register(label.toLowerCase())}
           //   checked={state}
