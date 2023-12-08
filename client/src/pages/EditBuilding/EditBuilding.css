@@ -19,10 +19,10 @@
     width: 61px;
     height: 6px;
     background: rgba(4, 162, 176, 0.534);
-    border-radius: 9px;
+    border-radius: 9px;    
 }
 
-.forgot-password {
+.checkbox-container {
     /* padding-left: 62px; */
     margin-top: 5%;
     color: rgba(4, 81, 88, 0.534);
