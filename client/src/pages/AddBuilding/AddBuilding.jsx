@@ -41,12 +41,12 @@ const AddBuilding = () => {
   //     fetchData();
   //   }, []);
 
-  const { register, handleSubmit, reset } = useForm(); // Initialize useForm
+  const { register, handleSubmit } = useForm(); // Initialize useForm
   const navigate = useNavigate();
 
-  const handleCheckboxChange = (event, checkboxStateSetter) => {
-    checkboxStateSetter(event.target.checked);
-  };
+//   const handleCheckboxChange = (event, checkboxStateSetter) => {
+//     checkboxStateSetter(event.target.checked);
+//   };
 
   const renderCheckbox = (label) => {
     return (
