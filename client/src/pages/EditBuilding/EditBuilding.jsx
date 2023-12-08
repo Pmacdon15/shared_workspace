@@ -14,7 +14,7 @@ const EditBuilding = () => {
   const [buildingToEdit, setBuildingToEdit] = useState({});
   const [smokingChecked, setSmokingChecked] = useState(false);
   const [parkingChecked, setParkingChecked] = useState(false);
-  const [public_transport, setPublic_transport] = useState(false);
+  const [public_transportChecked, setPublic_transportChecked] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,9 +29,11 @@ const EditBuilding = () => {
         const data = await response.json();
         console.log("Fetched Data:", JSON.stringify(data, null, 2));
         setBuildingToEdit(data);
-        setSmokingChecked(data[0]?.smoking || false);
-        setParkingChecked(data[0]?.parking || false);
-        setPublic_transport(data[0]?.public_transport || false);
+        // /!\ The !! operator is used to convert the value to a boolean
+        // This is witch craft but works
+        setSmokingChecked(!!data[0]?.smoking || false);
+        setParkingChecked(!!data[0]?.parking || false);
+        setPublic_transportChecked(!!data[0]?.public_transport || false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -65,8 +67,12 @@ const EditBuilding = () => {
       // Update the smoking and parking properties in the data object
       data.smoking = smokingChecked;
       data.parking = parkingChecked;
+      data.public_transport = public_transportChecked;
 
-      const response = await axios.post("http://localhost:5544/login", data);
+      const building_name = buildingToEdit[0]?.building_name;
+      console.log("Building name:", building_name);
+
+      const response = await axios.post("http://localhost:5544/building/${building_name}", data);
 
       //console.log("Response from the server:", response.data);
 
@@ -148,8 +154,9 @@ const EditBuilding = () => {
                 <div className="checkbox-container">
                   {renderCheckbox("Smoking", smokingChecked, setSmokingChecked)}
                   {renderCheckbox("Parking", parkingChecked, setParkingChecked)}
-                  {renderCheckbox("Public Transport", public_transport, setPublic_transport)}
-                    
+                  {renderCheckbox("Public Transport",public_transportChecked, setPublic_transportChecked)} 
+                                  
+                  
                 </div>
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
