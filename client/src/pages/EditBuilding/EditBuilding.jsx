@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import InputLabel from "@mui/material/InputLabel";
+// import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
 const EditBuilding = () => {
@@ -62,12 +62,33 @@ const EditBuilding = () => {
     );
   };
 
+  function updateFormData(formData, buildingToEdit) {
+    const fieldsToUpdate = [
+      { name: 'street', defaultValue: buildingToEdit[0]?.street },
+      { name: 'street_number', defaultValue: buildingToEdit[0]?.street_number },
+      { name: 'city', defaultValue: buildingToEdit[0]?.city },
+      { name: 'province', defaultValue: buildingToEdit[0]?.province },
+      { name: 'postal_code', defaultValue: buildingToEdit[0]?.postal_code },
+      { name: 'location', defaultValue: buildingToEdit[0]?.location },
+    ];
+  
+    for (const field of fieldsToUpdate) {
+      if (formData[field.name] === '') {
+        formData[field.name] = field.defaultValue;
+      }
+    }
+  
+    return formData;
+  }
+
   const onSubmit = async (data) => {
     try {
       // Update the smoking and parking properties in the data object
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;
+
+      const formData = updateFormData(data, buildingToEdit);
 
       const building_name = window.location.pathname.split("/").pop();
       console.log("Building name:", building_name);
@@ -78,7 +99,11 @@ const EditBuilding = () => {
       );
       //console.log("Response from the server:", response.data);
 
-      //   if (response.status === 200) {
+      if (response.status === 200) {
+        // If the building was successfully updated, redirect to the building page
+        const user_email = response.data[0].user_email;
+        navigate(`/ownerspage/${user_email}`);
+      }
     } catch (error) {
       console.error("Error while submitting the form:", error);
     }
@@ -117,6 +142,7 @@ const EditBuilding = () => {
                   label={buildingToEdit[0]?.street}
                   defaultValue={buildingToEdit[0]?.street}
                   variant="outlined"
+                  
                 />
                 <TextField
                   sx={{ width: "80%" }}
