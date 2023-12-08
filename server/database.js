@@ -217,12 +217,13 @@ module.exports = {
     province,
     postal_code,
     location,
+    smoking,
     parking,
     public_transport
   ) {
     try {
       const [rows] = await pool.query(
-        "UPDATE buildings SET street = ?, street_number = ?, city = ?, province = ?, postal_code = ?, location = ?, parking = ?, public_transport = ? WHERE name = ?",
+        "UPDATE buildings SET street = ?, street_number = ?, city = ?, province = ?, postal_code = ?, location = ?, smoking = ?, parking = ?, public_transport = ? WHERE name = ?",
         [
           street,
           street_number,
@@ -230,6 +231,7 @@ module.exports = {
           province,
           postal_code,
           location,
+          smoking,
           parking,
           public_transport,
           name,
