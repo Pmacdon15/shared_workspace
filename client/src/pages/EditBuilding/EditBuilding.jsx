@@ -65,15 +65,17 @@ const EditBuilding = () => {
   const onSubmit = async (data) => {
     try {
       // Update the smoking and parking properties in the data object
-      data.smoking = smokingChecked;
-      data.parking = parkingChecked;
-      data.public_transport = public_transportChecked;
+      data.smoking = smokingChecked ? 1 : 0;
+      data.parking = parkingChecked ? 1 : 0;
+      data.public_transport = public_transportChecked ? 1 : 0;
 
-      const building_name = buildingToEdit[0]?.building_name;
+      const building_name = window.location.pathname.split("/").pop();
       console.log("Building name:", building_name);
 
-      const response = await axios.post("http://localhost:5544/building/${building_name}", data);
-
+      const response = await axios.put(
+        `http://localhost:5544/building/${building_name}`,
+        data
+      );
       //console.log("Response from the server:", response.data);
 
       //   if (response.status === 200) {
@@ -154,9 +156,11 @@ const EditBuilding = () => {
                 <div className="checkbox-container">
                   {renderCheckbox("Smoking", smokingChecked, setSmokingChecked)}
                   {renderCheckbox("Parking", parkingChecked, setParkingChecked)}
-                  {renderCheckbox("Public Transport",public_transportChecked, setPublic_transportChecked)} 
-                                  
-                  
+                  {renderCheckbox(
+                    "Public Transport",
+                    public_transportChecked,
+                    setPublic_transportChecked
+                  )}
                 </div>
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
