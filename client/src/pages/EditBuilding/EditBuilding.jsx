@@ -29,7 +29,7 @@ const EditBuilding = () => {
         const data = await response.json();
         console.log("Fetched Data:", JSON.stringify(data, null, 2));
         setBuildingToEdit(data);
-        // /!\ The !! operator is used to convert the value to a boolean
+        // The !! operator is used to convert the value to a boolean
         // This is witch craft but works
         setSmokingChecked(!!data[0]?.smoking || false);
         setParkingChecked(!!data[0]?.parking || false);
