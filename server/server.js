@@ -109,9 +109,9 @@ app.get("/building/:name", async (req, res) => {
 });
 
 // Create building by email
-app.post("/building", async (req, res) => {
-  const {
-    email,
+app.post("/building/:email", async (req, res) => {
+  const { email } = req.params;
+  const {    
     name,
     street,
     street_number,

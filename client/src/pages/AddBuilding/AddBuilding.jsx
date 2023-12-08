@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -94,7 +94,7 @@ const AddBuilding = () => {
       console.log("User Email: ", user_email);
 
       const response = await axios.post(
-        `http://localhost:5544/building/`,
+        `http://localhost:5544/building/${user_email}`,
         data
       );
       //console.log("Response from the server:", response.data);
@@ -136,6 +136,12 @@ const AddBuilding = () => {
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
+              <TextField
+                  sx={{ width: "80%" }}
+                  {...register("name")}
+                  label="Building Name"
+                  variant="outlined"
+                />
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("street")}
@@ -175,7 +181,7 @@ const AddBuilding = () => {
                 <div className="checkbox-container">
                   {renderCheckbox("Smoking")}
                   {renderCheckbox("Parking")}
-                  {renderCheckbox("Public Transport")}
+                  {renderCheckbox("Public_Transport")}
                 </div>
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
