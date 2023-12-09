@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react"; // Import useState hook
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -20,17 +20,47 @@ const AddBuilding = () => {
       <div>        
         <label>{labelWithOutUnderScore}</label>
         <Checkbox
-          {...register(label.toLowerCase())}
-          //   checked={state}
-          //   onChange={(event) => handleCheckboxChange(event, stateSetter)}
+          {...register(label.toLowerCase())}          
           sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
         />
       </div>
     );
   };
 
+  // The following code is used to validate the postal code and street number fields
+  const [numberValue, setNumberValue] = useState("");
+  const [postalCodeValue, setPostalCodeValue] = useState("");
+  const [numberError, setNumberError] = useState(false);
+  const [postalCodeError, setPostalCodeError] = useState(false);
+
+  const handleNumberInputChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setNumberValue(numericValue);
+    setNumberError(value !== numericValue);
+  };
+
+  const handlePostalCodeInputChange = (event) => {
+    const { value } = event.target;
+    const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+    setPostalCodeValue(value);
+    setPostalCodeError(!postalCodeRegex.test(value));
+  };
+  
+
   const onSubmit = async (data) => {
     try {  
+      // If there are null values in the form data, return and do not submit the form
+      if (Object.values(data).includes("")) {
+        console.log("Please fill out all the fields");
+        alert("Please fill out all the fields");
+        return;
+      }
+      
+      if (postalCodeError) {
+        console.log("Invalid postal code");
+        return;
+      }
       const user_email = window.location.pathname.split("/").pop();
       console.log("User Email: ", user_email);
 
@@ -94,6 +124,15 @@ const AddBuilding = () => {
                   {...register("street_number")}
                   label="Street Number"
                   variant="outlined"
+                  value={numberValue}
+                  onChange={handleNumberInputChange}
+                  error={numberError}
+                  helperText={numberError ? "Please enter numbers only" : ""}
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[0-9]*",
+                    title: "Please enter numbers only",
+                  }}
                 />
                 <TextField
                   sx={{ width: "80%" }}
@@ -112,6 +151,16 @@ const AddBuilding = () => {
                   {...register("postal_code")}
                   label="Postal Code"
                   variant="outlined"
+                  value={postalCodeValue}
+                  onChange={handlePostalCodeInputChange}
+                  error={postalCodeError}
+                  helperText={
+                    postalCodeError ? "Please enter a valid postal code" : ""
+                  }
+                  inputProps={{
+                    pattern: "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$",
+                    title: "Please enter a valid postal code",
+                  }}
                 />
                 <TextField
                   sx={{ width: "80%" }}
