@@ -15,18 +15,12 @@ const AddBuilding = () => {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
-  const handleCheckboxChange = (event, checkboxStateSetter) => {
-    checkboxStateSetter(event.target.checked);
-  };
-
   const renderCheckbox = (label) => {
     return (
       <div>
         <label>{label}</label>
         <Checkbox
-          {...register(label.toLowerCase())}
-          //   checked={state}
-          //   onChange={(event) => handleCheckboxChange(event, stateSetter)}
+          {...register(label.toLowerCase())}          
           sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
         />
       </div>
@@ -42,9 +36,9 @@ const AddBuilding = () => {
           return;
         }
       }
-
+      
       const user_email = window.location.pathname.split("/").pop();
-      console.log("User Email: ", user_email);
+      //console.log("User Email: ", user_email);
 
       const response = await axios.post(
         `http://localhost:5544/building/${user_email}`,
