@@ -7,48 +7,12 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-// import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
 const AddBuilding = () => {
-  //   const [buildingToAdd, setBuildingToAdd] = useState({});
-  //   const [smokingChecked, setSmokingChecked] = useState(false);
-  //   const [parkingChecked, setParkingChecked] = useState(false);
-  //   const [public_transportChecked, setPublic_transportChecked] = useState(false);
-
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const building_name = window.location.pathname.split("/").pop();
-  //         const response = await fetch(
-  //           `http://localhost:5544/building/${building_name}`
-  //         );
-  //         if (!response.ok) {
-  //           throw new Error("Network response was not ok");
-  //         }
-  //         const data = await response.json();
-  //         console.log("Fetched Data:", JSON.stringify(data, null, 2));
-  //         setBuildingToAdd(data);
-  //         // The !! operator is used to convert the value to a boolean
-  //         // This is witch craft but works
-  //         setSmokingChecked(!!data[0]?.smoking || false);
-  //         setParkingChecked(!!data[0]?.parking || false);
-  //         setPublic_transportChecked(!!data[0]?.public_transport || false);
-  //       } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //       }
-  //     };
-  //     fetchData();
-  //   }, []);
-
+ 
   const { register, handleSubmit } = useForm(); // Initialize useForm
   const navigate = useNavigate();
-
-//   const handleCheckboxChange = (event, checkboxStateSetter) => {
-//     checkboxStateSetter(event.target.checked);
-//   };
-
-
 
   const renderCheckbox = (label) => {
     const labelWithOutUnderScore = label.replace("_", " ");
@@ -65,34 +29,8 @@ const AddBuilding = () => {
     );
   };
 
-  //   function updateFormData(formData, buildingToAdd) {
-  //     const fieldsToUpdate = [
-  //       { name: 'street', defaultValue: buildingToAdd[0]?.street },
-  //       { name: 'street_number', defaultValue: buildingToAdd[0]?.street_number },
-  //       { name: 'city', defaultValue: buildingToAdd[0]?.city },
-  //       { name: 'province', defaultValue: buildingToAdd[0]?.province },
-  //       { name: 'postal_code', defaultValue: buildingToAdd[0]?.postal_code },
-  //       { name: 'location', defaultValue: buildingToAdd[0]?.location },
-  //     ];
-
-  //     for (const field of fieldsToUpdate) {
-  //       if (formData[field.name] === '') {
-  //         formData[field.name] = field.defaultValue;
-  //       }
-  //     }
-
-  //     return formData;
-  //   }
-
   const onSubmit = async (data) => {
-    try {
-      // Update the smoking and parking properties in the data object
-      //   data.smoking = smokingChecked ? 1 : 0;
-      //   data.parking = parkingChecked ? 1 : 0;
-      //   data.public_transport = public_transportChecked ? 1 : 0;
-
-      //const formData = updateFormData(data, buildingToAdd);
-
+    try {  
       const user_email = window.location.pathname.split("/").pop();
       console.log("User Email: ", user_email);
 
