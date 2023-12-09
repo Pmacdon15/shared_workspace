@@ -124,9 +124,8 @@ const EditBuilding = () => {
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;
-
-      // todo remove 'const formData = "
-      const formData = updateFormData(data, buildingToEdit);
+      
+      updateFormData(data, buildingToEdit);
 
       const building_name = window.location.pathname.split("/").pop();
       console.log("Building name:", building_name);
