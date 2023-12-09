@@ -23,6 +23,7 @@ const EditBuilding = () => {
 
   // Load the building data from the server when the page loads
   useEffect(() => {
+    document.title = 'Edit Building';
     const fetchData = async () => {
       try {
         const building_name = window.location.pathname.split("/").pop();

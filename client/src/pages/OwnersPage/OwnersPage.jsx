@@ -19,6 +19,7 @@ const OwnersPage = () => {
   const boxRef = useRef(null);
 
   useEffect(() => {
+    document.title = "Owner's Page";
     const fetchData = async () => {
       try {
         const userEmail = window.location.pathname.split("/").pop();

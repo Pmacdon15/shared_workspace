@@ -8,6 +8,7 @@ const OwnerInfoPage = () => {
   const boxRef = useRef(null);
 
   useEffect(() => {
+    document.title = 'Owner Information';
     const fetchData = async () => {
       try {
         const buildingId = window.location.pathname.split("/").pop();

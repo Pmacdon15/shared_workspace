@@ -10,7 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 
 const AddBuilding = () => {
- 
+  document.title = 'Add Building';
   const { register, handleSubmit } = useForm(); // Initialize useForm
   const navigate = useNavigate();
 
