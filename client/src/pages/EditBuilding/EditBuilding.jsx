@@ -10,12 +10,18 @@ import Checkbox from "@mui/material/Checkbox";
 // import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
+/**
+ * EditBuilding component for editing building information.
+ *
+ * @returns {JSX.Element} The EditBuilding component.
+ */
 const EditBuilding = () => {
   const [buildingToEdit, setBuildingToEdit] = useState({});
   const [smokingChecked, setSmokingChecked] = useState(false);
   const [parkingChecked, setParkingChecked] = useState(false);
   const [public_transportChecked, setPublic_transportChecked] = useState(false);
 
+  // Load the building data from the server when the page loads
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,7 +47,7 @@ const EditBuilding = () => {
     fetchData();
   }, []);
 
-  //---------test-----------------
+  // The following code is used to validate the postal code and street number fields
   const [numberValue, setNumberValue] = useState("");
   const [postalCodeValue, setPostalCodeValue] = useState("");
   const [numberError, setNumberError] = useState(false);
@@ -60,14 +66,17 @@ const EditBuilding = () => {
     setPostalCodeValue(value);
     setPostalCodeError(!postalCodeRegex.test(value));
   };
-  //------------------------------
-  const { register, handleSubmit, reset } = useForm(); // Initialize useForm
+  
+  // Initialize useForm
+  const { register, handleSubmit } = useForm(); 
   const navigate = useNavigate();
 
+  // Handle checkbox changes
   const handleCheckboxChange = (event, checkboxStateSetter) => {
     checkboxStateSetter(event.target.checked);
   };
 
+  // Render a checkbox
   const renderCheckbox = (label, state, stateSetter) => {
     return (
       <div>
@@ -82,6 +91,7 @@ const EditBuilding = () => {
     );
   };
 
+  // Update the form data with the building information if the user did not enter anything
   function updateFormData(formData, buildingToEdit) {
     const fieldsToUpdate = [
       { name: "street", defaultValue: buildingToEdit[0]?.street },
@@ -101,8 +111,10 @@ const EditBuilding = () => {
     return formData;
   }
 
+  // Handle form submission
   const onSubmit = async (data) => {
     try {      
+      // Check if the postal code is valid and return if it is not
       if (postalCodeError) {
         console.log("Invalid postal code");
         return;
@@ -112,6 +124,7 @@ const EditBuilding = () => {
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;
 
+      // todo remove 'const formData = "
       const formData = updateFormData(data, buildingToEdit);
 
       const building_name = window.location.pathname.split("/").pop();
