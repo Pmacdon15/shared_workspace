@@ -102,7 +102,11 @@ const EditBuilding = () => {
   }
 
   const onSubmit = async (data) => {
-    try {
+    try {      
+      if (postalCodeError) {
+        console.log("Invalid postal code");
+        return;
+      }
       // Update the smoking and parking properties in the data object
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;
