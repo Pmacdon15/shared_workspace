@@ -11,6 +11,7 @@ import axios from "axios";
 import "./SignIn.css";
 
 const SignIn = () => {
+  document.title = "Sign In";
   const { register, handleSubmit, reset } = useForm(); // Initialize useForm
   const navigate = useNavigate();
 
