@@ -41,6 +41,18 @@ const EditBuilding = () => {
     fetchData();
   }, []);
 
+  //---------test-----------------
+  const [value, setValue] = useState('');
+  const [error, setError] = useState(false);
+
+  const handleInputChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setValue(numericValue);
+    setError(value !== numericValue);
+  };
+
+  //------------------------------
   const { register, handleSubmit, reset } = useForm(); // Initialize useForm
   const navigate = useNavigate();
 
@@ -64,20 +76,20 @@ const EditBuilding = () => {
 
   function updateFormData(formData, buildingToEdit) {
     const fieldsToUpdate = [
-      { name: 'street', defaultValue: buildingToEdit[0]?.street },
-      { name: 'street_number', defaultValue: buildingToEdit[0]?.street_number },
-      { name: 'city', defaultValue: buildingToEdit[0]?.city },
-      { name: 'province', defaultValue: buildingToEdit[0]?.province },
-      { name: 'postal_code', defaultValue: buildingToEdit[0]?.postal_code },
-      { name: 'location', defaultValue: buildingToEdit[0]?.location },
+      { name: "street", defaultValue: buildingToEdit[0]?.street },
+      { name: "street_number", defaultValue: buildingToEdit[0]?.street_number },
+      { name: "city", defaultValue: buildingToEdit[0]?.city },
+      { name: "province", defaultValue: buildingToEdit[0]?.province },
+      { name: "postal_code", defaultValue: buildingToEdit[0]?.postal_code },
+      { name: "location", defaultValue: buildingToEdit[0]?.location },
     ];
-  
+
     for (const field of fieldsToUpdate) {
-      if (formData[field.name] === '') {
+      if (formData[field.name] === "") {
         formData[field.name] = field.defaultValue;
       }
     }
-  
+
     return formData;
   }
 
@@ -142,7 +154,6 @@ const EditBuilding = () => {
                   label={buildingToEdit[0]?.street}
                   defaultValue={buildingToEdit[0]?.street}
                   variant="outlined"
-                  
                 />
                 <TextField
                   sx={{ width: "80%" }}
@@ -150,6 +161,10 @@ const EditBuilding = () => {
                   label={buildingToEdit[0]?.street_number}
                   defaultValue={buildingToEdit[0]?.street_number}
                   variant="outlined"
+                  value={value}
+                  onChange={handleInputChange}
+                  error={error}
+                  helperText={error ? "Please enter numbers only" : ""}
                 />
                 <TextField
                   sx={{ width: "80%" }}
