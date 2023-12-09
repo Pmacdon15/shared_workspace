@@ -42,16 +42,24 @@ const EditBuilding = () => {
   }, []);
 
   //---------test-----------------
-  const [value, setValue] = useState('');
-  const [error, setError] = useState(false);
+  const [numberValue, setNumberValue] = useState("");
+  const [postalCodeValue, setPostalCodeValue] = useState("");
+  const [numberError, setNumberError] = useState(false);
+  const [postalCodeError, setPostalCodeError] = useState(false);
 
-  const handleInputChange = (event) => {
+  const handleNumberInputChange = (event) => {
     const { value } = event.target;
     const numericValue = value.replace(/[^0-9]/g, "");
-    setValue(numericValue);
-    setError(value !== numericValue);
+    setNumberValue(numericValue);
+    setNumberError(value !== numericValue);
   };
 
+  const handlePostalCodeInputChange = (event) => {
+    const { value } = event.target;
+    const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+    setPostalCodeValue(value);
+    setPostalCodeError(!postalCodeRegex.test(value));
+  };
   //------------------------------
   const { register, handleSubmit, reset } = useForm(); // Initialize useForm
   const navigate = useNavigate();
@@ -94,7 +102,11 @@ const EditBuilding = () => {
   }
 
   const onSubmit = async (data) => {
-    try {
+    try {      
+      if (postalCodeError) {
+        console.log("Invalid postal code");
+        return;
+      }
       // Update the smoking and parking properties in the data object
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;
@@ -161,10 +173,15 @@ const EditBuilding = () => {
                   label={buildingToEdit[0]?.street_number}
                   defaultValue={buildingToEdit[0]?.street_number}
                   variant="outlined"
-                  value={value}
-                  onChange={handleInputChange}
-                  error={error}
-                  helperText={error ? "Please enter numbers only" : ""}
+                  value={numberValue}
+                  onChange={handleNumberInputChange}
+                  error={numberError}
+                  helperText={numberError ? "Please enter numbers only" : ""}
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[0-9]*",
+                    title: "Please enter numbers only",
+                  }}
                 />
                 <TextField
                   sx={{ width: "80%" }}
@@ -186,6 +203,16 @@ const EditBuilding = () => {
                   label={buildingToEdit[0]?.postal_code}
                   defaultValue={buildingToEdit[0]?.postal_code}
                   variant="outlined"
+                  value={postalCodeValue}
+                  onChange={handlePostalCodeInputChange}
+                  error={postalCodeError}
+                  helperText={
+                    postalCodeError ? "Please enter a valid postal code" : ""
+                  }
+                  inputProps={{
+                    pattern: "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$",
+                    title: "Please enter a valid postal code",
+                  }}
                 />
                 <TextField
                   sx={{ width: "80%" }}
