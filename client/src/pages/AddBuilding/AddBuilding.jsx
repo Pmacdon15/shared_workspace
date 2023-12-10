@@ -32,27 +32,7 @@ const AddBuilding = () => {
       </div>
     );
   };
-
-  // todo remove this
-  // const [numberValue, setNumberValue] = useState("");
-  // const [postalCodeValue, setPostalCodeValue] = useState("");
-  // const [numberError, setNumberError] = useState(false);
-  // const [postalCodeError, setPostalCodeError] = useState(false);
-
-  // const handleNumberInputChange = (event) => {
-  //   const { value } = event.target;
-  //   const numericValue = value.replace(/[^0-9]/g, "");
-  //   setNumberValue(numericValue);
-  //   setNumberError(value !== numericValue);
-  // };
-
-  // const handlePostalCodeInputChange = (event) => {
-  //   const { value } = event.target;
-  //   const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
-  //   setPostalCodeValue(value);
-  //   setPostalCodeError(!postalCodeRegex.test(value));
-  // };
-
+  
   const onSubmit = async (data) => {
     try {
       // If there are validation errors, the form won't submit
