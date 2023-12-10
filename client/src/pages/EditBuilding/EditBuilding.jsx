@@ -51,10 +51,9 @@ const EditBuilding = () => {
   }, []);
 
   // The following code is used to validate the postal code and street number fields
-  const [numberValue, setNumberValue] = useState("");
-  const [postalCodeValue, setPostalCodeValue] = useState("");
+  const [numberValue, setNumberValue] = useState("");  
   const [numberError, setNumberError] = useState(false);
-  const [postalCodeError, setPostalCodeError] = useState(false);
+  
 
   const handleNumberInputChange = (event) => {
     const { value } = event.target;
@@ -63,11 +62,24 @@ const EditBuilding = () => {
     setNumberError(value !== numericValue);
   };
 
+  const [postalCodeValue, setPostalCodeValue] = useState("");
+  const [postalCodeError, setPostalCodeError] = useState(false);
+
   const handlePostalCodeInputChange = (event) => {
     const { value } = event.target;
     const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
     setPostalCodeValue(value);
     setPostalCodeError(!postalCodeRegex.test(value));
+  };
+
+  const [textValue, setValue] = useState("");
+  const [textError, setError] = useState(false);
+
+  const handleInputChange = (event, validationFn = () => true) => {
+    const { value } = event.target;
+    setValue(value);
+    const trimmedValue = value.trim();    
+    setError(trimmedValue !== "" && trimmedValue.length < 3);
   };
 
   // Initialize useForm
@@ -197,7 +209,9 @@ const EditBuilding = () => {
                     })}
                     label="Street"
                     variant="outlined"
-                    error={errors.street !== undefined}
+                    value={textValue}
+                    onChange={handleInputChange}
+                    error={textError}
                     helperText={errors.street?.message || ""}
                   />
                 </div>
