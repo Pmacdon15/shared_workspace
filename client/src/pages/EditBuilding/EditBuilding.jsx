@@ -50,9 +50,9 @@ const EditBuilding = () => {
     fetchData();
   }, []);
 
-  // The following code is used to validate the postal code and street number fields
-  const [numberValue, setNumberValue] = useState("");  
-  const [numberError, setNumberError] = useState(false);  
+  // Below is for actively checking the input fields
+  const [numberValue, setNumberValue] = useState("");
+  const [numberError, setNumberError] = useState(false);
 
   const handleNumberInputChange = (event) => {
     const { value } = event.target;
@@ -77,10 +77,20 @@ const EditBuilding = () => {
   const handleStreetInputChange = (event) => {
     const { value } = event.target;
     const trimmedValue = value.trim();
-    setStreetValue(trimmedValue);        
+    setStreetValue(trimmedValue);
     setStreetError(trimmedValue !== "" && trimmedValue.length < 3);
   };
-  
+
+  const [cityValue, setCityValue] = useState("");
+  const [cityError, setCityError] = useState(false);
+
+  const handleCityInputChange = (event) => {
+    const { value } = event.target;
+    const trimmedValue = value.trim();
+    setCityValue(trimmedValue);
+    setCityError(trimmedValue !== "" && trimmedValue.length < 3);
+  };
+
   // Initialize useForm
   const {
     register,
@@ -125,7 +135,6 @@ const EditBuilding = () => {
         formData[field.name] = field.defaultValue;
       }
     }
-
     return formData;
   }
 
@@ -201,7 +210,8 @@ const EditBuilding = () => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
                         if (trimmedValue !== "" && trimmedValue.length < 3) {
-                          return "Street must be 0 or at least 3 characters";
+                           //return "Street must be 0 or at least 3 characters";
+                          return false;
                         }
                         return true;
                       },
@@ -211,11 +221,9 @@ const EditBuilding = () => {
                     value={streetValue}
                     onChange={handleStreetInputChange}
                     error={streetError}
-                    helperText={streetError ? "Please enter 0 or +2 charters" : ""}
-                    inputProps={{
-                      inputMode: "numeric",
-                      pattern: "[0-9]*",
-                    }}
+                    helperText={
+                      streetError ? "Street must be 0 or at least 3 characters" : ""
+                    }                    
                   />
                 </div>
                 <div className="textField-box">
@@ -232,13 +240,17 @@ const EditBuilding = () => {
                     onChange={handleNumberInputChange}
                     error={numberError}
                     helperText={numberError ? "Please enter numbers only" : ""}
-                    inputProps={{                      
+                    inputProps={{
                       title: "Please enter numbers only",
+                      inputMode: "numeric",
+                      pattern: "[0-9]*",
                     }}
                   />
                 </div>
                 <div className="textField-box">
-                  <label className="label-width">{buildingToEdit[0]?.city}</label>
+                  <label className="label-width">
+                    {buildingToEdit[0]?.city}
+                  </label>
                   <TextField
                     sx={{ width: "90%" }}
                     {...register("city", {
@@ -246,7 +258,7 @@ const EditBuilding = () => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
                         if (trimmedValue !== "" && trimmedValue.length < 3) {
-                          return "City must be 0 or at least 3 characters";
+                          return false;
                         }
                         return true;
                       },
@@ -254,12 +266,18 @@ const EditBuilding = () => {
                     label="City"
                     // defaultValue={buildingToEdit[0]?.city}
                     variant="outlined"
-                    error={errors.city !== undefined}
-                    helperText={errors.city?.message || ""}                    
+                    value={cityValue}
+                    onChange={handleCityInputChange}
+                    error={cityError}
+                    helperText={
+                      cityError ? "City must be 0 or at least 3 characters" : ""
+                    }                    
                   />
                 </div>
                 <div className="textField-box">
-                  <label className="label-width">{buildingToEdit[0]?.province}</label>
+                  <label className="label-width">
+                    {buildingToEdit[0]?.province}
+                  </label>
                   <TextField
                     sx={{ width: "90%" }}
                     {...register("province", {
@@ -279,45 +297,49 @@ const EditBuilding = () => {
                   />
                 </div>
                 <div className="textField-box">
-                  <label className="label-width">{buildingToEdit[0]?.postal_code}</label>
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("postal_code")}
-                  label="Postal Code"
-                  defaultValue={buildingToEdit[0]?.postal_code}
-                  variant="outlined"
-                  value={postalCodeValue}
-                  onChange={handlePostalCodeInputChange}
-                  error={postalCodeError}
-                  helperText={
-                    postalCodeError ? "Please enter a valid postal code" : ""
-                  }
-                  inputProps={{
-                    pattern: "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$",
-                    title: "Please enter a valid postal code",
-                  }}
-                />
+                  <label className="label-width">
+                    {buildingToEdit[0]?.postal_code}
+                  </label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("postal_code")}
+                    label="Postal Code"
+                    defaultValue={buildingToEdit[0]?.postal_code}
+                    variant="outlined"
+                    value={postalCodeValue}
+                    onChange={handlePostalCodeInputChange}
+                    error={postalCodeError}
+                    helperText={
+                      postalCodeError ? "Please enter a valid postal code" : ""
+                    }
+                    inputProps={{
+                      pattern: "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$",
+                      title: "Please enter a valid postal code",
+                    }}
+                  />
                 </div>
                 <div className="textField-box">
-                  <label className="label-width">{buildingToEdit[0]?.location}</label>
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("location", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 3) {
-                        return "Location must be 0 or at least 3 characters";
-                      }
-                      return true;
-                    },
-                  })}
-                  label="Location"
-                  defaultValue={buildingToEdit[0]?.location}
-                  variant="outlined"
-                  error={errors.location !== undefined}
-                  helperText={errors.location?.message || ""}
-                />
+                  <label className="label-width">
+                    {buildingToEdit[0]?.location}
+                  </label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("location", {
+                      validate: (value) => {
+                        const trimmedValue = value.trim();
+                        // If the value is not empty and not at least 3 characters, show an error
+                        if (trimmedValue !== "" && trimmedValue.length < 3) {
+                          return "Location must be 0 or at least 3 characters";
+                        }
+                        return true;
+                      },
+                    })}
+                    label="Location"
+                    defaultValue={buildingToEdit[0]?.location}
+                    variant="outlined"
+                    error={errors.location !== undefined}
+                    helperText={errors.location?.message || ""}
+                  />
                 </div>
                 <div className="checkbox-container">
                   {renderCheckbox("Smoking", smokingChecked, setSmokingChecked)}

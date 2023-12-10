@@ -33,6 +33,7 @@ const AddBuilding = () => {
 
   const onSubmit = async (data) => {
     try {
+      // ! this might be unnecessary
       // If there are validation errors, the form won't submit
       if (
         errors.street_number ||
