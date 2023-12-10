@@ -16,7 +16,7 @@ const AddBuilding = () => {
     register,
     handleSubmit,
     setValue,
-    watch,    
+    watch,
     formState: { errors },
   } = useForm();
 
@@ -33,17 +33,17 @@ const AddBuilding = () => {
     );
   };
 
-  const [numberValue, setNumberValue] = useState("");
+  // const [numberValue, setNumberValue] = useState("");
   const [postalCodeValue, setPostalCodeValue] = useState("");
-  const [numberError, setNumberError] = useState(false);
+  // const [numberError, setNumberError] = useState(false);
   const [postalCodeError, setPostalCodeError] = useState(false);
 
-  const handleNumberInputChange = (event) => {
-    const { value } = event.target;
-    const numericValue = value.replace(/[^0-9]/g, "");
-    setNumberValue(numericValue);
-    setNumberError(value !== numericValue);
-  };
+  // const handleNumberInputChange = (event) => {
+  //   const { value } = event.target;
+  //   const numericValue = value.replace(/[^0-9]/g, "");
+  //   setNumberValue(numericValue);
+  //   setNumberError(value !== numericValue);
+  // };
 
   const handlePostalCodeInputChange = (event) => {
     const { value } = event.target;
@@ -55,11 +55,19 @@ const AddBuilding = () => {
   const onSubmit = async (data) => {
     try {
       // If there are validation errors, the form won't submit
-      if (errors.street_number || errors.postal_code) {
-        console.log("Invalid postal code or street number");
+      if (
+        errors.street_number ||
+        errors.postal_code ||
+        errors.name ||
+        errors.street ||
+        errors.city ||
+        errors.province ||
+        errors.location
+      ) {
+        console.log("Invalid Field");
+        
         return;
       }
-      
 
       const user_email = window.location.pathname.split("/").pop();
       console.log("User Email: ", user_email);
@@ -107,31 +115,46 @@ const AddBuilding = () => {
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
                 <TextField
                   sx={{ width: "80%" }}
-                  {...register("name")}
+                  {...register("name", {
+                    required: "Building Name is required",
+                    minLength: {
+                      value: 3,
+                      message: "Building Name must be at least 3 characters",
+                    },
+                  })}
                   label="Building Name"
                   variant="outlined"
-                  
+                  error={errors.name !== undefined}
+                  helperText={errors.name?.message || ""}
                 />
                 <TextField
                   sx={{ width: "80%" }}
-                  {...register("street")}
+                  {...register("street", {
+                    required: "Street is required",
+                    minLength: {
+                      value: 3,
+                      message: "Street must be at least 3 characters",
+                    },
+                  })}
                   label="Street"
                   variant="outlined"
+                  error={errors.street !== undefined}
+                  helperText={errors.street?.message || ""}
                 />
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("street_number", {
-                    required: "Please enter street number",
+                    required: "Street Number is required",
+                    validate: (value) => {
+                      const numericValue = value.replace(/[^0-9]/g, "");
+                      if (value !== numericValue) {
+                        return "Please enter numbers only";
+                      }
+                      return true;
+                    },
                   })}
                   label="Street Number"
                   variant="outlined"
-                  value={numberValue}
-                  onChange={(e) => {
-                    handleNumberInputChange(e);
-                    setValue("street_number", e.target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
                   error={errors.street_number !== undefined}
                   helperText={errors.street_number?.message || ""}
                   inputProps={{
@@ -140,33 +163,45 @@ const AddBuilding = () => {
                     title: "Please enter numbers only",
                   }}
                 />
-
                 <TextField
                   sx={{ width: "80%" }}
-                  {...register("city")}
+                  {...register("city", {
+                    required: "City is required",
+                    minLength: {
+                      value: 3,
+                      message: "City must be at least 3 characters",
+                    },
+                  })}
                   label="City"
                   variant="outlined"
+                  error={errors.city !== undefined}
+                  helperText={errors.city?.message || ""}
                 />
                 <TextField
                   sx={{ width: "80%" }}
-                  {...register("province")}
+                  {...register("province", {
+                    required: "Province is required",
+                    minLength: {
+                      value: 2,
+                      message: "Province must be at least 3 characters",
+                    },
+                  })}
                   label="Province"
                   variant="outlined"
+                  error={errors.province !== undefined}
+                  helperText={errors.province?.message || ""}
                 />
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("postal_code", {
-                    required: "Please enter a valid postal code",
+                    required: "Postal Code is required",
+                    pattern: {
+                      value: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
+                      message: "Please enter a valid postal code",
+                    },
                   })}
                   label="Postal Code"
                   variant="outlined"
-                  value={postalCodeValue}
-                  onChange={(e) => {
-                    handlePostalCodeInputChange(e);
-                    setValue("postal_code", e.target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
                   error={errors.postal_code !== undefined}
                   helperText={errors.postal_code?.message || ""}
                   inputProps={{
@@ -176,10 +211,19 @@ const AddBuilding = () => {
                 />
                 <TextField
                   sx={{ width: "80%" }}
-                  {...register("location")}
+                  {...register("location", {
+                    required: "Location is required",
+                    minLength: {
+                      value: 3,
+                      message: "Location must be at least 3 characters",
+                    },
+                  })}
                   label="Location"
                   variant="outlined"
+                  error={errors.location !== undefined}
+                  helperText={errors.location?.message || ""}
                 />
+
                 <div className="checkbox-container">
                   {renderCheckbox("Smoking")}
                   {renderCheckbox("Parking")}
