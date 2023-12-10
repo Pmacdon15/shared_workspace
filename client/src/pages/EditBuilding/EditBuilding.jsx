@@ -225,7 +225,7 @@ const EditBuilding = () => {
                 <div className="textField-box">
                   <label className="label-width">{buildingToEdit[0]?.city}</label>
                   <TextField
-                    sx={{ width: "80%" }}
+                    sx={{ width: "90%" }}
                     {...register("city", {
                       validate: (value) => {
                         const trimmedValue = value.trim();
@@ -243,13 +243,26 @@ const EditBuilding = () => {
                     helperText={errors.city?.message || ""}                    
                   />
                 </div>
-                <TextField
-                  sx={{ width: "80%" }}
-                  {...register("province")}
-                  label={buildingToEdit[0]?.province}
-                  defaultValue={buildingToEdit[0]?.province}
-                  variant="outlined"
-                />
+                <div className="textField-box">
+                  <label className="label-width">{buildingToEdit[0]?.province}</label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("province", {
+                      validate: (value) => {
+                        const trimmedValue = value.trim();
+                        // If the value is not empty and not at least 2 characters, show an error
+                        if (trimmedValue !== "" && trimmedValue.length < 2) {
+                          return "Province must be 0 or at least 2 characters";
+                        }
+                        return true;
+                      },
+                    })}
+                    label="Province"
+                    variant="outlined"
+                    error={errors.province !== undefined}
+                    helperText={errors.province?.message || ""}
+                  />
+                </div>
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("postal_code")}
