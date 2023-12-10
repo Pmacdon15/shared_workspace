@@ -38,38 +38,13 @@ label {
     margin-right: 1%;
 }
 
-/* .checkbox-container {
-    
-    margin-top: 5%;
-    color: rgba(4, 81, 88, 0.534);
-    font-size: 18px;
-}
-.register {
-   
-    color: rgba(4, 81, 88, 0.534);
-    font-size: 18px;
-}
 
-.forgot-password span {
-    color: rgba(4, 162, 176, 0.534);
-    cursor: pointer;
-}
-
-.register span {
-    color: rgba(4, 162, 176, 0.534);
-    cursor: pointer;
-}
-.submit-container {
+.checkbox-container {
     display: flex;
-    gap: 3px;
-    margin: 30px;
-} */
-
-.custom-form {
-    margin-top: 10%;
-    display: flex;
+    flex-direction: row;
     align-items: center;
-    flex-direction: column;
-
-    gap: 15px;
+    justify-content: center;
+    gap: 9px;
+    width: 80%;
+    margin-top: 30px;
 }

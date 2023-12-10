@@ -266,9 +266,9 @@ const EditBuilding = () => {
                 <div className="textField-box">
                   <label className="label-width">{buildingToEdit[0]?.postal_code}</label>
                 <TextField
-                  sx={{ width: "80%" }}
+                  sx={{ width: "90%" }}
                   {...register("postal_code")}
-                  label={buildingToEdit[0]?.postal_code}
+                  label="Postal Code"
                   defaultValue={buildingToEdit[0]?.postal_code}
                   variant="outlined"
                   value={postalCodeValue}
@@ -283,13 +283,27 @@ const EditBuilding = () => {
                   }}
                 />
                 </div>
+                <div className="textField-box">
+                  <label className="label-width">{buildingToEdit[0]?.location}</label>
                 <TextField
-                  sx={{ width: "80%" }}
-                  {...register("location")}
-                  label={buildingToEdit[0]?.location}
+                  sx={{ width: "90%" }}
+                  {...register("location", {
+                    validate: (value) => {
+                      const trimmedValue = value.trim();
+                      // If the value is not empty and not at least 3 characters, show an error
+                      if (trimmedValue !== "" && trimmedValue.length < 3) {
+                        return "Location must be 0 or at least 3 characters";
+                      }
+                      return true;
+                    },
+                  })}
+                  label="Location"
                   defaultValue={buildingToEdit[0]?.location}
                   variant="outlined"
+                  error={errors.location !== undefined}
+                  helperText={errors.location?.message || ""}
                 />
+                </div>
                 <div className="checkbox-container">
                   {renderCheckbox("Smoking", smokingChecked, setSmokingChecked)}
                   {renderCheckbox("Parking", parkingChecked, setParkingChecked)}
