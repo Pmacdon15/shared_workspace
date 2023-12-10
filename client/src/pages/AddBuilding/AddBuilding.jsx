@@ -50,13 +50,13 @@ const AddBuilding = () => {
 
   const onSubmit = async (data) => {
     try {  
-      // If there are null values in the form data, return and do not submit the form
-      for (const [key, value] of Object.entries(data)) {
-        if (value === "") {
-          alert("Please fill in all fields");
-          return;
-        }
-      }
+      // // If there are null values in the form data, return and do not submit the form
+      // for (const [key, value] of Object.entries(data)) {
+      //   if (value === "") {
+      //     alert("Please fill in all fields");
+      //     return;
+      //   }
+      // }
       if (postalCodeError) {
         console.log("Invalid postal code");
         return;
