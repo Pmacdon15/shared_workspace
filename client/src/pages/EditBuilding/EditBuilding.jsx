@@ -91,6 +91,16 @@ const EditBuilding = () => {
     setCityError(trimmedValue !== "" && trimmedValue.length < 3);
   };
 
+  const [provinceValue, setProvinceValue] = useState("");
+  const [provinceError, setProvinceError] = useState(false);
+
+  const handleProvinceInputChange = (event) => {
+    const { value } = event.target;
+    const trimmedValue = value.trim();
+    setProvinceValue(trimmedValue);
+    setProvinceError(trimmedValue !== "" && trimmedValue.length < 2);
+  };
+
   // Initialize useForm
   const {
     register,
@@ -209,10 +219,8 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 3) {
-                           //return "Street must be 0 or at least 3 characters";
-                          return false;
-                        }
+                        if (trimmedValue !== "" && trimmedValue.length < 3) { return false; }   
+                        // Else, return true       
                         return true;
                       },
                     })}
@@ -234,17 +242,17 @@ const EditBuilding = () => {
                     sx={{ width: "90%" }}
                     {...register("street_number")}
                     label="Street Number"
-                    defaultValue={buildingToEdit[0]?.street_number}
+                    // defaultValue={buildingToEdit[0]?.street_number}
                     variant="outlined"
                     value={numberValue}
                     onChange={handleNumberInputChange}
                     error={numberError}
                     helperText={numberError ? "Please enter numbers only" : ""}
-                    inputProps={{
-                      title: "Please enter numbers only",
-                      inputMode: "numeric",
-                      pattern: "[0-9]*",
-                    }}
+                    // inputProps={{
+                    //   title: "Please enter numbers only",
+                    //   inputMode: "numeric",
+                    //   pattern: "[0-9]*",
+                    // }}
                   />
                 </div>
                 <div className="textField-box">
@@ -257,14 +265,12 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 3) {
-                          return false;
-                        }
+                        if (trimmedValue !== "" && trimmedValue.length < 3) {return false;}
+                        // Else, return true
                         return true;
                       },
                     })}
-                    label="City"
-                    // defaultValue={buildingToEdit[0]?.city}
+                    label="City"                    
                     variant="outlined"
                     value={cityValue}
                     onChange={handleCityInputChange}
@@ -284,16 +290,19 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 2 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 2) {
-                          return "Province must be 0 or at least 2 characters";
-                        }
+                        if (trimmedValue !== "" && trimmedValue.length < 2) { return false;}
+                        // Else, return true
                         return true;
                       },
                     })}
                     label="Province"
                     variant="outlined"
-                    error={errors.province !== undefined}
-                    helperText={errors.province?.message || ""}
+                    value={provinceValue}
+                    onChange={handleProvinceInputChange}
+                    error={provinceError}
+                    helperText={
+                      provinceError ? "Province must be 0 or at least 2 characters" : ""
+                    }
                   />
                 </div>
                 <div className="textField-box">
