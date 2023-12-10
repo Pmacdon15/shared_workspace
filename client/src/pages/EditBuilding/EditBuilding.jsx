@@ -52,8 +52,7 @@ const EditBuilding = () => {
 
   // The following code is used to validate the postal code and street number fields
   const [numberValue, setNumberValue] = useState("");  
-  const [numberError, setNumberError] = useState(false);
-  
+  const [numberError, setNumberError] = useState(false);  
 
   const handleNumberInputChange = (event) => {
     const { value } = event.target;
@@ -212,7 +211,11 @@ const EditBuilding = () => {
                     value={streetValue}
                     onChange={handleStreetInputChange}
                     error={streetError}
-                    helperText={errors.street?.message || ""}
+                    helperText={streetError ? "Please enter 0 or +2 charters" : ""}
+                    inputProps={{
+                      inputMode: "numeric",
+                      pattern: "[0-9]*",
+                    }}
                   />
                 </div>
                 <div className="textField-box">
@@ -229,9 +232,7 @@ const EditBuilding = () => {
                     onChange={handleNumberInputChange}
                     error={numberError}
                     helperText={numberError ? "Please enter numbers only" : ""}
-                    inputProps={{
-                      inputMode: "numeric",
-                      pattern: "[0-9]*",
+                    inputProps={{                      
                       title: "Please enter numbers only",
                     }}
                   />
