@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // Import useState hook
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,24 +10,23 @@ import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 
 const AddBuilding = () => {
-  document.title = 'Add Building';
-  const { register, handleSubmit } = useForm(); // Initialize useForm
+  document.title = "Add Building";
+  const { register, handleSubmit, setValue, watch } = useForm(); // Destructure setValue and watch
   const navigate = useNavigate();
 
   const renderCheckbox = (label) => {
     const labelWithOutUnderScore = label.replace("_", " ");
     return (
-      <div>        
+      <div>
         <label>{labelWithOutUnderScore}</label>
         <Checkbox
-          {...register(label.toLowerCase())}          
+          {...register(label.toLowerCase())}
           sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
         />
       </div>
     );
   };
 
-  // The following code is used to validate the postal code and street number fields
   const [numberValue, setNumberValue] = useState("");
   const [postalCodeValue, setPostalCodeValue] = useState("");
   const [numberError, setNumberError] = useState(false);
@@ -46,19 +45,11 @@ const AddBuilding = () => {
     setPostalCodeValue(value);
     setPostalCodeError(!postalCodeRegex.test(value));
   };
-  
 
   const onSubmit = async (data) => {
-    try {  
-      // // If there are null values in the form data, return and do not submit the form
-      // for (const [key, value] of Object.entries(data)) {
-      //   if (value === "") {
-      //     alert("Please fill in all fields");
-      //     return;
-      //   }
-      // }
-      if (postalCodeError) {
-        console.log("Invalid postal code");
+    try {
+      if (postalCodeError || numberError) {
+        console.log("Invalid postal code or street number");
         return;
       }
       const user_email = window.location.pathname.split("/").pop();
@@ -68,10 +59,8 @@ const AddBuilding = () => {
         `http://localhost:5544/building/${user_email}`,
         data
       );
-      //console.log("Response from the server:", response.data);
 
       if (response.status === 200) {
-        // If the building was successfully updated, redirect to the building page
         const user_email = response.data[0].user_email;
         navigate(`/ownerspage/${user_email}`);
       }
@@ -88,7 +77,7 @@ const AddBuilding = () => {
           sx={{
             bgcolor: "#cfe8fc",
             height: "90vh",
-            marginTop: " 3%",
+            marginTop: "3%",
             borderRadius: "9px",
             padding: "1%",
             overflowY: "scroll",
@@ -107,7 +96,7 @@ const AddBuilding = () => {
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
-              <TextField
+                <TextField
                   sx={{ width: "80%" }}
                   {...register("name")}
                   label="Building Name"
@@ -121,11 +110,23 @@ const AddBuilding = () => {
                 />
                 <TextField
                   sx={{ width: "80%" }}
-                  {...register("street_number")}
+                  {...register("street_number", {
+                    validate: (value) => {
+                      if (!value && !watch("street_number")) {
+                        return "Please enter street number";
+                      }
+                      return true;
+                    },
+                  })}
                   label="Street Number"
                   variant="outlined"
                   value={numberValue}
-                  onChange={handleNumberInputChange}
+                  onChange={(e) => {
+                    handleNumberInputChange(e);
+                    setValue("street_number", e.target.value, {
+                      shouldValidate: true,
+                    });
+                  }}
                   error={numberError}
                   helperText={numberError ? "Please enter numbers only" : ""}
                   inputProps={{
@@ -148,11 +149,23 @@ const AddBuilding = () => {
                 />
                 <TextField
                   sx={{ width: "80%" }}
-                  {...register("postal_code")}
+                  {...register("postal_code", {
+                    validate: (value) => {
+                      if (!value && !watch("postal_code")) {
+                        return "Please enter a valid postal code";
+                      }
+                      return true;
+                    },
+                  })}
                   label="Postal Code"
                   variant="outlined"
                   value={postalCodeValue}
-                  onChange={handlePostalCodeInputChange}
+                  onChange={(e) => {
+                    handlePostalCodeInputChange(e);
+                    setValue("postal_code", e.target.value, {
+                      shouldValidate: true,
+                    });
+                  }}
                   error={postalCodeError}
                   helperText={
                     postalCodeError ? "Please enter a valid postal code" : ""
