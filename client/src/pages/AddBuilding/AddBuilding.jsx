@@ -33,10 +33,11 @@ const AddBuilding = () => {
     );
   };
 
+  // todo remove this
   // const [numberValue, setNumberValue] = useState("");
-  const [postalCodeValue, setPostalCodeValue] = useState("");
+  // const [postalCodeValue, setPostalCodeValue] = useState("");
   // const [numberError, setNumberError] = useState(false);
-  const [postalCodeError, setPostalCodeError] = useState(false);
+  // const [postalCodeError, setPostalCodeError] = useState(false);
 
   // const handleNumberInputChange = (event) => {
   //   const { value } = event.target;
@@ -45,12 +46,12 @@ const AddBuilding = () => {
   //   setNumberError(value !== numericValue);
   // };
 
-  const handlePostalCodeInputChange = (event) => {
-    const { value } = event.target;
-    const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
-    setPostalCodeValue(value);
-    setPostalCodeError(!postalCodeRegex.test(value));
-  };
+  // const handlePostalCodeInputChange = (event) => {
+  //   const { value } = event.target;
+  //   const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+  //   setPostalCodeValue(value);
+  //   setPostalCodeError(!postalCodeRegex.test(value));
+  // };
 
   const onSubmit = async (data) => {
     try {
