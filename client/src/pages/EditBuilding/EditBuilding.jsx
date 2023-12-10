@@ -7,8 +7,10 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-// import InputLabel from "@mui/material/InputLabel";
+import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
+
+import "./EditBuilding.css";
 
 /**
  * EditBuilding component for editing building information.
@@ -23,7 +25,7 @@ const EditBuilding = () => {
 
   // Load the building data from the server when the page loads
   useEffect(() => {
-    document.title = 'Edit Building';
+    document.title = "Edit Building";
     const fetchData = async () => {
       try {
         const building_name = window.location.pathname.split("/").pop();
@@ -67,9 +69,13 @@ const EditBuilding = () => {
     setPostalCodeValue(value);
     setPostalCodeError(!postalCodeRegex.test(value));
   };
-  
+
   // Initialize useForm
-  const { register, handleSubmit } = useForm(); 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
 
   // Handle checkbox changes
@@ -114,7 +120,7 @@ const EditBuilding = () => {
 
   // Handle form submission
   const onSubmit = async (data) => {
-    try {      
+    try {
       // Check if the postal code is valid and return if it is not
       if (postalCodeError) {
         console.log("Invalid postal code");
@@ -124,7 +130,7 @@ const EditBuilding = () => {
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;
-      
+
       updateFormData(data, buildingToEdit);
 
       const building_name = window.location.pathname.split("/").pop();
@@ -173,14 +179,26 @@ const EditBuilding = () => {
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
-                                
-                <TextField
-                  sx={{ width: "80%" }}
-                  {...register("street")}
-                  label={buildingToEdit[0]?.street}
-                  defaultValue={buildingToEdit[0]?.street}
-                  variant="outlined"
-                />
+                <div className="textField-box">
+                  <label>{buildingToEdit[0]?.street}</label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("street", {
+                      validate: (value) => {
+                        const trimmedValue = value.trim();
+                        // If the value is not empty and not at least 3 characters, show an error
+                        if (trimmedValue !== "" && trimmedValue.length < 3) {
+                          return "Street must be 0 or at least 3 characters";
+                        }
+                        return true;
+                      },
+                    })}
+                    label="Street"
+                    variant="outlined"
+                    error={errors.street !== undefined}
+                    helperText={errors.street?.message || ""}
+                  />
+                </div>
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("street_number")}

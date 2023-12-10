@@ -1,4 +1,4 @@
-.header {
+/* .header {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,10 +20,20 @@
     height: 6px;
     background: rgba(4, 162, 176, 0.534);
     border-radius: 9px;    
+} */
+
+.textField-box{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    padding: 1%;
 }
 
-.checkbox-container {
-    /* padding-left: 62px; */
+label{
+    margin-right: 1%;
+}
+/* .checkbox-container {
+    
     margin-top: 5%;
     color: rgba(4, 81, 88, 0.534);
     font-size: 18px;
@@ -47,7 +57,7 @@
     display: flex;
     gap: 3px;
     margin: 30px;
-}
+} */
 
 .custom-form {
     margin-top: 10%;
