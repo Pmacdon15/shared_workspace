@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -54,21 +54,20 @@ const EditBuilding = () => {
   const [numberValue, setNumberValue] = useState("");
   const [numberError, setNumberError] = useState(false);
 
-  const handleNumberInputChange = (event) => {
-    const { value } = event.target;
-    const numericValue = value.replace(/[^0-9]/g, "");
-    setNumberValue(numericValue);
-    setNumberError(value !== numericValue);
-  }; 
-
   const [streetValue, setStreetValue] = useState("");
   const [streetError, setStreetError] = useState(false);
 
   const handleStreetInputChange = (event) => {
     const { value } = event.target;
-    const trimmedValue = value.trim();
-    setStreetValue(trimmedValue);
-    setStreetError(trimmedValue !== "" && trimmedValue.length < 3);
+    setStreetValue(value); // Set the value without trimming
+    setStreetError(value.trim() !== "" && value.trim().length < 3);
+  };
+
+  const handleNumberInputChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setNumberValue(numericValue);
+    setNumberError(value !== numericValue);
   };
 
   const [cityValue, setCityValue] = useState("");
@@ -76,9 +75,9 @@ const EditBuilding = () => {
 
   const handleCityInputChange = (event) => {
     const { value } = event.target;
-    const trimmedValue = value.trim();
-    setCityValue(trimmedValue);
-    setCityError(trimmedValue !== "" && trimmedValue.length < 3);
+
+    setCityValue(value);
+    setCityError(value.trim() !== "" && value.trim().length < 3);
   };
 
   const [provinceValue, setProvinceValue] = useState("");
@@ -86,9 +85,8 @@ const EditBuilding = () => {
 
   const handleProvinceInputChange = (event) => {
     const { value } = event.target;
-    const trimmedValue = value.trim();
-    setProvinceValue(trimmedValue);
-    setProvinceError(trimmedValue !== "" && trimmedValue.length < 2);
+    setProvinceValue(value);
+    setProvinceError(value.trim() !== "" && value.trim().length < 2);
   };
 
   const [postalCodeValue, setPostalCodeValue] = useState("");
@@ -106,9 +104,8 @@ const EditBuilding = () => {
 
   const handleLocationInputChange = (event) => {
     const { value } = event.target;
-    const trimmedValue = value.trim();
-    setLocationValue(trimmedValue);
-    setLocationError(trimmedValue !== "" && trimmedValue.length < 2);
+    setLocationValue(value);
+    setLocationError(value.trim() !== "" && value.trim().length < 2);
   };
 
   // Initialize useForm
@@ -229,7 +226,11 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 3) {
+                        if (
+                          trimmedValue !== "" &&
+                          !/\s/.test(trimmedValue) &&
+                          trimmedValue.length < 3
+                        ) {
                           return false;
                         }
                         // Else, return true
@@ -300,7 +301,9 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 2 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 2) {return false;}    
+                        if (trimmedValue !== "" && trimmedValue.length < 2) {
+                          return false;
+                        }
                         // Else, return true
                         return true;
                       },
@@ -344,7 +347,9 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 2) { return false;}
+                        if (trimmedValue !== "" && trimmedValue.length < 2) {
+                          return false;
+                        }
                         // Else, return true
                         return true;
                       },
@@ -358,7 +363,7 @@ const EditBuilding = () => {
                       locationError
                         ? "Location must be 0 or at least 2 characters"
                         : ""
-                    }                    
+                    }
                   />
                 </div>
                 <div className="checkbox-container">
@@ -369,6 +374,15 @@ const EditBuilding = () => {
                     public_transportChecked,
                     setPublic_transportChecked
                   )}
+                </div>
+                <div className="textField-box">
+                  <label className="label-width">Test</label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("test")}
+                    label="Test"
+                    variant="outlined"
+                  />
                 </div>
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
