@@ -263,6 +263,8 @@ const EditBuilding = () => {
                     helperText={errors.province?.message || ""}
                   />
                 </div>
+                <div className="textField-box">
+                  <label className="label-width">{buildingToEdit[0]?.postal_code}</label>
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("postal_code")}
@@ -280,6 +282,7 @@ const EditBuilding = () => {
                     title: "Please enter a valid postal code",
                   }}
                 />
+                </div>
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("location")}
