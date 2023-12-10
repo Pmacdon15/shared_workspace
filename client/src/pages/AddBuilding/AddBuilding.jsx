@@ -11,8 +11,14 @@ import axios from "axios";
 
 const AddBuilding = () => {
   document.title = "Add Building";
-  const { register, handleSubmit, setValue, watch } = useForm(); // Destructure setValue and watch
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,    
+    formState: { errors },
+  } = useForm();
 
   const renderCheckbox = (label) => {
     const labelWithOutUnderScore = label.replace("_", " ");
@@ -48,10 +54,13 @@ const AddBuilding = () => {
 
   const onSubmit = async (data) => {
     try {
-      if (postalCodeError || numberError) {
+      // If there are validation errors, the form won't submit
+      if (errors.street_number || errors.postal_code) {
         console.log("Invalid postal code or street number");
         return;
       }
+      
+
       const user_email = window.location.pathname.split("/").pop();
       console.log("User Email: ", user_email);
 
@@ -101,6 +110,7 @@ const AddBuilding = () => {
                   {...register("name")}
                   label="Building Name"
                   variant="outlined"
+                  
                 />
                 <TextField
                   sx={{ width: "80%" }}
@@ -111,12 +121,7 @@ const AddBuilding = () => {
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("street_number", {
-                    validate: (value) => {
-                      if (!value && !watch("street_number")) {
-                        return "Please enter street number";
-                      }
-                      return true;
-                    },
+                    required: "Please enter street number",
                   })}
                   label="Street Number"
                   variant="outlined"
@@ -127,14 +132,15 @@ const AddBuilding = () => {
                       shouldValidate: true,
                     });
                   }}
-                  error={numberError}
-                  helperText={numberError ? "Please enter numbers only" : ""}
+                  error={errors.street_number !== undefined}
+                  helperText={errors.street_number?.message || ""}
                   inputProps={{
                     inputMode: "numeric",
                     pattern: "[0-9]*",
                     title: "Please enter numbers only",
                   }}
                 />
+
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("city")}
@@ -150,12 +156,7 @@ const AddBuilding = () => {
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("postal_code", {
-                    validate: (value) => {
-                      if (!value && !watch("postal_code")) {
-                        return "Please enter a valid postal code";
-                      }
-                      return true;
-                    },
+                    required: "Please enter a valid postal code",
                   })}
                   label="Postal Code"
                   variant="outlined"
@@ -166,10 +167,8 @@ const AddBuilding = () => {
                       shouldValidate: true,
                     });
                   }}
-                  error={postalCodeError}
-                  helperText={
-                    postalCodeError ? "Please enter a valid postal code" : ""
-                  }
+                  error={errors.postal_code !== undefined}
+                  helperText={errors.postal_code?.message || ""}
                   inputProps={{
                     pattern: "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$",
                     title: "Please enter a valid postal code",
