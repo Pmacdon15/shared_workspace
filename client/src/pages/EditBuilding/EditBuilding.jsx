@@ -69,11 +69,7 @@ const EditBuilding = () => {
   };
   
   // Initialize useForm
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm(); 
+  const { register, handleSubmit } = useForm(); 
   const navigate = useNavigate();
 
   // Handle checkbox changes
@@ -176,21 +172,14 @@ const EditBuilding = () => {
                 paddingTop: "1px",
               }}
             >
-              <form onSubmit={handleSubmit(onSubmit)} className="custom-form">                             
+              <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
+                                
                 <TextField
                   sx={{ width: "80%" }}
-                  {...register("name", {
-                    required: "Building Name is required",
-                    minLength: {
-                      value: 3,
-                      message: "Building Name must be at least 3 characters",
-                    },
-                  })}
+                  {...register("street")}
                   label={buildingToEdit[0]?.street}
                   defaultValue={buildingToEdit[0]?.street}
                   variant="outlined"
-                  error={errors.name !== undefined}
-                  helperText={errors.name?.message || ""}
                 />
                 <TextField
                   sx={{ width: "80%" }}
