@@ -311,20 +311,20 @@ const EditBuilding = () => {
                   </label>
                   <TextField
                     sx={{ width: "90%" }}
-                    {...register("postal_code")}
-                    label="Postal Code"
-                    defaultValue={buildingToEdit[0]?.postal_code}
+                    {...register("postal_code", {
+                      validate: (value) => {
+                        const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+                        return postalCodeRegex.test(value);
+                      },
+                    })}
+                    label="Postal Code"                    
                     variant="outlined"
                     value={postalCodeValue}
                     onChange={handlePostalCodeInputChange}
                     error={postalCodeError}
                     helperText={
                       postalCodeError ? "Please enter a valid postal code" : ""
-                    }
-                    inputProps={{
-                      pattern: "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$",
-                      title: "Please enter a valid postal code",
-                    }}
+                    }                    
                   />
                 </div>
                 <div className="textField-box">
