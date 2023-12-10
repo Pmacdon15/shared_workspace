@@ -180,8 +180,9 @@ const EditBuilding = () => {
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
                 <div className="textField-box">
-                  
-                  <label className="label-width">{buildingToEdit[0]?.street}</label>
+                  <label className="label-width">
+                    {buildingToEdit[0]?.street}
+                  </label>
                   <TextField
                     sx={{ width: "90%" }}
                     {...register("street", {
@@ -201,31 +202,47 @@ const EditBuilding = () => {
                   />
                 </div>
                 <div className="textField-box">
-                  <label className="label-width">{buildingToEdit[0]?.street_number}</label>
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("street_number")}
-                  label="Street Number"
-                  defaultValue={buildingToEdit[0]?.street_number}
-                  variant="outlined"
-                  value={numberValue}
-                  onChange={handleNumberInputChange}
-                  error={numberError}
-                  helperText={numberError ? "Please enter numbers only" : ""}
-                  inputProps={{
-                    inputMode: "numeric",
-                    pattern: "[0-9]*",
-                    title: "Please enter numbers only",
-                  }}
-                />
+                  <label className="label-width">
+                    {buildingToEdit[0]?.street_number}
+                  </label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("street_number")}
+                    label="Street Number"
+                    defaultValue={buildingToEdit[0]?.street_number}
+                    variant="outlined"
+                    value={numberValue}
+                    onChange={handleNumberInputChange}
+                    error={numberError}
+                    helperText={numberError ? "Please enter numbers only" : ""}
+                    inputProps={{
+                      inputMode: "numeric",
+                      pattern: "[0-9]*",
+                      title: "Please enter numbers only",
+                    }}
+                  />
                 </div>
-                <TextField
-                  sx={{ width: "80%" }}
-                  {...register("city")}
-                  label={buildingToEdit[0]?.city}
-                  defaultValue={buildingToEdit[0]?.city}
-                  variant="outlined"
-                />
+                <div className="textField-box">
+                  <label className="label-width">{buildingToEdit[0]?.city}</label>
+                  <TextField
+                    sx={{ width: "80%" }}
+                    {...register("city", {
+                      validate: (value) => {
+                        const trimmedValue = value.trim();
+                        // If the value is not empty and not at least 3 characters, show an error
+                        if (trimmedValue !== "" && trimmedValue.length < 3) {
+                          return "City must be 0 or at least 3 characters";
+                        }
+                        return true;
+                      },
+                    })}
+                    label="City"
+                    // defaultValue={buildingToEdit[0]?.city}
+                    variant="outlined"
+                    error={errors.city !== undefined}
+                    helperText={errors.city?.message || ""}                    
+                  />
+                </div>
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("province")}
