@@ -22,16 +22,22 @@
     border-radius: 9px;    
 } */
 
-.textField-box{
+.textField-box {
     display: flex;
     flex-direction: row;
     width: 80%;
     padding: 1%;
 }
 
-label{
+.label-width {
+    min-width: 120px;
+    /* Adjust the width as needed */
+}
+
+label {
     margin-right: 1%;
 }
+
 /* .checkbox-container {
     
     margin-top: 5%;

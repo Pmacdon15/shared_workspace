@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import InputLabel from "@mui/material/InputLabel";
+//import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
 import "./EditBuilding.css";
@@ -180,7 +180,8 @@ const EditBuilding = () => {
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
                 <div className="textField-box">
-                  <label>{buildingToEdit[0]?.street}</label>
+                  
+                  <label className="label-width">{buildingToEdit[0]?.street}</label>
                   <TextField
                     sx={{ width: "90%" }}
                     {...register("street", {
@@ -199,10 +200,12 @@ const EditBuilding = () => {
                     helperText={errors.street?.message || ""}
                   />
                 </div>
+                <div className="textField-box">
+                  <label className="label-width">{buildingToEdit[0]?.street_number}</label>
                 <TextField
-                  sx={{ width: "80%" }}
+                  sx={{ width: "90%" }}
                   {...register("street_number")}
-                  label={buildingToEdit[0]?.street_number}
+                  label="Street Number"
                   defaultValue={buildingToEdit[0]?.street_number}
                   variant="outlined"
                   value={numberValue}
@@ -215,6 +218,7 @@ const EditBuilding = () => {
                     title: "Please enter numbers only",
                   }}
                 />
+                </div>
                 <TextField
                   sx={{ width: "80%" }}
                   {...register("city")}
