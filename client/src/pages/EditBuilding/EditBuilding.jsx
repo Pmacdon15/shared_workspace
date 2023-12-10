@@ -219,8 +219,10 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 3) { return false; }   
-                        // Else, return true       
+                        if (trimmedValue !== "" && trimmedValue.length < 3) {
+                          return false;
+                        }
+                        // Else, return true
                         return true;
                       },
                     })}
@@ -230,8 +232,10 @@ const EditBuilding = () => {
                     onChange={handleStreetInputChange}
                     error={streetError}
                     helperText={
-                      streetError ? "Street must be 0 or at least 3 characters" : ""
-                    }                    
+                      streetError
+                        ? "Street must be 0 or at least 3 characters"
+                        : ""
+                    }
                   />
                 </div>
                 <div className="textField-box">
@@ -242,17 +246,11 @@ const EditBuilding = () => {
                     sx={{ width: "90%" }}
                     {...register("street_number")}
                     label="Street Number"
-                    // defaultValue={buildingToEdit[0]?.street_number}
                     variant="outlined"
                     value={numberValue}
                     onChange={handleNumberInputChange}
                     error={numberError}
                     helperText={numberError ? "Please enter numbers only" : ""}
-                    // inputProps={{
-                    //   title: "Please enter numbers only",
-                    //   inputMode: "numeric",
-                    //   pattern: "[0-9]*",
-                    // }}
                   />
                 </div>
                 <div className="textField-box">
@@ -265,19 +263,21 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 3) {return false;}
+                        if (trimmedValue !== "" && trimmedValue.length < 3) {
+                          return false;
+                        }
                         // Else, return true
                         return true;
                       },
                     })}
-                    label="City"                    
+                    label="City"
                     variant="outlined"
                     value={cityValue}
                     onChange={handleCityInputChange}
                     error={cityError}
                     helperText={
                       cityError ? "City must be 0 or at least 3 characters" : ""
-                    }                    
+                    }
                   />
                 </div>
                 <div className="textField-box">
@@ -290,7 +290,7 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 2 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 2) { return false;}
+                        if (trimmedValue !== "" && trimmedValue.length < 2) {return false;}    
                         // Else, return true
                         return true;
                       },
@@ -301,7 +301,9 @@ const EditBuilding = () => {
                     onChange={handleProvinceInputChange}
                     error={provinceError}
                     helperText={
-                      provinceError ? "Province must be 0 or at least 2 characters" : ""
+                      provinceError
+                        ? "Province must be 0 or at least 2 characters"
+                        : ""
                     }
                   />
                 </div>
@@ -311,20 +313,15 @@ const EditBuilding = () => {
                   </label>
                   <TextField
                     sx={{ width: "90%" }}
-                    {...register("postal_code", {
-                      validate: (value) => {
-                        const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
-                        return postalCodeRegex.test(value);
-                      },
-                    })}
-                    label="Postal Code"                    
+                    {...register("postal_code")}
+                    label="Postal Code"
                     variant="outlined"
                     value={postalCodeValue}
                     onChange={handlePostalCodeInputChange}
                     error={postalCodeError}
                     helperText={
                       postalCodeError ? "Please enter a valid postal code" : ""
-                    }                    
+                    }
                   />
                 </div>
                 <div className="textField-box">
