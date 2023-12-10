@@ -72,16 +72,16 @@ const EditBuilding = () => {
     setPostalCodeError(!postalCodeRegex.test(value));
   };
 
-  const [textValue, setValue] = useState("");
-  const [textError, setError] = useState(false);
+  const [streetValue, setStreetValue] = useState("");
+  const [streetError, setStreetError] = useState(false);
 
-  const handleInputChange = (event, validationFn = () => true) => {
+  const handleStreetInputChange = (event) => {
     const { value } = event.target;
-    setValue(value);
-    const trimmedValue = value.trim();    
-    setError(trimmedValue !== "" && trimmedValue.length < 3);
+    const trimmedValue = value.trim();
+    setStreetValue(trimmedValue);        
+    setStreetError(trimmedValue !== "" && trimmedValue.length < 3);
   };
-
+  
   // Initialize useForm
   const {
     register,
@@ -209,9 +209,9 @@ const EditBuilding = () => {
                     })}
                     label="Street"
                     variant="outlined"
-                    value={textValue}
-                    onChange={handleInputChange}
-                    error={textError}
+                    value={streetValue}
+                    onChange={handleStreetInputChange}
+                    error={streetError}
                     helperText={errors.street?.message || ""}
                   />
                 </div>
