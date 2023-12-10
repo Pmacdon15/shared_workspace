@@ -59,17 +59,7 @@ const EditBuilding = () => {
     const numericValue = value.replace(/[^0-9]/g, "");
     setNumberValue(numericValue);
     setNumberError(value !== numericValue);
-  };
-
-  const [postalCodeValue, setPostalCodeValue] = useState("");
-  const [postalCodeError, setPostalCodeError] = useState(false);
-
-  const handlePostalCodeInputChange = (event) => {
-    const { value } = event.target;
-    const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
-    setPostalCodeValue(value);
-    setPostalCodeError(!postalCodeRegex.test(value));
-  };
+  }; 
 
   const [streetValue, setStreetValue] = useState("");
   const [streetError, setStreetError] = useState(false);
@@ -99,6 +89,26 @@ const EditBuilding = () => {
     const trimmedValue = value.trim();
     setProvinceValue(trimmedValue);
     setProvinceError(trimmedValue !== "" && trimmedValue.length < 2);
+  };
+
+  const [postalCodeValue, setPostalCodeValue] = useState("");
+  const [postalCodeError, setPostalCodeError] = useState(false);
+
+  const handlePostalCodeInputChange = (event) => {
+    const { value } = event.target;
+    const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+    setPostalCodeValue(value);
+    setPostalCodeError(!postalCodeRegex.test(value));
+  };
+
+  const [locationValue, setLocationValue] = useState("");
+  const [locationError, setLocationError] = useState(false);
+
+  const handleLocationInputChange = (event) => {
+    const { value } = event.target;
+    const trimmedValue = value.trim();
+    setLocationValue(trimmedValue);
+    setLocationError(trimmedValue !== "" && trimmedValue.length < 2);
   };
 
   // Initialize useForm
@@ -334,17 +344,21 @@ const EditBuilding = () => {
                       validate: (value) => {
                         const trimmedValue = value.trim();
                         // If the value is not empty and not at least 3 characters, show an error
-                        if (trimmedValue !== "" && trimmedValue.length < 3) {
-                          return "Location must be 0 or at least 3 characters";
-                        }
+                        if (trimmedValue !== "" && trimmedValue.length < 2) { return false;}
+                        // Else, return true
                         return true;
                       },
                     })}
                     label="Location"
-                    defaultValue={buildingToEdit[0]?.location}
+                    value={locationValue}
                     variant="outlined"
-                    error={errors.location !== undefined}
-                    helperText={errors.location?.message || ""}
+                    onChange={handleLocationInputChange}
+                    error={locationError}
+                    helperText={
+                      locationError
+                        ? "Location must be 0 or at least 2 characters"
+                        : ""
+                    }                    
                   />
                 </div>
                 <div className="checkbox-container">
