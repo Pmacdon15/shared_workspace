@@ -58,15 +58,17 @@ const EditBuilding = () => {
   const [streetError, setStreetError] = useState(false);
 
   const handleStreetInputChange = (event) => {
-    const { value } = event.target;
-    console.log("Value:", value);
-  
+    const { value } = event.target;    
     setStreetValue(value); // Set the value without trimming
-    setStreetError(value.trim() !== "" && value.trim().length < 3);
-  
-    // Log the updated streetValue directly
-    console.log("Street value:", value);
+    setStreetError(value.trim() !== "" && value.trim().length < 3);  
   };
+
+  // Use useEffect to update TextField value when streetValue changes
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("street", streetValue);
+  }, [streetValue]);
+
   
   const handleNumberInputChange = (event) => {
     const { value } = event.target;
@@ -152,9 +154,8 @@ const EditBuilding = () => {
       "province",
       "postal_code",
       "location",
-    ];
-    
-    console.log("Form data:", formData);
+    ];    
+    //console.log("Form data:", formData);
     // Loop through each field
     for (const field of fieldsToUpdate) {
       // Check if the field is empty in the form data
@@ -167,12 +168,7 @@ const EditBuilding = () => {
     // Return the updated form data
     return formData;
   }
-   // Use useEffect to update TextField value when streetValue changes
-   useEffect(() => {
-    // Set the value of the TextField
-    setValue("street", streetValue);
-  }, [streetValue]);
-
+   
   // Handle form submission
   const onSubmit = async (data) => {
     try {
@@ -186,7 +182,7 @@ const EditBuilding = () => {
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;
 
-      console.log("Data:", data);
+      //console.log("Data:", data);
       updateFormData(data, buildingToEdit);
 
       const building_name = window.location.pathname.split("/").pop();
