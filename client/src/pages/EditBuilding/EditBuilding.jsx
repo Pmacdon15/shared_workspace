@@ -59,10 +59,15 @@ const EditBuilding = () => {
 
   const handleStreetInputChange = (event) => {
     const { value } = event.target;
+    console.log("Value:", value);
+  
     setStreetValue(value); // Set the value without trimming
     setStreetError(value.trim() !== "" && value.trim().length < 3);
+  
+    // Log the updated streetValue directly
+    console.log("Street value:", value);
   };
-
+  
   const handleNumberInputChange = (event) => {
     const { value } = event.target;
     const numericValue = value.replace(/[^0-9]/g, "");
@@ -112,6 +117,7 @@ const EditBuilding = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
@@ -138,22 +144,34 @@ const EditBuilding = () => {
 
   // Update the form data with the building information if the user did not enter anything
   function updateFormData(formData, buildingToEdit) {
+    // Define the fields to update with default values
     const fieldsToUpdate = [
-      { name: "street", defaultValue: buildingToEdit[0]?.street },
-      { name: "street_number", defaultValue: buildingToEdit[0]?.street_number },
-      { name: "city", defaultValue: buildingToEdit[0]?.city },
-      { name: "province", defaultValue: buildingToEdit[0]?.province },
-      { name: "postal_code", defaultValue: buildingToEdit[0]?.postal_code },
-      { name: "location", defaultValue: buildingToEdit[0]?.location },
+      "street",
+      "street_number",
+      "city",
+      "province",
+      "postal_code",
+      "location",
     ];
-
+    
+    console.log("Form data:", formData);
+    // Loop through each field
     for (const field of fieldsToUpdate) {
-      if (formData[field.name] === "") {
-        formData[field.name] = field.defaultValue;
+      // Check if the field is empty in the form data
+      if (!formData[field]) {
+        // If empty, set the default value from buildingToEdit or an empty string if not available
+        formData[field] = buildingToEdit[0]?.[field] || "";
       }
     }
+  
+    // Return the updated form data
     return formData;
   }
+   // Use useEffect to update TextField value when streetValue changes
+   useEffect(() => {
+    // Set the value of the TextField
+    setValue("street", streetValue);
+  }, [streetValue]);
 
   // Handle form submission
   const onSubmit = async (data) => {
@@ -168,6 +186,7 @@ const EditBuilding = () => {
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;
 
+      console.log("Data:", data);
       updateFormData(data, buildingToEdit);
 
       const building_name = window.location.pathname.split("/").pop();
@@ -238,9 +257,9 @@ const EditBuilding = () => {
                       },
                     })}
                     label="Street"
-                    variant="outlined"
-                    value={streetValue}
+                    variant="outlined"                    
                     onChange={handleStreetInputChange}
+                    value={streetValue}
                     error={streetError}
                     helperText={
                       streetError
@@ -374,16 +393,7 @@ const EditBuilding = () => {
                     public_transportChecked,
                     setPublic_transportChecked
                   )}
-                </div>
-                <div className="textField-box">
-                  <label className="label-width">Test</label>
-                  <TextField
-                    sx={{ width: "90%" }}
-                    {...register("test")}
-                    label="Test"
-                    variant="outlined"
-                  />
-                </div>
+                </div>               
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
                     Edit Building
