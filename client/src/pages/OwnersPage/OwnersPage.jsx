@@ -14,6 +14,8 @@ import {
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
+import "./OwnersPage.css";
+
 const OwnersPage = () => {
   const [userBuildings, setUserBuildings] = useState([]);
   const boxRef = useRef(null);
@@ -38,7 +40,7 @@ const OwnersPage = () => {
       }
     };
     fetchData();
-  }, []);
+  }, []); 
 
   const handleDeleteBuilding = async (buildingName) => {
     try {
@@ -80,6 +82,19 @@ const OwnersPage = () => {
             overflowY: "scroll",
           }}
         >
+          <div className="display-container">
+            <Link
+              to={`/addBuilding/${window.location.pathname.split("/").pop()}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Button variant="contained">Add Building</Button>
+            </Link>
+            <Link
+              to={`/`}
+              >
+            <Button variant="contained">Logout</Button>
+            </Link>
+          </div>
           {userBuildings.map((building) => (
             <div key={building.name} className="display-container">
               <Container maxWidth="md">
