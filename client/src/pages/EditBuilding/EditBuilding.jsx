@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -50,9 +50,17 @@ const EditBuilding = () => {
     fetchData();
   }, []);
 
+
+  // Initialize useForm
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    // formState: { errors },
+  } = useForm();
+  const navigate = useNavigate();
+
   // Below is for actively checking the input fields
-  const [numberValue, setNumberValue] = useState("");
-  const [numberError, setNumberError] = useState(false);
 
   const [streetValue, setStreetValue] = useState("");
   const [streetError, setStreetError] = useState(false);
@@ -67,9 +75,12 @@ const EditBuilding = () => {
   useEffect(() => {
     // Set the value of the TextField
     setValue("street", streetValue);
-  }, [streetValue]);
+  }, [streetValue, setValue]);
 
   
+  const [numberValue, setNumberValue] = useState("");
+  const [numberError, setNumberError] = useState(false);
+
   const handleNumberInputChange = (event) => {
     const { value } = event.target;
     const numericValue = value.replace(/[^0-9]/g, "");
@@ -115,15 +126,7 @@ const EditBuilding = () => {
     setLocationError(value.trim() !== "" && value.trim().length < 2);
   };
 
-  // Initialize useForm
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm();
-  const navigate = useNavigate();
-
+  
   // Handle checkbox changes
   const handleCheckboxChange = (event, checkboxStateSetter) => {
     checkboxStateSetter(event.target.checked);
