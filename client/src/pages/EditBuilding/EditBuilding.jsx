@@ -116,6 +116,11 @@ const EditBuilding = () => {
     setProvinceError(value.trim() !== "" && value.trim().length < 2);
   };
 
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("province", provinceValue);
+  }, [provinceValue, setValue]);
+
   const [postalCodeValue, setPostalCodeValue] = useState("");
   const [postalCodeError, setPostalCodeError] = useState(false);
 
