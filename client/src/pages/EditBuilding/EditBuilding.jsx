@@ -88,6 +88,11 @@ const EditBuilding = () => {
     setNumberError(value !== numericValue);
   };
 
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("street_number", numberValue);
+  }, [numberValue, setValue]);
+
   const [cityValue, setCityValue] = useState("");
   const [cityError, setCityError] = useState(false);
 
