@@ -131,6 +131,11 @@ const EditBuilding = () => {
     setPostalCodeError(!postalCodeRegex.test(value));
   };
 
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("postal_code", postalCodeValue);
+  }, [postalCodeValue, setValue]);
+
   const [locationValue, setLocationValue] = useState("");
   const [locationError, setLocationError] = useState(false);
 
@@ -140,6 +145,10 @@ const EditBuilding = () => {
     setLocationError(value.trim() !== "" && value.trim().length < 2);
   };
 
+  useEffect(() => { 
+    // Set the value of the TextField
+    setValue("location", locationValue);
+  }, [locationValue, setValue]);
   
   // Handle checkbox changes
   const handleCheckboxChange = (event, checkboxStateSetter) => {
