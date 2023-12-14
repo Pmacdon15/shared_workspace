@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,8 +15,6 @@ const AddBuilding = () => {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -32,9 +30,10 @@ const AddBuilding = () => {
       </div>
     );
   };
-  
+
   const onSubmit = async (data) => {
     try {
+      // ! this might be unnecessary
       // If there are validation errors, the form won't submit
       if (
         errors.street_number ||
@@ -46,7 +45,7 @@ const AddBuilding = () => {
         errors.location
       ) {
         console.log("Invalid Field");
-        
+
         return;
       }
 
