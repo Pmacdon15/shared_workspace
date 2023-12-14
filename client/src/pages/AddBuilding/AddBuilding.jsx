@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -7,24 +7,140 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
+//import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
 const AddBuilding = () => {
   document.title = "Add Building";
-  const navigate = useNavigate();
+
+  const [smokingChecked, setSmokingChecked] = useState(false);
+  const [parkingChecked, setParkingChecked] = useState(false);
+  const [public_transportChecked, setPublic_transportChecked] = useState(false);
+  // Initialize useForm
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    setValue,
+    // formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
-  const renderCheckbox = (label) => {
-    const labelWithOutUnderScore = label.replace("_", " ");
+  // Below is for actively checking the input fields
+
+  const [nameValue, setNameValue] = useState("");
+  const [nameError, setNameError] = useState(false);
+
+  const handleNameInputChange = (event) => {
+    const { value } = event.target;
+    setNameValue(value);
+    setNameError(value.trim() !== "" && value.trim().length < 3);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("name", nameValue);
+  }, [nameValue, setValue]);
+
+  const [streetValue, setStreetValue] = useState("");
+  const [streetError, setStreetError] = useState(false);
+
+  const handleStreetInputChange = (event) => {
+    const { value } = event.target;
+    setStreetValue(value); // Set the value without trimming
+    setStreetError(value.trim() !== "" && value.trim().length < 3);
+  };
+
+  // Use useEffect to update TextField value when streetValue changes
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("street", streetValue);
+  }, [streetValue, setValue]);
+
+  const [numberValue, setNumberValue] = useState("");
+  const [numberError, setNumberError] = useState(false);
+
+  const handleNumberInputChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setNumberValue(numericValue);
+    setNumberError(value !== numericValue);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("street_number", numberValue);
+  }, [numberValue, setValue]);
+
+  const [cityValue, setCityValue] = useState("");
+  const [cityError, setCityError] = useState(false);
+
+  const handleCityInputChange = (event) => {
+    const { value } = event.target;
+    setCityValue(value);
+    setCityError(value.trim() !== "" && value.trim().length < 3);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("city", cityValue);
+  }, [cityValue, setValue]);
+
+  const [provinceValue, setProvinceValue] = useState("");
+  const [provinceError, setProvinceError] = useState(false);
+
+  const handleProvinceInputChange = (event) => {
+    const { value } = event.target;
+    setProvinceValue(value);
+    setProvinceError(value.trim() !== "" && value.trim().length < 2);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("province", provinceValue);
+  }, [provinceValue, setValue]);
+
+  const [postalCodeValue, setPostalCodeValue] = useState("");
+  const [postalCodeError, setPostalCodeError] = useState(false);
+
+  const handlePostalCodeInputChange = (event) => {
+    const { value } = event.target;
+    const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+    setPostalCodeValue(value);
+    setPostalCodeError(!postalCodeRegex.test(value));
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("postal_code", postalCodeValue);
+  }, [postalCodeValue, setValue]);
+
+  const [locationValue, setLocationValue] = useState("");
+  const [locationError, setLocationError] = useState(false);
+
+  const handleLocationInputChange = (event) => {
+    const { value } = event.target;
+    setLocationValue(value);
+    setLocationError(value.trim() !== "" && value.trim().length < 2);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("location", locationValue);
+  }, [locationValue, setValue]);
+
+  // Handle checkbox changes
+  const handleCheckboxChange = (event, checkboxStateSetter) => {
+    checkboxStateSetter(event.target.checked);
+  };
+
+  const renderCheckbox = (label, state, stateSetter) => {
     return (
       <div>
-        <label>{labelWithOutUnderScore}</label>
+        <label>{label}</label>
         <Checkbox
           {...register(label.toLowerCase())}
+          checked={state}
+          onChange={(event) => handleCheckboxChange(event, stateSetter)}
           sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
         />
       </div>
@@ -33,21 +149,9 @@ const AddBuilding = () => {
 
   const onSubmit = async (data) => {
     try {
-      // ! this might be unnecessary
-      // If there are validation errors, the form won't submit
-      if (
-        errors.street_number ||
-        errors.postal_code ||
-        errors.name ||
-        errors.street ||
-        errors.city ||
-        errors.province ||
-        errors.location
-      ) {
-        console.log("Invalid Field");
-
-        return;
-      }
+      data.smoking = smokingChecked ? 1 : 0;
+      data.parking = parkingChecked ? 1 : 0;
+      data.public_transport = public_transportChecked ? 1 : 0;
 
       const user_email = window.location.pathname.split("/").pop();
       console.log("User Email: ", user_email);
@@ -74,14 +178,14 @@ const AddBuilding = () => {
           sx={{
             bgcolor: "#cfe8fc",
             height: "90vh",
-            marginTop: "3%",
+            marginTop: " 3%",
             borderRadius: "9px",
             padding: "1%",
             overflowY: "scroll",
           }}
         >
           <div className="header">
-            <div className="text">Add Building information</div>
+            <div className="text">Edit Building information</div>
             <div className="underline"></div>
           </div>
           <Container maxWidth="md">
@@ -94,124 +198,166 @@ const AddBuilding = () => {
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
                 <TextField
-                  sx={{ width: "80%" }}
+                  sx={{ width: "90%" }}
                   {...register("name", {
-                    required: "Building Name is required",
-                    minLength: {
-                      value: 3,
-                      message: "Building Name must be at least 3 characters",
+                    validate: (value) => {
+                      const trimmedValue = value.trim();
+                      // If the value is not empty and not at least 3 characters, show an error
+                      if (trimmedValue !== "" && trimmedValue.length < 3) {
+                        return false;
+                      }
+                      // Else, return true
+                      return true;
                     },
                   })}
                   label="Building Name"
                   variant="outlined"
-                  error={errors.name !== undefined}
-                  helperText={errors.name?.message || ""}
+                  onChange={handleNameInputChange}
+                  value={nameValue}
+                  error={false}
+                  helperText={
+                    nameError ? "Name must be at least 3 characters" : ""
+                  }
                 />
+
                 <TextField
-                  sx={{ width: "80%" }}
+                  sx={{ width: "90%" }}
                   {...register("street", {
-                    required: "Street is required",
-                    minLength: {
-                      value: 3,
-                      message: "Street must be at least 3 characters",
+                    validate: (value) => {
+                      const trimmedValue = value.trim();
+                      // If the value is not empty and not at least 3 characters, show an error
+                      if (
+                        trimmedValue !== "" &&
+                        !/\s/.test(trimmedValue) &&
+                        trimmedValue.length < 3
+                      ) {
+                        return false;
+                      }
+                      // Else, return true
+                      return true;
                     },
                   })}
                   label="Street"
                   variant="outlined"
-                  error={errors.street !== undefined}
-                  helperText={errors.street?.message || ""}
+                  onChange={handleStreetInputChange}
+                  value={streetValue}
+                  error={streetError}
+                  helperText={
+                    streetError
+                      ? "Street must be 0 or at least 3 characters"
+                      : ""
+                  }
                 />
+
                 <TextField
-                  sx={{ width: "80%" }}
-                  {...register("street_number", {
-                    required: "Street Number is required",
-                    validate: (value) => {
-                      const numericValue = value.replace(/[^0-9]/g, "");
-                      if (value !== numericValue) {
-                        return "Please enter numbers only";
-                      }
-                      return true;
-                    },
-                  })}
+                  sx={{ width: "90%" }}
+                  {...register("street_number")}
                   label="Street Number"
                   variant="outlined"
-                  error={errors.street_number !== undefined}
-                  helperText={errors.street_number?.message || ""}
-                  inputProps={{
-                    inputMode: "numeric",
-                    pattern: "[0-9]*",
-                    title: "Please enter numbers only",
-                  }}
+                  value={numberValue}
+                  onChange={handleNumberInputChange}
+                  error={numberError}
+                  helperText={numberError ? "Please enter numbers only" : ""}
                 />
+
                 <TextField
-                  sx={{ width: "80%" }}
+                  sx={{ width: "90%" }}
                   {...register("city", {
-                    required: "City is required",
-                    minLength: {
-                      value: 3,
-                      message: "City must be at least 3 characters",
+                    validate: (value) => {
+                      const trimmedValue = value.trim();
+                      // If the value is not empty and not at least 3 characters, show an error
+                      if (trimmedValue !== "" && trimmedValue.length < 3) {
+                        return false;
+                      }
+                      // Else, return true
+                      return true;
                     },
                   })}
                   label="City"
                   variant="outlined"
-                  error={errors.city !== undefined}
-                  helperText={errors.city?.message || ""}
+                  value={cityValue}
+                  onChange={handleCityInputChange}
+                  error={cityError}
+                  helperText={
+                    cityError ? "City must be 0 or at least 3 characters" : ""
+                  }
                 />
+
                 <TextField
-                  sx={{ width: "80%" }}
+                  sx={{ width: "90%" }}
                   {...register("province", {
-                    required: "Province is required",
-                    minLength: {
-                      value: 2,
-                      message: "Province must be at least 3 characters",
+                    validate: (value) => {
+                      const trimmedValue = value.trim();
+                      // If the value is not empty and not at least 2 characters, show an error
+                      if (trimmedValue !== "" && trimmedValue.length < 2) {
+                        return false;
+                      }
+                      // Else, return true
+                      return true;
                     },
                   })}
                   label="Province"
                   variant="outlined"
-                  error={errors.province !== undefined}
-                  helperText={errors.province?.message || ""}
+                  value={provinceValue}
+                  onChange={handleProvinceInputChange}
+                  error={provinceError}
+                  helperText={
+                    provinceError
+                      ? "Province must be 0 or at least 2 characters"
+                      : ""
+                  }
                 />
+
                 <TextField
-                  sx={{ width: "80%" }}
-                  {...register("postal_code", {
-                    required: "Postal Code is required",
-                    pattern: {
-                      value: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
-                      message: "Please enter a valid postal code",
-                    },
-                  })}
+                  sx={{ width: "90%" }}
+                  {...register("postal_code")}
                   label="Postal Code"
                   variant="outlined"
-                  error={errors.postal_code !== undefined}
-                  helperText={errors.postal_code?.message || ""}
-                  inputProps={{
-                    pattern: "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$",
-                    title: "Please enter a valid postal code",
-                  }}
+                  value={postalCodeValue}
+                  onChange={handlePostalCodeInputChange}
+                  error={postalCodeError}
+                  helperText={
+                    postalCodeError ? "Please enter a valid postal code" : ""
+                  }
                 />
+
                 <TextField
-                  sx={{ width: "80%" }}
+                  sx={{ width: "90%" }}
                   {...register("location", {
-                    required: "Location is required",
-                    minLength: {
-                      value: 3,
-                      message: "Location must be at least 3 characters",
+                    validate: (value) => {
+                      const trimmedValue = value.trim();
+                      // If the value is not empty and not at least 3 characters, show an error
+                      if (trimmedValue !== "" && trimmedValue.length < 2) {
+                        return false;
+                      }
+                      // Else, return true
+                      return true;
                     },
                   })}
                   label="Location"
+                  value={locationValue}
                   variant="outlined"
-                  error={errors.location !== undefined}
-                  helperText={errors.location?.message || ""}
+                  onChange={handleLocationInputChange}
+                  error={locationError}
+                  helperText={
+                    locationError
+                      ? "Location must be 0 or at least 2 characters"
+                      : ""
+                  }
                 />
 
                 <div className="checkbox-container">
-                  {renderCheckbox("Smoking")}
-                  {renderCheckbox("Parking")}
-                  {renderCheckbox("Public_Transport")}
+                  {renderCheckbox("Smoking", smokingChecked, setSmokingChecked)}
+                  {renderCheckbox("Parking", parkingChecked, setParkingChecked)}
+                  {renderCheckbox(
+                    "Public Transport",
+                    public_transportChecked,
+                    setPublic_transportChecked
+                  )}
                 </div>
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
-                    Add Building
+                    Edit Building
                   </Button>
                 </div>
               </form>
