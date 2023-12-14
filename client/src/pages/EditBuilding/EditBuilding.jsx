@@ -98,11 +98,15 @@ const EditBuilding = () => {
 
   const handleCityInputChange = (event) => {
     const { value } = event.target;
-
     setCityValue(value);
     setCityError(value.trim() !== "" && value.trim().length < 3);
   };
 
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("city", cityValue);
+  }, [cityValue, setValue]);
+  
   const [provinceValue, setProvinceValue] = useState("");
   const [provinceError, setProvinceError] = useState(false);
 
