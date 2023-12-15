@@ -112,7 +112,7 @@ function BuildingsWorkspaces() {
                     >
                       <TableHead>
                         <TableRow>
-                          <TableCell align="center">Number Of Seats</TableCell>
+                          <TableCell align="center">Number of Seats</TableCell>
                           <TableCell align="center">Price</TableCell>
                           <TableCell align="center">Lease Term(Days)</TableCell>
                           <TableCell align="center">Available</TableCell>
