@@ -25,9 +25,9 @@ const AddWorkspace = () => {
 
   const handleNumberOfSeatsChange = (event) => {
     const { value } = event.target;
-    const numericValue = value.replace(/[^0-9]/g, "");
-    setNumberOfSeatsValue("number_of_seats", numericValue);
-    setNumberOfSeatsError(numericValue.length === 0);
+    const numericValue = value.replace(/[^1-9]/g, "");
+    setNumberOfSeatsValue(numericValue);
+    setNumberOfSeatsError(value !== numericValue);
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const AddWorkspace = () => {
           }}
         >
           <div className="header">
-            <div className="text">Edit Building information</div>
+            <div className="text">Add Workspace</div>
             <div className="underline"></div>
           </div>
           <Container maxWidth="md">
@@ -64,7 +64,20 @@ const AddWorkspace = () => {
               <form
                 // onSubmit={handleSubmit(onSubmit)}
                 className="custom-form"
-              ></form>
+              >
+                <TextField
+                sx={{width: "90%"}}
+                  {...register("number_of_seats")}
+                  label="Number of Seats"
+                  variant="outlined"
+                  value={numberOfSeatsValue}
+                  onChange={handleNumberOfSeatsChange}
+                  error={number_of_seats_error}
+                  helperText={
+                    number_of_seats_error ? "Please enter a number starting from 1" : ""
+                  }
+                />
+              </form>
             </Box>
           </Container>
         </Box>
