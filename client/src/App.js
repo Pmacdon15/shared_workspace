@@ -9,6 +9,7 @@ import OwnersPage from './pages/OwnersPage/OwnersPage';
 import AddBuilding from './pages/AddBuilding/AddBuilding';
 import EditBuilding from './pages/EditBuilding/EditBuilding';
 import BuildingsWorkspaces from './pages/BuildingsWorkspaces/BuildingsWorkspaces';
+import AddWorkspace from './pages/AddWorkspace/AddWorkspace';
 import EditWorkspace from './pages/EditWorkspace/EditWorkspace';
 import OwnerInfoPage from './pages/OwnerInfoPage/OwnerInfoPage';
 
@@ -20,6 +21,7 @@ function App() {
     <Route path="/addbuilding/:userEmail" element={<AddBuilding />} />
     <Route path="/editbuilding/:building_name" element={<EditBuilding />} /> 
     <Route path="/workspaces/:building_name" element={<BuildingsWorkspaces />} />
+    <Route path="/addworkspace/:building_name" element={<AddWorkspace />} />
     <Route path="/editworkspace/:workspace_name" element={<EditWorkspace />} />
     <Route path="/ownerInfo/:buildingId" element={<OwnerInfoPage />} />
     
