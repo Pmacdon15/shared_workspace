@@ -86,6 +86,19 @@ function BuildingsWorkspaces() {
             overflowY: "scroll",
           }}
         >
+          <div className="display-container">
+            <Link
+              to={`/addWorkspace/${window.location.pathname.split("/").pop()}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Button variant="contained">Add Workspace</Button>
+            </Link>
+            <Link
+              to={`/`}
+              >
+            <Button variant="contained">Logout</Button>
+            </Link>
+            </div>
           {workspaces.map((workspace) => (
             <div key={workspace.id} className="display-container">
               <Container maxWidth="md">

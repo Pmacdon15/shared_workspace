@@ -52,7 +52,7 @@ const AddWorkspace = () => {
           <div className="header">
             <div className="text">Add Workspace</div>
             <div className="underline"></div>
-          </div>
+          </div>          
           <Container maxWidth="md">
             <Box
               sx={{
