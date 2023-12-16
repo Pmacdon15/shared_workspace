@@ -19,6 +19,20 @@ const AddWorkspace = () => {
 
   const navigate = useNavigate();
 
+  const [workspaceNameValue, setWorkspaceNameValue] = useState("");
+  const [workspace_name_error, setWorkspaceNameError] = useState(false);
+
+  const handleWorkspaceNameChange = (event) => {
+    const { value } = event.target;    
+    setWorkspaceNameValue(value);
+    setWorkspaceNameError(value.trim().length < 3);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("workspace_name", workspaceNameValue);
+  }, [workspaceNameValue, setValue]);
+
   const [numberOfSeatsValue, setNumberOfSeatsValue] = useState("");
   const [number_of_seats_error, setNumberOfSeatsError] = useState(false);
 
@@ -94,6 +108,21 @@ const AddWorkspace = () => {
                 // onSubmit={handleSubmit(onSubmit)}
                 className="custom-form"
               >
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("workspace_name")}
+                  label="Workspace Name"
+                  variant="outlined"
+                  value={workspaceNameValue}
+                  onChange={handleWorkspaceNameChange}
+                  error={workspace_name_error}
+                  helperText={
+                    workspace_name_error
+                      ? "Please enter at least 3 characters"
+                      : ""
+                  }
+                />
+
                 <TextField
                   sx={{ width: "90%" }}
                   {...register("number_of_seats")}

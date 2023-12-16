@@ -32,7 +32,7 @@ const AddBuilding = () => {
   const handleNameInputChange = (event) => {
     const { value } = event.target;
     setNameValue(value);
-    setNameError(value.trim() !== "" && value.trim().length < 3);
+    setNameError(value.trim().length < 3);
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const AddBuilding = () => {
   const handleStreetInputChange = (event) => {
     const { value } = event.target;
     setStreetValue(value); // Set the value without trimming
-    setStreetError(value.trim() !== "" && value.trim().length < 3);
+    setStreetError(value.trim().length < 3);
   };
 
   // Use useEffect to update TextField value when streetValue changes
@@ -76,7 +76,7 @@ const AddBuilding = () => {
   const handleCityInputChange = (event) => {
     const { value } = event.target;
     setCityValue(value);
-    setCityError(value.trim() !== "" && value.trim().length < 3);
+    setCityError(value.trim().length < 3);
   };
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const AddBuilding = () => {
   const handleProvinceInputChange = (event) => {
     const { value } = event.target;
     setProvinceValue(value);
-    setProvinceError(value.trim() !== "" && value.trim().length < 2);
+    setProvinceError(value.trim().length < 2);
   };
 
   useEffect(() => {
@@ -119,7 +119,7 @@ const AddBuilding = () => {
   const handleLocationInputChange = (event) => {
     const { value } = event.target;
     setLocationValue(value);
-    setLocationError(value.trim() !== "" && value.trim().length < 2);
+    setLocationError(value.trim().length < 2);
   };
 
   useEffect(() => {
