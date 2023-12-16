@@ -4,7 +4,7 @@
     align-items: center;
     gap: 9px;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 1%;
 
 }
 
@@ -62,15 +62,17 @@
     gap: 5px;
     /* margin: 30px; */
     margin-top: 1%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row
 }
 
 .custom-form {
-    margin-top: 10%;
+    margin-top: 1%;
     display: flex;
     align-items: center;
     flex-direction: column;
-
-    gap: 15px;
+    gap: 1%;
 }
 
 .textField-box {
