@@ -148,7 +148,6 @@ const AddBuilding = () => {
 
   const onSubmit = async (data) => {
     try {
-
       for (const key in data) {
         if (data[key] === "") {
           alert("Please fill out all fields before submitting.");
@@ -227,7 +226,7 @@ const AddBuilding = () => {
                   error={streetError}
                   helperText={
                     streetError
-                      ? "Street must be 0 or at least 3 characters"
+                      ? "Street must be at least 3 characters"
                       : ""
                   }
                 />
@@ -252,7 +251,7 @@ const AddBuilding = () => {
                   onChange={handleCityInputChange}
                   error={cityError}
                   helperText={
-                    cityError ? "City must be 0 or at least 3 characters" : ""
+                    cityError ? "City must be at least 3 characters" : ""
                   }
                 />
 
@@ -266,7 +265,7 @@ const AddBuilding = () => {
                   error={provinceError}
                   helperText={
                     provinceError
-                      ? "Province must be 0 or at least 2 characters"
+                      ? "Province must be at least 3 characters"
                       : ""
                   }
                 />
@@ -294,7 +293,7 @@ const AddBuilding = () => {
                   error={locationError}
                   helperText={
                     locationError
-                      ? "Location must be 0 or at least 2 characters"
+                      ? "Location must be at least 2 characters"
                       : ""
                   }
                 />

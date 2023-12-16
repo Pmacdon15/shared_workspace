@@ -324,7 +324,7 @@ module.exports = {
       return null;
     }
   },
-
+  
   async createWorkspace(
     name,
     building_name,
@@ -349,20 +349,21 @@ module.exports = {
           type,
         ]
       );
-
+  
       if (rows.affectedRows === 0) {
         throw new Error("Workspace not created");
       }
-
+  
       const workspace = await module.exports.getWorkspaceByName(name);
       console.log("Create workspace result:", name);
-
+  
       return workspace;
     } catch (error) {
       console.error("Error:", error);
       return null;
     }
-  },
+  }
+  ,
 
   async updateWorkspaceByName(
     name,

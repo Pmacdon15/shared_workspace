@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -19,19 +19,19 @@ const AddWorkspace = () => {
 
   const navigate = useNavigate();
 
-  const [workspaceNameValue, setWorkspaceNameValue] = useState("");
-  const [workspace_name_error, setWorkspaceNameError] = useState(false);
+  const [nameValue, setNameValue] = useState("");
+  const [name_error, setNameError] = useState(false);
 
-  const handleWorkspaceNameChange = (event) => {
+  const handleNameChange = (event) => {
     const { value } = event.target;
-    setWorkspaceNameValue(value);
-    setWorkspaceNameError(value.trim().length < 3);
+    setNameValue(value);
+    setNameError(value.trim().length < 3);
   };
 
   useEffect(() => {
     // Set the value of the TextField
-    setValue("workspace_name", workspaceNameValue);
-  }, [workspaceNameValue, setValue]);
+    setValue("name", nameValue);
+  }, [nameValue, setValue]);
 
   const [numberOfSeatsValue, setNumberOfSeatsValue] = useState("");
   const [number_of_seats_error, setNumberOfSeatsError] = useState(false);
@@ -78,8 +78,8 @@ const AddWorkspace = () => {
     setValue("lease_term", leaseTermValue);
   }, [leaseTermValue, setValue]);
 
-  const [availableValue, setAvailableValue] = useState("");
-  const [available_error, setAvailableError] = useState(false);
+  // const [availableValue, setAvailableValue] = useState("");
+  // const [available_error, setAvailableError] = useState(false);
 
   // Handle checkbox changes
   const handleCheckboxChange = (event, checkboxStateSetter) => {
@@ -99,39 +99,71 @@ const AddWorkspace = () => {
       </div>
     );
   };
+  
+  // const [squareFootageValue, setSquareFootageValue] = useState("");
+  // const [square_footage_error, setSquareFootageError] = useState(false);
 
-  // Todo fine out if this is unneeded
+  // const handleSquareFootageChange = (event) => {
+  //   const { value } = event.target;
+  //   const numericValue = value.replace(/[^1-9]/g, "");
+  //   setSquareFootageValue(numericValue);
+  //   setSquareFootageError(value !== numericValue);
+  // };
+
   // useEffect(() => {
   //   // Set the value of the TextField
-  //   setValue("available", availableValue);
-  // }
-  // , [availableValue, setValue]);
+  //   setValue("square_footage", squareFootageValue);
+  // }, [squareFootageValue, setValue]);
 
-  const [squareFootageValue, setSquareFootageValue] = useState("");
-  const [square_footage_error, setSquareFootageError] = useState(false);
+  const [sizeValue, setSizeValue] = useState("");
+  const [size_error, setSizeError] = useState(false);
 
-  const handleSquareFootageChange = (event) => {
+  const handleSizeChange = (event) => {
     const { value } = event.target;
     const numericValue = value.replace(/[^1-9]/g, "");
-    setSquareFootageValue(numericValue);
-    setSquareFootageError(value !== numericValue);
+    setSizeValue(numericValue);
+    setSizeError(value !== numericValue);
   };
 
   useEffect(() => {
     // Set the value of the TextField
-    setValue("square_footage", squareFootageValue);
-  }, [squareFootageValue, setValue]);
+    setValue("size", sizeValue);
+  }, [sizeValue, setValue]);
+
+  const [typeValue, setTypeValue] = useState("");
+  const [type_error, setTypeError] = useState(false);
+
+  const handleTypeChange = (event) => {
+    const { value } = event.target;
+    setTypeValue(value);
+    setTypeError(value.trim().length < 3);
+  }
 
   const onSubmit = async (data) => {
-    //console.log(data);
-    for (const key in data) {
-      if (data[key] === "") {
-        alert("Please fill out all fields before submitting.");
-        return;
+    try {
+      for (const key in data) {
+        if (data[key] === "") {
+          alert("Please fill out all fields before submitting.");
+          return;
+        }
       }
-    }
+      data.available = availableChecked ? 1 : 0;
 
-    data.available = availableChecked ? 1 : 0;
+      const building_name = window.location.pathname.split("/")[2];
+      console.log(building_name);
+      console.log(data);
+      const response = await axios.post(
+        `http://localhost:5544/workspace/${building_name}`,
+        data
+      );
+
+      if (response.status === 200) {
+        // alert("Workspace added successfully!");
+        navigate(`/workspaces/${building_name}`);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
@@ -161,22 +193,17 @@ const AddWorkspace = () => {
                 paddingTop: "1px",
               }}
             >
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="custom-form"
-              >
+              <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("workspace_name")}
+                  {...register("name")}
                   label="Workspace Name"
                   variant="outlined"
-                  value={workspaceNameValue}
-                  onChange={handleWorkspaceNameChange}
-                  error={workspace_name_error}
+                  value={nameValue}
+                  onChange={handleNameChange}
+                  error={name_error}
                   helperText={
-                    workspace_name_error
-                      ? "Please enter at least 3 characters"
-                      : ""
+                    name_error ? "Please enter at least 3 characters" : ""
                   }
                 />
 
@@ -230,15 +257,29 @@ const AddWorkspace = () => {
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("square_footage")}
+                  {...register("size")}
                   label="Square Footage"
                   variant="outlined"
-                  value={squareFootageValue}
-                  onChange={handleSquareFootageChange}
-                  error={square_footage_error}
+                  value={sizeValue}
+                  onChange={handleSizeChange}
+                  error={size_error}
                   helperText={
-                    square_footage_error
+                    size_error
                       ? "Please enter a number starting from 1"
+                      : ""
+                  }
+                />
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("type")}
+                  label="Type"
+                  variant="outlined"
+                  value={typeValue}
+                  onChange={handleTypeChange}
+                  error={type_error}
+                  helperText={
+                    type_error
+                      ? "Please enter at least 3 characters"
                       : ""
                   }
                 />
