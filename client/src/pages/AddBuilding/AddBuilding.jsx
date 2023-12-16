@@ -10,7 +10,6 @@ import Checkbox from "@mui/material/Checkbox";
 //import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
-import Grid from "@mui/material/Grid";
 
 const AddBuilding = () => {
   document.title = "Add Building";
@@ -203,7 +202,6 @@ const AddBuilding = () => {
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
-               {/* <div className="addForm"> */}
                 <TextField
                   sx={{ width: "90%" }}
                   // margin = "1%"
@@ -217,21 +215,19 @@ const AddBuilding = () => {
                     nameError ? "Name must be at least 3 characters" : ""
                   }
                 />
-                {/* </div> */}
 
-                {/* <div className="addForm"> */}
-                  <TextField
-                    sx={{ width: "90%" }}
-                    {...register("street")}
-                    label="Street"
-                    variant="outlined"
-                    onChange={handleStreetInputChange}
-                    value={streetValue}
-                    error={streetError}
-                    helperText={
-                      streetError ? "Street must be at least 3 characters" : ""
-                    }
-                  />
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("street")}
+                  label="Street"
+                  variant="outlined"
+                  onChange={handleStreetInputChange}
+                  value={streetValue}
+                  error={streetError}
+                  helperText={
+                    streetError ? "Street must be at least 3 characters" : ""
+                  }
+                />
                 {/* </div> */}
 
                 <TextField

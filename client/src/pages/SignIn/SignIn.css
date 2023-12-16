@@ -65,7 +65,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    
+
 }
 
 .textField-box {
@@ -74,6 +74,7 @@
     width: 80%;
     padding: 1%;
 }
+
 .submit-container {
     display: flex;
     gap: 5px;
@@ -89,15 +90,6 @@
     gap: 5px;
     margin-top: 1%;
 }
-.label-width {
-    min-width: 120px;
-    /* Adjust the width as needed */
-}
-
-label {
-    margin-right: 1%;
-}
-
 
 .checkbox-container {
     display: flex;
@@ -107,4 +99,13 @@ label {
     /* gap: 9px; */
     width: 80%;
     /* margin-top: 30px; */
+}
+
+.label-width {
+    min-width: 120px;
+    /* Adjust the width as needed */
+}
+
+label {
+    margin-right: 1%;
 }
