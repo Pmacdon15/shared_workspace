@@ -7,7 +7,6 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-//import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
 // import "./AddWorkspace.css";
@@ -35,6 +34,36 @@ const AddWorkspace = () => {
     setValue("number_of_seats", numberOfSeatsValue);
   }, [numberOfSeatsValue, setValue]);
 
+  const [priceValue, setPriceValue] = useState("");
+  const [price_error, setPriceError] = useState(false);
+
+  const handlePriceChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^1-9]/g, "");
+    setPriceValue(numericValue);
+    setPriceError(value !== numericValue);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("price", priceValue);
+  }, [priceValue, setValue]);
+
+  const [leaseTermValue, setLeaseTermValue] = useState("");
+  const [lease_term_error, setLeaseTermError] = useState(false);
+
+  const handleLeaseTermChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^1-9]/g, "");
+    setLeaseTermValue(numericValue);
+    setLeaseTermError(value !== numericValue);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("lease_term", leaseTermValue);
+  }, [leaseTermValue, setValue]);
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -52,7 +81,7 @@ const AddWorkspace = () => {
           <div className="header">
             <div className="text">Add Workspace</div>
             <div className="underline"></div>
-          </div>          
+          </div>
           <Container maxWidth="md">
             <Box
               sx={{
@@ -66,7 +95,7 @@ const AddWorkspace = () => {
                 className="custom-form"
               >
                 <TextField
-                sx={{width: "90%"}}
+                  sx={{ width: "90%" }}
                   {...register("number_of_seats")}
                   label="Number of Seats"
                   variant="outlined"
@@ -74,9 +103,43 @@ const AddWorkspace = () => {
                   onChange={handleNumberOfSeatsChange}
                   error={number_of_seats_error}
                   helperText={
-                    number_of_seats_error ? "Please enter a number starting from 1" : ""
+                    number_of_seats_error
+                      ? "Please enter a number starting from 1"
+                      : ""
                   }
                 />
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("price")}
+                  label="Price"
+                  variant="outlined"
+                  value={priceValue}
+                  onChange={handlePriceChange}
+                  error={price_error}
+                  helperText={
+                    price_error ? "Please enter a number starting from 0" : ""
+                  }
+                />
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("lease_term")}
+                  label="Lease Term"
+                  variant="outlined"
+                  value={leaseTermValue}
+                  onChange={handleLeaseTermChange}
+                  error={lease_term_error}
+                  helperText={
+                    lease_term_error
+                      ? "Please enter a number starting from 1"
+                      : ""
+                  }
+                />
+
+                <div className="submit-container">
+                  <Button type="submit" variant="contained">
+                    Edit Building
+                  </Button>
+                </div>
               </form>
             </Box>
           </Container>

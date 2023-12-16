@@ -184,7 +184,7 @@ const AddBuilding = () => {
           }}
         >
           <div className="header">
-            <div className="text">Edit Building information</div>
+            <div className="text">Add Building</div>
             <div className="underline"></div>
           </div>
           <Container maxWidth="md">
