@@ -49,8 +49,9 @@ const SignIn = () => {
         <Box
           sx={{
             bgcolor: "#cfe8fc",
-            height: "70vh",
+            height: "60vh",
             margin: "10%",
+            marginTop: "20%",
             borderRadius: "9px",
           }}
         >

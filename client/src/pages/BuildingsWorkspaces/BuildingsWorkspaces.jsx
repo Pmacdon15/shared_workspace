@@ -105,7 +105,7 @@ function BuildingsWorkspaces() {
             </Link>
           </div>
           {workspaces.map((workspace) => (
-            <div key={workspace.id} className="display-container">
+            // <div key={workspace.id} className="display-container">
               <Container maxWidth="md">
                 <Box
                   sx={{
@@ -174,7 +174,7 @@ function BuildingsWorkspaces() {
                   </div>
                 </Box>
               </Container>
-            </div>
+            // </div>
           ))}
         </Box>
       </Container>

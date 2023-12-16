@@ -94,7 +94,7 @@ const OwnersPage = () => {
             </Link>
           </div>
           {userBuildings.map((building) => (
-            <div key={building.name} className="display-container">
+            // <div key={building.name} className="display-container">
               <Container maxWidth="md">
                 <Box
                   sx={{
@@ -206,7 +206,7 @@ const OwnersPage = () => {
                   </div>
                 </Box>
               </Container>
-            </div>
+            // </div>
           ))}
         </Box>
       </Container>
