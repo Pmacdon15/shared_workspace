@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 
 import { Link } from "react-router-dom";
 
-import "./CoworkersPage.css";
+// import "./CoworkersPage.css";
 
 function CoworkersPage() {
   const [workspaces, setWorkspaces] = useState([]);

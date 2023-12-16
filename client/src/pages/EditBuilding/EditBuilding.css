@@ -21,7 +21,7 @@
     background: rgba(4, 162, 176, 0.534);
     border-radius: 9px;    
 } */
-
+/* 
 .textField-box {
     display: flex;
     flex-direction: row;
@@ -31,7 +31,7 @@
 
 .label-width {
     min-width: 120px;
-    /* Adjust the width as needed */
+   
 }
 
 label {
@@ -47,4 +47,4 @@ label {
     gap: 9px;
     width: 80%;
     margin-top: 30px;
-}
+} */

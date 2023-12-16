@@ -17,7 +17,8 @@ import Button from "@mui/material/Button";
 
 import { useNavigate, Link } from "react-router-dom";
 
-import "./BuildingsWorkspaces.css";
+// import "./BuildingsWorkspaces.css";
+// import "../SignIn/SignIn.css";
 
 function BuildingsWorkspaces() {
   const [workspaces, setWorkspaces] = useState([]);
@@ -89,7 +90,7 @@ function BuildingsWorkspaces() {
             overflowY: "scroll",
           }}
         >
-          <div className="display-container">
+          <div className="navButtons">
             <Button variant="contained" onClick={() => navigate(-1)}>
               Back
             </Button>

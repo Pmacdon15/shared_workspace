@@ -76,11 +76,11 @@ const OwnersPage = () => {
             height: "90vh",
             marginTop: " 3%",
             borderRadius: "9px",
-            padding: "1%",
+            paddingTop: "1%",
             overflowY: "scroll",
           }}
         >
-          <div className="display-container">
+          <div className="navButtons">
             <Link
               to={`/addBuilding/${window.location.pathname.split("/").pop()}`}
               style={{ textDecoration: "none" }}
@@ -101,7 +101,7 @@ const OwnersPage = () => {
                     bgcolor: "#90caf9",
                     borderRadius: "9px",
                     paddingBottom: "1%",
-                    paddingLeft: "1%",
+                    paddingLeft: "2%",
                   }}
                 >
                   <h2>{building.name}</h2>
@@ -152,7 +152,7 @@ const OwnersPage = () => {
                   <TableContainer
                     component={Paper}
                     sx={{
-                      marginTop: "2%",
+                      marginTop: "1%",
                       overflowY: "auto",
                       maxWidth: 400,
                     }}
