@@ -99,21 +99,6 @@ const AddWorkspace = () => {
       </div>
     );
   };
-  
-  // const [squareFootageValue, setSquareFootageValue] = useState("");
-  // const [square_footage_error, setSquareFootageError] = useState(false);
-
-  // const handleSquareFootageChange = (event) => {
-  //   const { value } = event.target;
-  //   const numericValue = value.replace(/[^1-9]/g, "");
-  //   setSquareFootageValue(numericValue);
-  //   setSquareFootageError(value !== numericValue);
-  // };
-
-  // useEffect(() => {
-  //   // Set the value of the TextField
-  //   setValue("square_footage", squareFootageValue);
-  // }, [squareFootageValue, setValue]);
 
   const [sizeValue, setSizeValue] = useState("");
   const [size_error, setSizeError] = useState(false);
