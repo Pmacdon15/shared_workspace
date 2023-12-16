@@ -148,6 +148,14 @@ const AddBuilding = () => {
 
   const onSubmit = async (data) => {
     try {
+
+      for (const key in data) {
+        if (data[key] === "") {
+          alert("Please fill out all fields before submitting.");
+          return;
+        }
+      }
+      
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;

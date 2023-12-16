@@ -120,10 +120,19 @@ const AddWorkspace = () => {
   useEffect(() => {
     // Set the value of the TextField
     setValue("square_footage", squareFootageValue);
-  }
-  , [squareFootageValue, setValue]);
+  }, [squareFootageValue, setValue]);
 
+  const onSubmit = async (data) => {
+    //console.log(data);
+    for (const key in data) {
+      if (data[key] === "") {
+        alert("Please fill out all fields before submitting.");
+        return;
+      }
+    }
 
+    data.available = availableChecked ? 1 : 0;
+  };
 
   return (
     <React.Fragment>
@@ -153,7 +162,7 @@ const AddWorkspace = () => {
               }}
             >
               <form
-                // onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
                 className="custom-form"
               >
                 <TextField
@@ -212,7 +221,11 @@ const AddWorkspace = () => {
                   }
                 />
                 <div className="checkbox-container">
-                  {renderCheckbox("Available", availableChecked, setAvailableChecked)}
+                  {renderCheckbox(
+                    "Available",
+                    availableChecked,
+                    setAvailableChecked
+                  )}
                 </div>
 
                 <TextField
@@ -227,9 +240,8 @@ const AddWorkspace = () => {
                     square_footage_error
                       ? "Please enter a number starting from 1"
                       : ""
-                  } 
+                  }
                 />
-
 
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
