@@ -232,7 +232,7 @@ const AddWorkspace = () => {
 
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
-                    Edit Building
+                    Add Workspace
                   </Button>
                 </div>
               </form>
