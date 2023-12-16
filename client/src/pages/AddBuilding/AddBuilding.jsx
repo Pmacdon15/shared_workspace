@@ -131,7 +131,7 @@ const AddBuilding = () => {
 
   const renderCheckbox = (label, state, stateSetter) => {
     return (
-      <div>
+      <div className="checkbox-container">
         <label>{label}</label>
         <Checkbox
           {...register(label.toLowerCase())}
