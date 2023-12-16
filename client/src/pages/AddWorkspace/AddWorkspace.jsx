@@ -23,7 +23,7 @@ const AddWorkspace = () => {
   const [workspace_name_error, setWorkspaceNameError] = useState(false);
 
   const handleWorkspaceNameChange = (event) => {
-    const { value } = event.target;    
+    const { value } = event.target;
     setWorkspaceNameValue(value);
     setWorkspaceNameError(value.trim().length < 3);
   };
@@ -78,6 +78,52 @@ const AddWorkspace = () => {
     setValue("lease_term", leaseTermValue);
   }, [leaseTermValue, setValue]);
 
+  const [availableValue, setAvailableValue] = useState("");
+  const [available_error, setAvailableError] = useState(false);
+
+  // Handle checkbox changes
+  const handleCheckboxChange = (event, checkboxStateSetter) => {
+    checkboxStateSetter(event.target.checked);
+  };
+
+  const renderCheckbox = (label, state, stateSetter) => {
+    return (
+      <div>
+        <label>{label}</label>
+        <Checkbox
+          {...register(label.toLowerCase())}
+          checked={state}
+          onChange={(event) => handleCheckboxChange(event, stateSetter)}
+          sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+        />
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("available", availableValue);
+  }
+  , [availableValue, setValue]);
+
+  const [squareFootageValue, setSquareFootageValue] = useState("");
+  const [square_footage_error, setSquareFootageError] = useState(false);
+
+  const handleSquareFootageChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^1-9]/g, "");
+    setSquareFootageValue(numericValue);
+    setSquareFootageError(value !== numericValue);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("square_footage", squareFootageValue);
+  }
+  , [squareFootageValue, setValue]);
+
+
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -95,6 +141,7 @@ const AddWorkspace = () => {
           <div className="header">
             <div className="text">Add Workspace</div>
             <div className="underline"></div>
+            <br></br>
           </div>
           <Container maxWidth="md">
             <Box
@@ -163,6 +210,25 @@ const AddWorkspace = () => {
                       : ""
                   }
                 />
+                <div className="checkbox-container">
+                  {renderCheckbox("Available", availableChecked, setAvailableChecked)}
+                </div>
+
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("square_footage")}
+                  label="Square Footage"
+                  variant="outlined"
+                  value={squareFootageValue}
+                  onChange={handleSquareFootageChange}
+                  error={square_footage_error}
+                  helperText={
+                    square_footage_error
+                      ? "Please enter a number starting from 1"
+                      : ""
+                  } 
+                />
+
 
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
