@@ -4,7 +4,7 @@
     align-items: center;
     gap: 9px;
     width: 100%;
-    margin-top: 30px;
+    /* margin-top: 1%; */
 
 }
 
@@ -22,21 +22,26 @@
     border-radius: 9px;
 }
 
-.display-container {
+/* .display-container {
+    margin-top: 10%;
+} */
+
+.navButtons {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 15px;
-  }
-  
+    justify-content: center;
+}
+
 .forgot-password {
     /* padding-left: 62px; */
     margin-top: 5%;
     color: rgba(4, 81, 88, 0.534);
     font-size: 18px;
 }
+
 .register {
-   
     color: rgba(4, 81, 88, 0.534);
     font-size: 18px;
 }
@@ -50,17 +55,55 @@
     color: rgba(4, 162, 176, 0.534);
     cursor: pointer;
 }
-.submit-container {
-    display: flex;
-    gap: 3px;
-    margin: 30px;
-}
+
+
 
 .custom-form {
-    margin-top: 10%;
+    margin: 1%;
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
+    gap: 10px;
 
-    gap: 15px;
+}
+
+.textField-box {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    padding: 1%;
+}
+
+.submit-container {
+    display: flex;
+    gap: 5px;
+    /* margin: 30px; */
+    margin-top: 1%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row
+}
+
+.options-container {
+    display: flex;
+    gap: 5px;
+    margin-top: 1%;
+}
+
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;    
+    width: 80%;    
+}
+
+.label-width {
+    min-width: 120px;
+    /* Adjust the width as needed */
+}
+
+label {
+    margin-right: 1%;
 }

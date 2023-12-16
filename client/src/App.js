@@ -13,6 +13,8 @@ import AddWorkspace from './pages/AddWorkspace/AddWorkspace';
 import EditWorkspace from './pages/EditWorkspace/EditWorkspace';
 import OwnerInfoPage from './pages/OwnerInfoPage/OwnerInfoPage';
 
+import "./css/app.css";
+
 function App() {
   return (<Routes>      
     <Route path="/" element={<SignIn />} />

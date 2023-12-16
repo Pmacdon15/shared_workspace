@@ -10,6 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 //import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
+
 const AddBuilding = () => {
   document.title = "Add Building";
 
@@ -130,7 +131,7 @@ const AddBuilding = () => {
 
   const renderCheckbox = (label, state, stateSetter) => {
     return (
-      <div>
+      <div className="checkbox-container">
         <label>{label}</label>
         <Checkbox
           {...register(label.toLowerCase())}
@@ -197,11 +198,13 @@ const AddBuilding = () => {
                 bgcolor: "#90caf9",
                 borderRadius: "9px",
                 paddingTop: "1px",
+                paddingBottom: "1%",
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
                 <TextField
                   sx={{ width: "90%" }}
+                  // margin = "1%"
                   {...register("name")}
                   label="Building Name"
                   variant="outlined"
@@ -225,6 +228,7 @@ const AddBuilding = () => {
                     streetError ? "Street must be at least 3 characters" : ""
                   }
                 />
+                {/* </div> */}
 
                 <TextField
                   sx={{ width: "90%" }}
@@ -304,7 +308,7 @@ const AddBuilding = () => {
                 </div>
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
-                    Edit Building
+                    Add Building
                   </Button>
                   <Button variant="contained" onClick={() => navigate(-1)}>
                     Back

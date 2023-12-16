@@ -88,7 +88,7 @@ const AddWorkspace = () => {
 
   const renderCheckbox = (label, state, stateSetter) => {
     return (
-      <div>
+      <div className="checkbox-container">
         <label>{label}</label>
         <Checkbox
           {...register(label.toLowerCase())}
@@ -176,6 +176,7 @@ const AddWorkspace = () => {
                 bgcolor: "#90caf9",
                 borderRadius: "9px",
                 paddingTop: "1px",
+                paddingBottom: "1%",
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">

@@ -17,7 +17,8 @@ import Button from "@mui/material/Button";
 
 import { useNavigate, Link } from "react-router-dom";
 
-import "./BuildingsWorkspaces.css";
+// import "./BuildingsWorkspaces.css";
+// import "../SignIn/SignIn.css";
 
 function BuildingsWorkspaces() {
   const [workspaces, setWorkspaces] = useState([]);
@@ -89,7 +90,7 @@ function BuildingsWorkspaces() {
             overflowY: "scroll",
           }}
         >
-          <div className="display-container">
+          <div className="navButtons">
             <Button variant="contained" onClick={() => navigate(-1)}>
               Back
             </Button>
@@ -104,7 +105,7 @@ function BuildingsWorkspaces() {
             </Link>
           </div>
           {workspaces.map((workspace) => (
-            <div key={workspace.id} className="display-container">
+            // <div key={workspace.id} className="display-container">
               <Container maxWidth="md">
                 <Box
                   sx={{
@@ -157,7 +158,7 @@ function BuildingsWorkspaces() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <div className="submit-container">
+                  <div className="options-container">
                     <Link
                       to={`/editworkspace/${workspace.name}`}
                       style={{ textDecoration: "none" }}
@@ -173,7 +174,7 @@ function BuildingsWorkspaces() {
                   </div>
                 </Box>
               </Container>
-            </div>
+            // </div>
           ))}
         </Box>
       </Container>

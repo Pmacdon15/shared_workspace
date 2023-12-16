@@ -8,7 +8,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-import "./SignIn.css";
+// import "./SignIn.css";
 
 const SignIn = () => {
   document.title = "Sign In";
@@ -49,8 +49,9 @@ const SignIn = () => {
         <Box
           sx={{
             bgcolor: "#cfe8fc",
-            height: "70vh",
+            height: "60vh",
             margin: "10%",
+            marginTop: "20%",
             borderRadius: "9px",
           }}
         >
@@ -58,6 +59,7 @@ const SignIn = () => {
             <div className="text">Sign In</div>
             <div className="underline"></div>
           </div>
+          <br></br>
           <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
             <TextField
               sx={{ width: "80%" }}

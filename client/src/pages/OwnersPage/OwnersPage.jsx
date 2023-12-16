@@ -76,11 +76,11 @@ const OwnersPage = () => {
             height: "90vh",
             marginTop: " 3%",
             borderRadius: "9px",
-            padding: "1%",
+            paddingTop: "1%",
             overflowY: "scroll",
           }}
         >
-          <div className="display-container">
+          <div className="navButtons">
             <Link
               to={`/addBuilding/${window.location.pathname.split("/").pop()}`}
               style={{ textDecoration: "none" }}
@@ -94,14 +94,14 @@ const OwnersPage = () => {
             </Link>
           </div>
           {userBuildings.map((building) => (
-            <div key={building.name} className="display-container">
+            // <div key={building.name} className="display-container">
               <Container maxWidth="md">
                 <Box
                   sx={{
                     bgcolor: "#90caf9",
                     borderRadius: "9px",
                     paddingBottom: "1%",
-                    paddingLeft: "1%",
+                    paddingLeft: "2%",
                   }}
                 >
                   <h2>{building.name}</h2>
@@ -152,7 +152,7 @@ const OwnersPage = () => {
                   <TableContainer
                     component={Paper}
                     sx={{
-                      marginTop: "2%",
+                      marginTop: "1%",
                       overflowY: "auto",
                       maxWidth: 400,
                     }}
@@ -184,7 +184,7 @@ const OwnersPage = () => {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <div className="submit-container">
+                  <div className="options-container">
                     <Link
                       to={`/editbuilding/${building.name}`}
                       style={{ textDecoration: "none" }}
@@ -206,7 +206,7 @@ const OwnersPage = () => {
                   </div>
                 </Box>
               </Container>
-            </div>
+            // </div>
           ))}
         </Box>
       </Container>

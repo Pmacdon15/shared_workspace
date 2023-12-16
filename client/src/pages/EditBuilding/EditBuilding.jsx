@@ -10,7 +10,9 @@ import Checkbox from "@mui/material/Checkbox";
 //import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
-import "./EditBuilding.css";
+// import "./EditBuilding.css";
+
+// import "../SignIn/SignIn.css";
 
 /**
  * EditBuilding component for editing building information.
@@ -156,7 +158,7 @@ const EditBuilding = () => {
   // Render a checkbox
   const renderCheckbox = (label, state, stateSetter) => {
     return (
-      <div>
+      <div className="checkbox-container">
         <label>{label}</label>
         <Checkbox
           {...register(label.toLowerCase())}
@@ -246,12 +248,14 @@ const EditBuilding = () => {
             <div className="text">Edit Building information</div>
             <div className="underline"></div>
           </div>
+          <br></br>
           <Container maxWidth="md">
             <Box
               sx={{
                 bgcolor: "#90caf9",
                 borderRadius: "9px",
                 paddingTop: "1px",
+                paddingBottom: "1%",
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
