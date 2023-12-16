@@ -17,11 +17,7 @@ const AddBuilding = () => {
   const [parkingChecked, setParkingChecked] = useState(false);
   const [public_transportChecked, setPublic_transportChecked] = useState(false);
   // Initialize useForm
-  const {
-    register,
-    handleSubmit,
-    setValue,    
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
 
   // Below is for actively checking the input fields
@@ -154,7 +150,7 @@ const AddBuilding = () => {
           return;
         }
       }
-      
+
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;
@@ -194,6 +190,7 @@ const AddBuilding = () => {
             <div className="text">Add Building</div>
             <div className="underline"></div>
           </div>
+          <br></br>
           <Container maxWidth="md">
             <Box
               sx={{
@@ -225,9 +222,7 @@ const AddBuilding = () => {
                   value={streetValue}
                   error={streetError}
                   helperText={
-                    streetError
-                      ? "Street must be at least 3 characters"
-                      : ""
+                    streetError ? "Street must be at least 3 characters" : ""
                   }
                 />
 
@@ -310,6 +305,9 @@ const AddBuilding = () => {
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
                     Edit Building
+                  </Button>
+                  <Button variant="contained" onClick={() => navigate(-1)}>
+                    Back
                   </Button>
                 </div>
               </form>

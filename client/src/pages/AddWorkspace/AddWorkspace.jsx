@@ -122,7 +122,7 @@ const AddWorkspace = () => {
     const { value } = event.target;
     setTypeValue(value);
     setTypeError(value.trim().length < 3);
-  }
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -249,9 +249,7 @@ const AddWorkspace = () => {
                   onChange={handleSizeChange}
                   error={size_error}
                   helperText={
-                    size_error
-                      ? "Please enter a number starting from 1"
-                      : ""
+                    size_error ? "Please enter a number starting from 1" : ""
                   }
                 />
                 <TextField
@@ -263,15 +261,17 @@ const AddWorkspace = () => {
                   onChange={handleTypeChange}
                   error={type_error}
                   helperText={
-                    type_error
-                      ? "Please enter at least 3 characters"
-                      : ""
+                    type_error ? "Please enter at least 3 characters" : ""
                   }
                 />
 
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
                     Add Workspace
+                  </Button>
+
+                  <Button variant="contained" onClick={() => navigate(-1)}>
+                    Back
                   </Button>
                 </div>
               </form>

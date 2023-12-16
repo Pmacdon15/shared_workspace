@@ -50,7 +50,6 @@ const EditBuilding = () => {
     fetchData();
   }, []);
 
-
   // Initialize useForm
   const {
     register,
@@ -66,9 +65,9 @@ const EditBuilding = () => {
   const [streetError, setStreetError] = useState(false);
 
   const handleStreetInputChange = (event) => {
-    const { value } = event.target;    
+    const { value } = event.target;
     setStreetValue(value); // Set the value without trimming
-    setStreetError(value.trim() !== "" && value.trim().length < 3);  
+    setStreetError(value.trim() !== "" && value.trim().length < 3);
   };
 
   // Use useEffect to update TextField value when streetValue changes
@@ -77,7 +76,6 @@ const EditBuilding = () => {
     setValue("street", streetValue);
   }, [streetValue, setValue]);
 
-  
   const [numberValue, setNumberValue] = useState("");
   const [numberError, setNumberError] = useState(false);
 
@@ -106,7 +104,7 @@ const EditBuilding = () => {
     // Set the value of the TextField
     setValue("city", cityValue);
   }, [cityValue, setValue]);
-  
+
   const [provinceValue, setProvinceValue] = useState("");
   const [provinceError, setProvinceError] = useState(false);
 
@@ -145,11 +143,11 @@ const EditBuilding = () => {
     setLocationError(value.trim() !== "" && value.trim().length < 2);
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     // Set the value of the TextField
     setValue("location", locationValue);
   }, [locationValue, setValue]);
-  
+
   // Handle checkbox changes
   const handleCheckboxChange = (event, checkboxStateSetter) => {
     checkboxStateSetter(event.target.checked);
@@ -180,7 +178,7 @@ const EditBuilding = () => {
       "province",
       "postal_code",
       "location",
-    ];    
+    ];
     //console.log("Form data:", formData);
     // Loop through each field
     for (const field of fieldsToUpdate) {
@@ -190,11 +188,11 @@ const EditBuilding = () => {
         formData[field] = buildingToEdit[0]?.[field] || "";
       }
     }
-  
+
     // Return the updated form data
     return formData;
   }
-   
+
   // Handle form submission
   const onSubmit = async (data) => {
     try {
@@ -265,7 +263,7 @@ const EditBuilding = () => {
                     sx={{ width: "90%" }}
                     {...register("street")}
                     label="Street"
-                    variant="outlined"                    
+                    variant="outlined"
                     onChange={handleStreetInputChange}
                     value={streetValue}
                     error={streetError}
@@ -371,10 +369,14 @@ const EditBuilding = () => {
                     public_transportChecked,
                     setPublic_transportChecked
                   )}
-                </div>               
+                </div>
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
                     Edit Building
+                  </Button>
+
+                  <Button variant="contained" onClick={() => navigate(-1)}>
+                    Back
                   </Button>
                 </div>
               </form>
