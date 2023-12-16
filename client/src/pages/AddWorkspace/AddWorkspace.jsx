@@ -100,11 +100,12 @@ const AddWorkspace = () => {
     );
   };
 
-  useEffect(() => {
-    // Set the value of the TextField
-    setValue("available", availableValue);
-  }
-  , [availableValue, setValue]);
+  // Todo fine out if this is unneeded
+  // useEffect(() => {
+  //   // Set the value of the TextField
+  //   setValue("available", availableValue);
+  // }
+  // , [availableValue, setValue]);
 
   const [squareFootageValue, setSquareFootageValue] = useState("");
   const [square_footage_error, setSquareFootageError] = useState(false);

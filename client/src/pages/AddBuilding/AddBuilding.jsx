@@ -198,17 +198,7 @@ const AddBuilding = () => {
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("name", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 3) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("name")}
                   label="Building Name"
                   variant="outlined"
                   onChange={handleNameInputChange}
@@ -221,21 +211,7 @@ const AddBuilding = () => {
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("street", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (
-                        trimmedValue !== "" &&
-                        !/\s/.test(trimmedValue) &&
-                        trimmedValue.length < 3
-                      ) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("street")}
                   label="Street"
                   variant="outlined"
                   onChange={handleStreetInputChange}
@@ -261,17 +237,7 @@ const AddBuilding = () => {
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("city", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 3) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("city")}
                   label="City"
                   variant="outlined"
                   value={cityValue}
@@ -284,17 +250,7 @@ const AddBuilding = () => {
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("province", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 2 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 2) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("province")}
                   label="Province"
                   variant="outlined"
                   value={provinceValue}
@@ -322,17 +278,7 @@ const AddBuilding = () => {
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("location", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 2) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("location")}
                   label="Location"
                   value={locationValue}
                   variant="outlined"
