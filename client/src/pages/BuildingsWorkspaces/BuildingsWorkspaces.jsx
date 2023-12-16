@@ -15,13 +15,14 @@ import {
 
 import Button from "@mui/material/Button";
 
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import "./BuildingsWorkspaces.css";
 
 function BuildingsWorkspaces() {
   const [workspaces, setWorkspaces] = useState([]);
   const boxRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,29 +48,31 @@ function BuildingsWorkspaces() {
   const handleDelete = async (workspaceName) => {
     try {
       console.log("Deleting workspace:", workspaceName);
-  
-      const response = await fetch(`http://localhost:5544/workspace/${workspaceName}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
+
+      const response = await fetch(
+        `http://localhost:5544/workspace/${workspaceName}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-  
+
       // Update the state to remove the deleted workspace
       setWorkspaces((prevWorkspaces) =>
         prevWorkspaces.filter((workspace) => workspace.name !== workspaceName)
       );
-  
+
       console.log("Workspace deleted successfully.");
     } catch (error) {
       console.error("Error deleting workspace:", error);
     }
   };
-  
 
   return (
     <React.Fragment>
@@ -87,24 +90,19 @@ function BuildingsWorkspaces() {
           }}
         >
           <div className="display-container">
-            <Link
-              to={`/ownerspage/${window.location.pathname.split("/").pop()}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Button variant="contained">Back</Button>
-            </Link>
+            <Button variant="contained" onClick={() => navigate(-1)}>
+              Back
+            </Button>
             <Link
               to={`/addWorkspace/${window.location.pathname.split("/").pop()}`}
               style={{ textDecoration: "none" }}
             >
               <Button variant="contained">Add Workspace</Button>
             </Link>
-            <Link
-              to={`/`}
-              >
-            <Button variant="contained">Logout</Button>
+            <Link to={`/`}>
+              <Button variant="contained">Logout</Button>
             </Link>
-            </div>
+          </div>
           {workspaces.map((workspace) => (
             <div key={workspace.id} className="display-container">
               <Container maxWidth="md">
