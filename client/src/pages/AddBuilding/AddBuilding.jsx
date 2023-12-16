@@ -10,6 +10,8 @@ import Checkbox from "@mui/material/Checkbox";
 //import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
+import Grid from "@mui/material/Grid";
+
 const AddBuilding = () => {
   document.title = "Add Building";
 
@@ -197,12 +199,14 @@ const AddBuilding = () => {
                 bgcolor: "#90caf9",
                 borderRadius: "9px",
                 paddingTop: "1px",
-                paddingBottom: "1%", 
+                paddingBottom: "1%",
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
+               {/* <div className="addForm"> */}
                 <TextField
                   sx={{ width: "90%" }}
+                  // margin = "1%"
                   {...register("name")}
                   label="Building Name"
                   variant="outlined"
@@ -213,19 +217,22 @@ const AddBuilding = () => {
                     nameError ? "Name must be at least 3 characters" : ""
                   }
                 />
+                {/* </div> */}
 
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("street")}
-                  label="Street"
-                  variant="outlined"
-                  onChange={handleStreetInputChange}
-                  value={streetValue}
-                  error={streetError}
-                  helperText={
-                    streetError ? "Street must be at least 3 characters" : ""
-                  }
-                />
+                {/* <div className="addForm"> */}
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("street")}
+                    label="Street"
+                    variant="outlined"
+                    onChange={handleStreetInputChange}
+                    value={streetValue}
+                    error={streetError}
+                    helperText={
+                      streetError ? "Street must be at least 3 characters" : ""
+                    }
+                  />
+                {/* </div> */}
 
                 <TextField
                   sx={{ width: "90%" }}
@@ -305,7 +312,7 @@ const AddBuilding = () => {
                 </div>
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
-                    Edit Building
+                    Add Building
                   </Button>
                   <Button variant="contained" onClick={() => navigate(-1)}>
                     Back
