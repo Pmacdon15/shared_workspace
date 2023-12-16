@@ -184,7 +184,7 @@ const OwnersPage = () => {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <div className="submit-container">
+                  <div className="options-container">
                     <Link
                       to={`/editbuilding/${building.name}`}
                       style={{ textDecoration: "none" }}

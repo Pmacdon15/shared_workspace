@@ -84,6 +84,11 @@
     flex-direction: row
 }
 
+.options-container {
+    display: flex;
+    gap: 5px;
+    margin-top: 1%;
+}
 .label-width {
     min-width: 120px;
     /* Adjust the width as needed */

@@ -158,7 +158,7 @@ function BuildingsWorkspaces() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <div className="submit-container">
+                  <div className="options-container">
                     <Link
                       to={`/editworkspace/${workspace.name}`}
                       style={{ textDecoration: "none" }}
