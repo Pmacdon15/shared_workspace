@@ -14,8 +14,6 @@ import {
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
-import "./OwnersPage.css";
-
 const OwnersPage = () => {
   const [userBuildings, setUserBuildings] = useState([]);
   const boxRef = useRef(null);

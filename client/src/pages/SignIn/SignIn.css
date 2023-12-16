@@ -22,6 +22,13 @@
     border-radius: 9px;
 }
 
+.display-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+  
 .forgot-password {
     /* padding-left: 62px; */
     margin-top: 5%;
