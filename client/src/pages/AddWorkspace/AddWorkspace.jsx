@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -18,6 +18,20 @@ const AddWorkspace = () => {
   const { register, handleSubmit, setValue } = useForm();
 
   const navigate = useNavigate();
+
+  const [nameValue, setNameValue] = useState("");
+  const [name_error, setNameError] = useState(false);
+
+  const handleNameChange = (event) => {
+    const { value } = event.target;
+    setNameValue(value);
+    setNameError(value.trim().length < 3);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("name", nameValue);
+  }, [nameValue, setValue]);
 
   const [numberOfSeatsValue, setNumberOfSeatsValue] = useState("");
   const [number_of_seats_error, setNumberOfSeatsError] = useState(false);
@@ -64,6 +78,79 @@ const AddWorkspace = () => {
     setValue("lease_term", leaseTermValue);
   }, [leaseTermValue, setValue]);
 
+  // const [availableValue, setAvailableValue] = useState("");
+  // const [available_error, setAvailableError] = useState(false);
+
+  // Handle checkbox changes
+  const handleCheckboxChange = (event, checkboxStateSetter) => {
+    checkboxStateSetter(event.target.checked);
+  };
+
+  const renderCheckbox = (label, state, stateSetter) => {
+    return (
+      <div>
+        <label>{label}</label>
+        <Checkbox
+          {...register(label.toLowerCase())}
+          checked={state}
+          onChange={(event) => handleCheckboxChange(event, stateSetter)}
+          sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+        />
+      </div>
+    );
+  };
+
+  const [sizeValue, setSizeValue] = useState("");
+  const [size_error, setSizeError] = useState(false);
+
+  const handleSizeChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^1-9]/g, "");
+    setSizeValue(numericValue);
+    setSizeError(value !== numericValue);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("size", sizeValue);
+  }, [sizeValue, setValue]);
+
+  const [typeValue, setTypeValue] = useState("");
+  const [type_error, setTypeError] = useState(false);
+
+  const handleTypeChange = (event) => {
+    const { value } = event.target;
+    setTypeValue(value);
+    setTypeError(value.trim().length < 3);
+  }
+
+  const onSubmit = async (data) => {
+    try {
+      for (const key in data) {
+        if (data[key] === "") {
+          alert("Please fill out all fields before submitting.");
+          return;
+        }
+      }
+      data.available = availableChecked ? 1 : 0;
+
+      const building_name = window.location.pathname.split("/")[2];
+      console.log(building_name);
+      console.log(data);
+      const response = await axios.post(
+        `http://localhost:5544/workspace/${building_name}`,
+        data
+      );
+
+      if (response.status === 200) {
+        // alert("Workspace added successfully!");
+        navigate(`/workspaces/${building_name}`);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -81,6 +168,7 @@ const AddWorkspace = () => {
           <div className="header">
             <div className="text">Add Workspace</div>
             <div className="underline"></div>
+            <br></br>
           </div>
           <Container maxWidth="md">
             <Box
@@ -90,10 +178,20 @@ const AddWorkspace = () => {
                 paddingTop: "1px",
               }}
             >
-              <form
-                // onSubmit={handleSubmit(onSubmit)}
-                className="custom-form"
-              >
+              <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("name")}
+                  label="Workspace Name"
+                  variant="outlined"
+                  value={nameValue}
+                  onChange={handleNameChange}
+                  error={name_error}
+                  helperText={
+                    name_error ? "Please enter at least 3 characters" : ""
+                  }
+                />
+
                 <TextField
                   sx={{ width: "90%" }}
                   {...register("number_of_seats")}
@@ -134,10 +232,46 @@ const AddWorkspace = () => {
                       : ""
                   }
                 />
+                <div className="checkbox-container">
+                  {renderCheckbox(
+                    "Available",
+                    availableChecked,
+                    setAvailableChecked
+                  )}
+                </div>
+
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("size")}
+                  label="Square Footage"
+                  variant="outlined"
+                  value={sizeValue}
+                  onChange={handleSizeChange}
+                  error={size_error}
+                  helperText={
+                    size_error
+                      ? "Please enter a number starting from 1"
+                      : ""
+                  }
+                />
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("type")}
+                  label="Type"
+                  variant="outlined"
+                  value={typeValue}
+                  onChange={handleTypeChange}
+                  error={type_error}
+                  helperText={
+                    type_error
+                      ? "Please enter at least 3 characters"
+                      : ""
+                  }
+                />
 
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
-                    Edit Building
+                    Add Workspace
                   </Button>
                 </div>
               </form>

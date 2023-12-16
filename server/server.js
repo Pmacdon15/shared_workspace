@@ -230,10 +230,10 @@ app.get("/workspaces/:building_name", async (req, res) => {
 });
 
 // Create workspace
-app.post("/workspace", async (req, res) => {
+app.post("/workspace/:building_name", async (req, res) => {
+  const { building_name } = req.params;
   const {
-    name,
-    building_name,
+    name,    
     number_of_seats,
     price,
     lease_term,

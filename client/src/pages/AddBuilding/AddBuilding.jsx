@@ -32,7 +32,7 @@ const AddBuilding = () => {
   const handleNameInputChange = (event) => {
     const { value } = event.target;
     setNameValue(value);
-    setNameError(value.trim() !== "" && value.trim().length < 3);
+    setNameError(value.trim().length < 3);
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const AddBuilding = () => {
   const handleStreetInputChange = (event) => {
     const { value } = event.target;
     setStreetValue(value); // Set the value without trimming
-    setStreetError(value.trim() !== "" && value.trim().length < 3);
+    setStreetError(value.trim().length < 3);
   };
 
   // Use useEffect to update TextField value when streetValue changes
@@ -76,7 +76,7 @@ const AddBuilding = () => {
   const handleCityInputChange = (event) => {
     const { value } = event.target;
     setCityValue(value);
-    setCityError(value.trim() !== "" && value.trim().length < 3);
+    setCityError(value.trim().length < 3);
   };
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const AddBuilding = () => {
   const handleProvinceInputChange = (event) => {
     const { value } = event.target;
     setProvinceValue(value);
-    setProvinceError(value.trim() !== "" && value.trim().length < 2);
+    setProvinceError(value.trim().length < 2);
   };
 
   useEffect(() => {
@@ -119,7 +119,7 @@ const AddBuilding = () => {
   const handleLocationInputChange = (event) => {
     const { value } = event.target;
     setLocationValue(value);
-    setLocationError(value.trim() !== "" && value.trim().length < 2);
+    setLocationError(value.trim().length < 2);
   };
 
   useEffect(() => {
@@ -148,6 +148,13 @@ const AddBuilding = () => {
 
   const onSubmit = async (data) => {
     try {
+      for (const key in data) {
+        if (data[key] === "") {
+          alert("Please fill out all fields before submitting.");
+          return;
+        }
+      }
+      
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;
       data.public_transport = public_transportChecked ? 1 : 0;
@@ -198,17 +205,7 @@ const AddBuilding = () => {
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("name", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 3) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("name")}
                   label="Building Name"
                   variant="outlined"
                   onChange={handleNameInputChange}
@@ -221,21 +218,7 @@ const AddBuilding = () => {
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("street", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (
-                        trimmedValue !== "" &&
-                        !/\s/.test(trimmedValue) &&
-                        trimmedValue.length < 3
-                      ) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("street")}
                   label="Street"
                   variant="outlined"
                   onChange={handleStreetInputChange}
@@ -243,7 +226,7 @@ const AddBuilding = () => {
                   error={streetError}
                   helperText={
                     streetError
-                      ? "Street must be 0 or at least 3 characters"
+                      ? "Street must be at least 3 characters"
                       : ""
                   }
                 />
@@ -261,40 +244,20 @@ const AddBuilding = () => {
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("city", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 3) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("city")}
                   label="City"
                   variant="outlined"
                   value={cityValue}
                   onChange={handleCityInputChange}
                   error={cityError}
                   helperText={
-                    cityError ? "City must be 0 or at least 3 characters" : ""
+                    cityError ? "City must be at least 3 characters" : ""
                   }
                 />
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("province", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 2 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 2) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("province")}
                   label="Province"
                   variant="outlined"
                   value={provinceValue}
@@ -302,7 +265,7 @@ const AddBuilding = () => {
                   error={provinceError}
                   helperText={
                     provinceError
-                      ? "Province must be 0 or at least 2 characters"
+                      ? "Province must be at least 3 characters"
                       : ""
                   }
                 />
@@ -322,17 +285,7 @@ const AddBuilding = () => {
 
                 <TextField
                   sx={{ width: "90%" }}
-                  {...register("location", {
-                    validate: (value) => {
-                      const trimmedValue = value.trim();
-                      // If the value is not empty and not at least 3 characters, show an error
-                      if (trimmedValue !== "" && trimmedValue.length < 2) {
-                        return false;
-                      }
-                      // Else, return true
-                      return true;
-                    },
-                  })}
+                  {...register("location")}
                   label="Location"
                   value={locationValue}
                   variant="outlined"
@@ -340,7 +293,7 @@ const AddBuilding = () => {
                   error={locationError}
                   helperText={
                     locationError
-                      ? "Location must be 0 or at least 2 characters"
+                      ? "Location must be at least 2 characters"
                       : ""
                   }
                 />

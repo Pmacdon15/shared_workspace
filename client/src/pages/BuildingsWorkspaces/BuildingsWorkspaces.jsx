@@ -88,6 +88,12 @@ function BuildingsWorkspaces() {
         >
           <div className="display-container">
             <Link
+              to={`/ownerspage/${window.location.pathname.split("/").pop()}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Button variant="contained">Back</Button>
+            </Link>
+            <Link
               to={`/addWorkspace/${window.location.pathname.split("/").pop()}`}
               style={{ textDecoration: "none" }}
             >
