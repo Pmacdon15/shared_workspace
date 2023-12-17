@@ -229,6 +229,17 @@ app.get("/workspaces/:building_name", async (req, res) => {
   }
 });
 
+app.get("/workspace/:workspace_name", async (req, res) => {
+  const { workspace_name } = req.params;
+  const workspace = await getWorkspaceByName(workspace_name);
+
+  if (workspace === null) {
+    res.status(400).send("Workspace not found");
+  } else {
+    res.json(workspace);
+  }
+});
+
 // Create workspace
 app.post("/workspace/:building_name", async (req, res) => {
   const { building_name } = req.params;

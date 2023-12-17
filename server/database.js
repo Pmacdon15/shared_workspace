@@ -325,6 +325,27 @@ module.exports = {
     }
   },
   
+  async getWorkspaceByName(name) {
+    try {
+      const [rows] = await pool.query(
+        "SELECT * FROM workspaces WHERE name = ?",
+        [name]
+      );
+
+      if (rows.length === 0) {
+        throw new Error("Workspace not found");
+      }
+
+      console.log(name + " found");
+
+      return rows;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+
+  },
+
   async createWorkspace(
     name,
     building_name,
@@ -362,8 +383,7 @@ module.exports = {
       console.error("Error:", error);
       return null;
     }
-  }
-  ,
+  },
 
   async updateWorkspaceByName(
     name,
