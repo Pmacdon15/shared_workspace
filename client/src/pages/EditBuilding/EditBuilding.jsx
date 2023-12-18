@@ -57,7 +57,6 @@ const EditBuilding = () => {
     register,
     handleSubmit,
     setValue,
-    // formState: { errors },
   } = useForm();
   const navigate = useNavigate();
 
@@ -197,12 +196,7 @@ const EditBuilding = () => {
 
   // Handle form submission
   const onSubmit = async (data) => {
-    try {
-      // Check if the postal code is valid and return if it is not
-      if (postalCodeError) {
-        console.log("Invalid postal code");
-        return;
-      }
+    try {      
       // Update the smoking and parking properties in the data object
       data.smoking = smokingChecked ? 1 : 0;
       data.parking = parkingChecked ? 1 : 0;

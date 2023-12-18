@@ -203,7 +203,7 @@ const AddWorkspace = () => {
                   error={number_of_seats_error}
                   helperText={
                     number_of_seats_error
-                      ? "Please enter a number starting from 1"
+                      ? "Please enter a number"
                       : ""
                   }
                 />
@@ -216,7 +216,7 @@ const AddWorkspace = () => {
                   onChange={handlePriceChange}
                   error={price_error}
                   helperText={
-                    price_error ? "Please enter a number starting from 0" : ""
+                    price_error ? "Please enter a number" : ""
                   }
                 />
                 <TextField
@@ -229,7 +229,7 @@ const AddWorkspace = () => {
                   error={lease_term_error}
                   helperText={
                     lease_term_error
-                      ? "Please enter a number starting from 1"
+                      ? "Please enter a number"
                       : ""
                   }
                 />
@@ -250,7 +250,7 @@ const AddWorkspace = () => {
                   onChange={handleSizeChange}
                   error={size_error}
                   helperText={
-                    size_error ? "Please enter a number starting from 1" : ""
+                    size_error ? "Please enter a number" : ""
                   }
                 />
                 <TextField

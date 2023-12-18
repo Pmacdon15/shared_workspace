@@ -315,9 +315,10 @@ module.exports = {
       if (rows.length === 0) {
         throw new Error("Workspace not found");
       }
-
+      
       console.log("Workspaces from building:", building_name, "found");
-
+      // add building name to rows[0]
+       //rows.building_name = building_name;
       return rows;
     } catch (error) {
       console.error("Error:", error);
@@ -325,6 +326,32 @@ module.exports = {
     }
   },
   
+  async getWorkspaceByName(name) {
+    try {
+      const [rows] = await pool.query(
+        "SELECT * FROM workspaces WHERE name = ?",
+        [name]
+      );
+      const buildingName = await pool.query(
+        "SELECT name FROM buildings WHERE id = (SELECT buildings_id FROM workspaces WHERE name = ?)",
+        [name]
+      );
+
+      if (rows.length === 0) {
+        throw new Error("Workspace not found");
+      }
+
+      rows[0].building_name = buildingName[0][0].name;
+      console.log(name + " found");
+
+      return rows;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+
+  },
+
   async createWorkspace(
     name,
     building_name,
@@ -362,8 +389,7 @@ module.exports = {
       console.error("Error:", error);
       return null;
     }
-  }
-  ,
+  },
 
   async updateWorkspaceByName(
     name,
