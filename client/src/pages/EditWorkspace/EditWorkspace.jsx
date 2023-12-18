@@ -24,8 +24,7 @@ const EditWorkspace = () => {
           `http://localhost:5544/workspace/${workspace_name}`
         );
 
-
-        // if (!res.ok) {          
+        // if (!res.ok) {
         //     throw new Error("Workspace not found");
         // }
         const data = await res.json();
@@ -48,7 +47,7 @@ const EditWorkspace = () => {
 
   const handleNumberOfSeatsChange = (event) => {
     const { value } = event.target;
-    const numericValue = value.replace(/[^1-9]/g, "");
+    const numericValue = value.replace(/[^0-9]/g, "");
     setNumberOfSeatsValue(numericValue);
     setNumberOfSeatsError(value !== numericValue);
   };
@@ -131,28 +130,36 @@ const EditWorkspace = () => {
     setTypeError(value.trim().length < 3);
   };
 
-function updateFormData(formData) {
-    const fieldsToUpdate = ["number_of_seats", "price", "lease_term"];
+  function updateFormData(formData) {
+    const fieldsToUpdate = [
+      "number_of_seats",
+      "price",
+      "lease_term",
+      "size",
+      "type",
+    ];
 
     for (const fieldName of fieldsToUpdate) {
-        if (!formData[fieldName]) {
-            formData[fieldName] = workspaceToEdit[0]?.[fieldName] || "";
-        }
+      if (!formData[fieldName]) {
+        formData[fieldName] = workspaceToEdit[0]?.[fieldName] || "";
+      }
     }
 
     return formData;
-}
+  }
 
   const onSubmit = async (data) => {
     try {
       data.available = availableChecked ? 1 : 0;
 
       updateFormData(data, workspaceToEdit);
+      console.log("Data:", JSON.stringify(data, null, 2));
 
       const workspace_name = window.location.pathname.split("/").pop();
 
       const res = await axios.put(
-        `/localhost:5544/workspace/${workspace_name}`,
+        `http://localhost:5544/workspace/${workspace_name}`,
+        data
       );
       if (res.status === 200) {
         navigate(`/workspaces/${workspaceToEdit[0]?.building_name}`);
@@ -161,6 +168,7 @@ function updateFormData(formData) {
       console.log(err);
     }
   };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -190,51 +198,62 @@ function updateFormData(formData) {
               }}
             >
               <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
-              <div className="textField-box">
+                <div className="textField-box">
                   <label className="label-width">
                     {workspaceToEdit[0]?.number_of_seats}
                   </label>
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("number_of_seats")}
-                  label="Number of Seats"
-                  variant="outlined"
-                  value={numberOfSeatsValue}
-                  onChange={handleNumberOfSeatsChange}
-                  error={number_of_seats_error}
-                  helperText={
-                    number_of_seats_error
-                      ? "Please enter a number starting from 1"
-                      : ""
-                  }
-                />
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("number_of_seats")}
+                    label="Number of Seats"
+                    variant="outlined"
+                    value={numberOfSeatsValue}
+                    onChange={handleNumberOfSeatsChange}
+                    error={number_of_seats_error}
+                    helperText={
+                      number_of_seats_error
+                        ? "Please enter a number starting from 1"
+                        : ""
+                    }
+                  />
                 </div>
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("price")}
-                  label="Price"
-                  variant="outlined"
-                  value={priceValue}
-                  onChange={handlePriceChange}
-                  error={price_error}
-                  helperText={
-                    price_error ? "Please enter a number starting from 0" : ""
-                  }
-                />
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("lease_term")}
-                  label="Lease Term"
-                  variant="outlined"
-                  value={leaseTermValue}
-                  onChange={handleLeaseTermChange}
-                  error={lease_term_error}
-                  helperText={
-                    lease_term_error
-                      ? "Please enter a number starting from 1"
-                      : ""
-                  }
-                />
+                <div className="textField-box">
+                  <label className="label-width">
+                    {"$" + workspaceToEdit[0]?.price}
+                  </label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("price")}
+                    label="Price"
+                    variant="outlined"
+                    value={priceValue}
+                    onChange={handlePriceChange}
+                    error={price_error}
+                    helperText={
+                      price_error ? "Please enter a number starting from 0" : ""
+                    }
+                  />
+                </div>
+                <div className="textField-box">
+                  <label className="label-width">
+                    {workspaceToEdit[0]?.lease_term + " Week(s)"}
+                  </label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("lease_term")}
+                    label="Lease Term"
+                    variant="outlined"
+                    value={leaseTermValue}
+                    onChange={handleLeaseTermChange}
+                    error={lease_term_error}
+                    helperText={
+                      lease_term_error
+                        ? "Please enter a number starting from 1"
+                        : ""
+                    }
+                  />
+                </div>
+
                 <div className="checkbox-container">
                   {renderCheckbox(
                     "Available",
@@ -243,30 +262,40 @@ function updateFormData(formData) {
                   )}
                 </div>
 
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("size")}
-                  label="Square Footage"
-                  variant="outlined"
-                  value={sizeValue}
-                  onChange={handleSizeChange}
-                  error={size_error}
-                  helperText={
-                    size_error ? "Please enter a number starting from 1" : ""
-                  }
-                />
-                <TextField
-                  sx={{ width: "90%" }}
-                  {...register("type")}
-                  label="Type"
-                  variant="outlined"
-                  value={typeValue}
-                  onChange={handleTypeChange}
-                  error={type_error}
-                  helperText={
-                    type_error ? "Please enter at least 3 characters" : ""
-                  }
-                />
+                <div className="textField-box">
+                  <label className="label-width">
+                    {workspaceToEdit[0]?.size + " Sqft"}
+                  </label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("size")}
+                    label="Square Footage"
+                    variant="outlined"
+                    value={sizeValue}
+                    onChange={handleSizeChange}
+                    error={size_error}
+                    helperText={
+                      size_error ? "Please enter a number starting from 1" : ""
+                    }
+                  />
+                </div>
+                <div className="textField-box">
+                  <label className="label-width">
+                    {workspaceToEdit[0]?.type}
+                  </label>
+                  <TextField
+                    sx={{ width: "90%" }}
+                    {...register("type")}
+                    label="Type"
+                    variant="outlined"
+                    value={typeValue}
+                    onChange={handleTypeChange}
+                    error={type_error}
+                    helperText={
+                      type_error ? "Please enter at least 3 characters" : ""
+                    }
+                  />
+                </div>
 
                 <div className="submit-container">
                   <Button type="submit" variant="contained">

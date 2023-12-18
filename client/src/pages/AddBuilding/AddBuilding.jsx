@@ -227,8 +227,7 @@ const AddBuilding = () => {
                   helperText={
                     streetError ? "Street must be at least 3 characters" : ""
                   }
-                />
-                {/* </div> */}
+                />              
 
                 <TextField
                   sx={{ width: "90%" }}
