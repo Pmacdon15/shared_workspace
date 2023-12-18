@@ -106,7 +106,7 @@ function BuildingsWorkspaces() {
           </div>
           {workspaces.map((workspace) => (
             // <div key={workspace.id} className="display-container">
-              <Container maxWidth="md">
+              <Container maxWidth="md"key={workspace.name}>
                 <Box
                   sx={{
                     bgcolor: "#90caf9",
