@@ -38,7 +38,7 @@ const AddWorkspace = () => {
 
   const handleNumberOfSeatsChange = (event) => {
     const { value } = event.target;
-    const numericValue = value.replace(/[^1-9]/g, "");
+    const numericValue = value.replace(/[^0-9]/g, "");
     setNumberOfSeatsValue(numericValue);
     setNumberOfSeatsError(value !== numericValue);
   };
@@ -53,7 +53,7 @@ const AddWorkspace = () => {
 
   const handlePriceChange = (event) => {
     const { value } = event.target;
-    const numericValue = value.replace(/[^1-9]/g, "");
+    const numericValue = value.replace(/[^0-9]/g, "");
     setPriceValue(numericValue);
     setPriceError(value !== numericValue);
   };
@@ -68,7 +68,7 @@ const AddWorkspace = () => {
 
   const handleLeaseTermChange = (event) => {
     const { value } = event.target;
-    const numericValue = value.replace(/[^1-9]/g, "");
+    const numericValue = value.replace(/[^0-9]/g, "");
     setLeaseTermValue(numericValue);
     setLeaseTermError(value !== numericValue);
   };
@@ -105,7 +105,7 @@ const AddWorkspace = () => {
 
   const handleSizeChange = (event) => {
     const { value } = event.target;
-    const numericValue = value.replace(/[^1-9]/g, "");
+    const numericValue = value.replace(/[^0-9]/g, "");
     setSizeValue(numericValue);
     setSizeError(value !== numericValue);
   };
