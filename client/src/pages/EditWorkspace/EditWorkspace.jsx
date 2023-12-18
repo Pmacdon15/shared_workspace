@@ -19,16 +19,19 @@ const EditWorkspace = () => {
     const fetchWorkspace = async () => {
       try {
         const workspace_name = window.location.pathname.split("/").pop();
-        const res = await axios.get(
-          `/localhost:5544/workspace/${workspace_name}`
+        console.log(workspace_name);
+        const res = await fetch(
+          `http://localhost:5544/workspace/${workspace_name}`
         );
-        if (!res.data.ok) {
-          throw new Error("Workspace not found");
-        }
-        const workspace = await res.json();
-        console.log(workspace);
-        setWorkspaceToEdit(workspace);
-        setAvailableChecked(!!workspace[0]?.available||false);
+
+
+        // if (!res.ok) {          
+        //     throw new Error("Workspace not found");
+        // }
+        const data = await res.json();
+        console.log("Fetched Data:", JSON.stringify(data, null, 2));
+        setWorkspaceToEdit(data);
+        setAvailableChecked(!!data[0]?.available || false);
       } catch (err) {
         console.log(err);
       }
@@ -36,27 +39,9 @@ const EditWorkspace = () => {
     fetchWorkspace();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-  } = useForm();
-  
+  const { register, handleSubmit, setValue } = useForm();
+
   const navigate = useNavigate();
-
-  const [nameValue, setNameValue] = useState("");
-  const [name_error, setNameError] = useState(false);
-
-  const handleNameChange = (event) => {
-    const { value } = event.target;
-    setNameValue(value);
-    setNameError(value.trim().length < 3);
-  };
-
-  useEffect(() => {
-    // Set the value of the TextField
-    setValue("name", nameValue);
-  }, [nameValue, setValue]);
 
   const [numberOfSeatsValue, setNumberOfSeatsValue] = useState("");
   const [number_of_seats_error, setNumberOfSeatsError] = useState(false);
@@ -103,15 +88,11 @@ const EditWorkspace = () => {
     setValue("lease_term", leaseTermValue);
   }, [leaseTermValue, setValue]);
 
-  // const [availableValue, setAvailableValue] = useState("");
-  // const [available_error, setAvailableError] = useState(false);
-
   // Handle checkbox changes
   const handleCheckboxChange = (event, checkboxStateSetter) => {
     checkboxStateSetter(event.target.checked);
   };
 
-  // Render a checkbox
   const renderCheckbox = (label, state, stateSetter) => {
     return (
       <div className="checkbox-container">
@@ -126,45 +107,182 @@ const EditWorkspace = () => {
     );
   };
 
-  function updateFormData(formData, buildingToEdit) {
-    const fieldsToUpdate = [        
-        "number_of_seats",
-        "price",
-        "lease_term",
-        ]; 
-        
-        for (const fieldName of fieldsToUpdate) {
-           if (!formData[fieldName]) {
-              formData[fieldName] = workspaceToEdit[0]?.[fieldName] || "";
-           }
-        }
+  const [sizeValue, setSizeValue] = useState("");
+  const [size_error, setSizeError] = useState(false);
 
-        return formData;
+  const handleSizeChange = (event) => {
+    const { value } = event.target;
+    const numericValue = value.replace(/[^1-9]/g, "");
+    setSizeValue(numericValue);
+    setSizeError(value !== numericValue);
+  };
+
+  useEffect(() => {
+    // Set the value of the TextField
+    setValue("size", sizeValue);
+  }, [sizeValue, setValue]);
+
+  const [typeValue, setTypeValue] = useState("");
+  const [type_error, setTypeError] = useState(false);
+
+  const handleTypeChange = (event) => {
+    const { value } = event.target;
+    setTypeValue(value);
+    setTypeError(value.trim().length < 3);
+  };
+
+function updateFormData(formData) {
+    const fieldsToUpdate = ["number_of_seats", "price", "lease_term"];
+
+    for (const fieldName of fieldsToUpdate) {
+        if (!formData[fieldName]) {
+            formData[fieldName] = workspaceToEdit[0]?.[fieldName] || "";
+        }
     }
 
-    const onSubmit = async (data) => {
-        try{
-        data.available = availableChecked ? 1 : 0;
+    return formData;
+}
 
-        updateFormData(data, workspaceToEdit);
+  const onSubmit = async (data) => {
+    try {
+      data.available = availableChecked ? 1 : 0;
 
-        const workspace_name = window.location.pathname.split("/").pop();
+      updateFormData(data, workspaceToEdit);
 
-        const res = await axios.put(
-            `/localhost:5544/workspace/${workspaceToEdit[0]?.building_name}`,
-        );
-        if (res.status === 200) {
-            location.reload(navigate(-1));
-        }
+      const workspace_name = window.location.pathname.split("/").pop();
 
-        } catch (err) { 
-            console.log(err);
-        }
-    };
+      const res = await axios.put(
+        `/localhost:5544/workspace/${workspace_name}`,
+      );
+      if (res.status === 200) {
+        navigate(`/workspaces/${workspaceToEdit[0]?.building_name}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
-    <div>
-      <h1>Edit Workspace</h1>
-    </div>
+    <React.Fragment>
+      <CssBaseline />
+      <Container fixed>
+        <Box
+          sx={{
+            bgcolor: "#cfe8fc",
+            height: "90vh",
+            marginTop: " 3%",
+            borderRadius: "9px",
+            padding: "1%",
+            overflowY: "scroll",
+          }}
+        >
+          <div className="header">
+            <div className="text">Edit Workspace</div>
+            <div className="underline"></div>
+            <br></br>
+          </div>
+          <Container maxWidth="md">
+            <Box
+              sx={{
+                bgcolor: "#90caf9",
+                borderRadius: "9px",
+                paddingTop: "1px",
+                paddingBottom: "1%",
+              }}
+            >
+              <form onSubmit={handleSubmit(onSubmit)} className="custom-form">
+              <div className="textField-box">
+                  <label className="label-width">
+                    {workspaceToEdit[0]?.number_of_seats}
+                  </label>
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("number_of_seats")}
+                  label="Number of Seats"
+                  variant="outlined"
+                  value={numberOfSeatsValue}
+                  onChange={handleNumberOfSeatsChange}
+                  error={number_of_seats_error}
+                  helperText={
+                    number_of_seats_error
+                      ? "Please enter a number starting from 1"
+                      : ""
+                  }
+                />
+                </div>
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("price")}
+                  label="Price"
+                  variant="outlined"
+                  value={priceValue}
+                  onChange={handlePriceChange}
+                  error={price_error}
+                  helperText={
+                    price_error ? "Please enter a number starting from 0" : ""
+                  }
+                />
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("lease_term")}
+                  label="Lease Term"
+                  variant="outlined"
+                  value={leaseTermValue}
+                  onChange={handleLeaseTermChange}
+                  error={lease_term_error}
+                  helperText={
+                    lease_term_error
+                      ? "Please enter a number starting from 1"
+                      : ""
+                  }
+                />
+                <div className="checkbox-container">
+                  {renderCheckbox(
+                    "Available",
+                    availableChecked,
+                    setAvailableChecked
+                  )}
+                </div>
+
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("size")}
+                  label="Square Footage"
+                  variant="outlined"
+                  value={sizeValue}
+                  onChange={handleSizeChange}
+                  error={size_error}
+                  helperText={
+                    size_error ? "Please enter a number starting from 1" : ""
+                  }
+                />
+                <TextField
+                  sx={{ width: "90%" }}
+                  {...register("type")}
+                  label="Type"
+                  variant="outlined"
+                  value={typeValue}
+                  onChange={handleTypeChange}
+                  error={type_error}
+                  helperText={
+                    type_error ? "Please enter at least 3 characters" : ""
+                  }
+                />
+
+                <div className="submit-container">
+                  <Button type="submit" variant="contained">
+                    Edit Workspace
+                  </Button>
+
+                  <Button variant="contained" onClick={() => navigate(-1)}>
+                    Back
+                  </Button>
+                </div>
+              </form>
+            </Box>
+          </Container>
+        </Box>
+      </Container>
+    </React.Fragment>
   );
 };
 
