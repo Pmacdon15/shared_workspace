@@ -95,7 +95,7 @@ const OwnersPage = () => {
           </div>
           {userBuildings.map((building) => (
             // <div key={building.name} className="display-container">
-              <Container maxWidth="md">
+              <Container maxWidth="md" key={building.name}>
                 <Box
                   sx={{
                     bgcolor: "#90caf9",
