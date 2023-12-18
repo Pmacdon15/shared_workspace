@@ -105,7 +105,7 @@ function CoworkersPage() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <div className="submit-container">
+                  <div className="options-container">
                     <Link
                       to={`/ownerInfo/${workspace.buildings_id}`}
                       style={{ textDecoration: "none" }}
@@ -113,8 +113,7 @@ function CoworkersPage() {
                       <Button variant="contained">Get Owner Info</Button>
                     </Link>
                     <Button variant="contained">Book</Button>
-                  </div>
-                  {/* <pre>{JSON.stringify(workspace, null, 2)}</pre> */}
+                  </div>                 
                 </Box>
               </Container>
             </div>
