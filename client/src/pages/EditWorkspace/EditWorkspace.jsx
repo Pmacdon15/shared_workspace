@@ -62,7 +62,7 @@ const EditWorkspace = () => {
 
   const handlePriceChange = (event) => {
     const { value } = event.target;
-    const numericValue = value.replace(/[^1-9]/g, "");
+    const numericValue = value.replace(/[^0-9]/g, "");
     setPriceValue(numericValue);
     setPriceError(value !== numericValue);
   };
@@ -77,7 +77,7 @@ const EditWorkspace = () => {
 
   const handleLeaseTermChange = (event) => {
     const { value } = event.target;
-    const numericValue = value.replace(/[^1-9]/g, "");
+    const numericValue = value.replace(/[^0-9]/g, "");
     setLeaseTermValue(numericValue);
     setLeaseTermError(value !== numericValue);
   };
@@ -212,7 +212,7 @@ const EditWorkspace = () => {
                     error={number_of_seats_error}
                     helperText={
                       number_of_seats_error
-                        ? "Please enter a number starting from 1"
+                        ? "Please enter a number"
                         : ""
                     }
                   />
@@ -230,7 +230,7 @@ const EditWorkspace = () => {
                     onChange={handlePriceChange}
                     error={price_error}
                     helperText={
-                      price_error ? "Please enter a number starting from 0" : ""
+                      price_error ? "Please enter a number" : ""
                     }
                   />
                 </div>
@@ -248,7 +248,7 @@ const EditWorkspace = () => {
                     error={lease_term_error}
                     helperText={
                       lease_term_error
-                        ? "Please enter a number starting from 1"
+                        ? "Please enter a number"
                         : ""
                     }
                   />
@@ -275,7 +275,7 @@ const EditWorkspace = () => {
                     onChange={handleSizeChange}
                     error={size_error}
                     helperText={
-                      size_error ? "Please enter a number starting from 1" : ""
+                      size_error ? "Please enter a number" : ""
                     }
                   />
                 </div>
