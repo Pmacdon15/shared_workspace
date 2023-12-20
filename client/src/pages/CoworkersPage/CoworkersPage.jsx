@@ -3,7 +3,19 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper} from '@mui/material';
+import TextField from "@mui/material/TextField";
+
+import { useForm } from "react-hook-form";
+
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+} from "@mui/material";
 
 import Button from "@mui/material/Button";
 
@@ -12,6 +24,7 @@ import { Link } from "react-router-dom";
 // import "./CoworkersPage.css";
 
 function CoworkersPage() {
+  const { register, handleSubmit, setValue } = useForm();
   const [workspaces, setWorkspaces] = useState([]);
   const boxRef = useRef(null);
 
@@ -45,10 +58,19 @@ function CoworkersPage() {
             marginTop: " 3%",
             borderRadius: "9px",
             padding: "1%",
-            overflowY: "scroll",     
+            overflowY: "scroll",
             // overflowX: "scroll",
           }}
         >
+          <div className="navButtons">
+            <TextField
+              sx={{ width: "30%" }}
+              {...register("search")}
+              label="Search"
+              variant="outlined"
+            />
+            <Button variant="contained">Search</Button>
+          </div>
           {workspaces.map((workspace) => (
             <div key={workspace.id} className="display-container">
               <Container maxWidth="md">
@@ -58,7 +80,6 @@ function CoworkersPage() {
                     borderRadius: "9px",
                     paddingBottom: "1%",
                     paddingLeft: "1%",
-                                        
                   }}
                 >
                   <h2>{workspace.name}</h2>
@@ -113,7 +134,7 @@ function CoworkersPage() {
                       <Button variant="contained">Get Owner Info</Button>
                     </Link>
                     <Button variant="contained">Book</Button>
-                  </div>                 
+                  </div>
                 </Box>
               </Container>
             </div>
