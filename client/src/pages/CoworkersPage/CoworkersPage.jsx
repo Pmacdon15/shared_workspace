@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 // import "./CoworkersPage.css";
 
 function CoworkersPage() {
+  document.title = "Coworkers Page";
   const { register, handleSubmit, setValue } = useForm();
   const [workspaces, setWorkspaces] = useState([]);
   const boxRef = useRef(null);
@@ -46,6 +47,11 @@ function CoworkersPage() {
     fetchData();
   }, []); // The empty dependency array ensures that the effect runs only once on mount
 
+  const onSubmit = async (data) => {
+    const searchTerm = data.search;
+    console.log(searchTerm);
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -62,15 +68,21 @@ function CoworkersPage() {
             // overflowX: "scroll",
           }}
         >
-          <div className="navButtons">
-            <TextField
-              sx={{ width: "30%" }}
-              {...register("search")}
-              label="Search"
-              variant="outlined"
-            />
-            <Button variant="contained">Search</Button>
-          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="navButtons">
+              <TextField
+                sx={{ width: "30%" }}
+                {...register("search")}
+                label="Search"
+                variant="outlined"
+              />
+
+              <Button variant="contained" type="submit">
+                Search
+              </Button>
+            </div>
+          </form>
+
           {workspaces.map((workspace) => (
             <div key={workspace.id} className="display-container">
               <Container maxWidth="md">
