@@ -25,7 +25,7 @@ import { Link } from "react-router-dom";
 
 function CoworkersPage() {
   document.title = "Coworkers Page";
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit} = useForm();
   const [workspaces, setWorkspaces] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState(""); // New state for search term
