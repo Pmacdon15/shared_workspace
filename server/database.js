@@ -315,10 +315,18 @@ module.exports = {
       if (rows.length === 0) {
         throw new Error("Workspace not found");
       }
-      
+
       console.log("Workspaces from building:", building_name, "found");
-      // add building name to rows[0]
-       //rows.building_name = building_name;
+      const user_email = await pool.query(
+        "SELECT user_email FROM buildings WHERE name = ?",
+        [building_name]
+      );
+
+      rows.map((row) => {
+        row.user_email = user_email[0][0].user_email;
+        return row;
+      });
+
       return rows;
     } catch (error) {
       console.error("Error:", error);

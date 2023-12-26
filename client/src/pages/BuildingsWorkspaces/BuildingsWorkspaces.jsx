@@ -20,6 +20,9 @@ import { useForm } from "react-hook-form";
 function BuildingsWorkspaces() {
   const [workspaces, setWorkspaces] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [user_email, setUser_email] = useState("");//added by me
+
   const boxRef = useRef(null);
 
   const { register, handleSubmit } = useForm();
@@ -41,6 +44,9 @@ function BuildingsWorkspaces() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
+        setUser_email(data[0].user_email);//added by me
+        //const user_email = data[0].user_email;  
+        console.log(user_email);
         const filteredData = data.filter((workspace) => {
           return Object.entries(workspace).some(([key, value]) => {
             const stringValue =
@@ -117,9 +123,14 @@ function BuildingsWorkspaces() {
           }}
         >
           <div className="navButtons">
-            <Button variant="contained" onClick={() => navigate(-1)}>
-              Back
+          <Link
+              to={`/ownerspage/${user_email}`}
+              style={{ textDecoration: "none" }}
+            >
+            <Button variant="contained">
+              Back to Buildings
             </Button>
+          </Link>
             <Link
               to={`/addWorkspace/${window.location.pathname.split("/").pop()}`}
               style={{ textDecoration: "none" }}
