@@ -42,13 +42,16 @@ function CoworkersPage() {
         }
         const data = await response.json();
         // Filter workspaces based on the search term
-        const filteredData = data.filter((workspace) =>
-          Object.values(workspace).some(
-            (value) =>
-              typeof value === "string" &&
-              value.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        );
+        const filteredData = data.filter((workspace) => {
+          return Object.entries(workspace).some(([key, value]) => {
+            if (typeof value === "string") {
+              return value.toLowerCase().includes(searchTerm.toLowerCase());
+            } else if (key === "available" && (searchTerm.toLowerCase() === "yes" || searchTerm.toLowerCase() === "no")) {
+              return value === (searchTerm.toLowerCase() === "yes" ? 1 : 0);
+            }
+            return false;
+          });
+        });
 
         setWorkspaces(filteredData);
         boxRef.current.scrollTop = 0; // Set the scroll position to the top
