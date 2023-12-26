@@ -27,6 +27,10 @@ function CoworkersPage() {
   document.title = "Coworkers Page";
   const { register, handleSubmit, setValue } = useForm();
   const [workspaces, setWorkspaces] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState(""); // New state for search term
+  // const [filteredWorkspaces, setFilteredWorkspaces] = useState([]); // New state for filtered workspaces
+
   const boxRef = useRef(null);
 
   useEffect(() => {
@@ -37,7 +41,16 @@ function CoworkersPage() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setWorkspaces(data);
+        // Filter workspaces based on the search term
+        const filteredData = data.filter((workspace) =>
+          Object.values(workspace).some(
+            (value) =>
+              typeof value === "string" &&
+              value.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        );
+
+        setWorkspaces(filteredData);
         boxRef.current.scrollTop = 0; // Set the scroll position to the top
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,11 +58,12 @@ function CoworkersPage() {
     };
 
     fetchData();
-  }, []); // The empty dependency array ensures that the effect runs only once on mount
+  }, [searchTerm]); // The empty dependency array ensures that the effect runs only once on mount
 
   const onSubmit = async (data) => {
     const searchTerm = data.search;
     console.log(searchTerm);
+    setSearchTerm(searchTerm);
   };
 
   return (
