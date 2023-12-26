@@ -33,6 +33,11 @@ function CoworkersPage() {
 
   const boxRef = useRef(null);
 
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,7 +51,11 @@ function CoworkersPage() {
           return Object.entries(workspace).some(([key, value]) => {
             if (typeof value === "string") {
               return value.toLowerCase().includes(searchTerm.toLowerCase());
-            } else if (key === "available" && (searchTerm.toLowerCase() === "yes" || searchTerm.toLowerCase() === "no")) {
+            } else if (
+              key === "available" &&
+              (searchTerm.toLowerCase() === "yes" ||
+                searchTerm.toLowerCase() === "no")
+            ) {
               return value === (searchTerm.toLowerCase() === "yes" ? 1 : 0);
             }
             return false;
@@ -92,11 +101,8 @@ function CoworkersPage() {
                 {...register("search")}
                 label="Search"
                 variant="outlined"
-              />
-
-              <Button variant="contained" type="submit">
-                Search
-              </Button>
+                onChange={handleSearchChange}
+              />              
             </div>
           </form>
 
