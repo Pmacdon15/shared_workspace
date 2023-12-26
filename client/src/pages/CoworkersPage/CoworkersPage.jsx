@@ -3,7 +3,19 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper} from '@mui/material';
+import TextField from "@mui/material/TextField";
+
+import { useForm } from "react-hook-form";
+
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+} from "@mui/material";
 
 import Button from "@mui/material/Button";
 
@@ -12,8 +24,19 @@ import { Link } from "react-router-dom";
 // import "./CoworkersPage.css";
 
 function CoworkersPage() {
+  document.title = "Coworkers Page";
+  const { register, handleSubmit} = useForm();
   const [workspaces, setWorkspaces] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState(""); // New state for search term
+  // const [filteredWorkspaces, setFilteredWorkspaces] = useState([]); // New state for filtered workspaces
+
   const boxRef = useRef(null);
+
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +46,24 @@ function CoworkersPage() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setWorkspaces(data);
+        // Filter workspaces based on the search term
+        const filteredData = data.filter((workspace) => {
+          return Object.entries(workspace).some(([key, value]) => {
+            const stringValue =
+              typeof value === "number" ? value.toString() : value;
+
+            if (key === "available") {
+              return (
+                (searchTerm.toLowerCase() === "yes" && value === 1) ||
+                (searchTerm.toLowerCase() === "no" && value === 0)
+              );
+            }
+
+            return stringValue.toLowerCase().includes(searchTerm.toLowerCase());
+          });
+        });
+
+        setWorkspaces(filteredData);
         boxRef.current.scrollTop = 0; // Set the scroll position to the top
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -31,7 +71,13 @@ function CoworkersPage() {
     };
 
     fetchData();
-  }, []); // The empty dependency array ensures that the effect runs only once on mount
+  }, [searchTerm]); // The empty dependency array ensures that the effect runs only once on mount
+
+  const onSubmit = async (data) => {
+    const searchTerm = data.search;
+    console.log(searchTerm);
+    setSearchTerm(searchTerm);
+  };
 
   return (
     <React.Fragment>
@@ -45,10 +91,22 @@ function CoworkersPage() {
             marginTop: " 3%",
             borderRadius: "9px",
             padding: "1%",
-            overflowY: "scroll",     
+            overflowY: "scroll",
             // overflowX: "scroll",
           }}
         >
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="navButtons">
+              <TextField
+                sx={{ width: "30%" }}
+                {...register("search")}
+                label="Search"
+                variant="outlined"
+                onChange={handleSearchChange}
+              />
+            </div>
+          </form>
+
           {workspaces.map((workspace) => (
             <div key={workspace.id} className="display-container">
               <Container maxWidth="md">
@@ -58,7 +116,6 @@ function CoworkersPage() {
                     borderRadius: "9px",
                     paddingBottom: "1%",
                     paddingLeft: "1%",
-                                        
                   }}
                 >
                   <h2>{workspace.name}</h2>
@@ -113,7 +170,7 @@ function CoworkersPage() {
                       <Button variant="contained">Get Owner Info</Button>
                     </Link>
                     <Button variant="contained">Book</Button>
-                  </div>                 
+                  </div>
                 </Box>
               </Container>
             </div>
