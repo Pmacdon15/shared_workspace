@@ -209,8 +209,8 @@ const AddBuilding = () => {
                   label="Building Name"
                   variant="outlined"
                   onChange={handleNameInputChange}
-                  value={nameValue}
-                  error={false}
+                  // value={nameValue}
+                  error={nameError}
                   helperText={
                     nameError ? "Name must be at least 3 characters" : ""
                   }
