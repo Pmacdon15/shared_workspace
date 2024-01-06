@@ -17,6 +17,8 @@ import TextField from "@mui/material/TextField";
 
 import { useForm } from "react-hook-form";
 
+import api_config from "../../Components/config.js";
+
 const OwnersPage = () => {
   const { register, handleSubmit } = useForm();
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,7 +37,7 @@ const OwnersPage = () => {
         const userEmail = window.location.pathname.split("/").pop();
         console.log("user e mail: " + userEmail);
         const response = await fetch(
-          `http://localhost:5544/buildings/${userEmail}`
+          `${api_config.API_HOST}:5544/buildings/${userEmail}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -76,7 +78,7 @@ const OwnersPage = () => {
   const handleDeleteBuilding = async (buildingName) => {
     try {
       const response = await fetch(
-        `http://localhost:5544/building/${buildingName}`,
+        `${api_config.API_HOST}:5544/building/${buildingName}`,
         {
           method: "DELETE",
           headers: {

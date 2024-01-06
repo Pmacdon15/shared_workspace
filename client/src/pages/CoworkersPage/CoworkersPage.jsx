@@ -7,6 +7,8 @@ import TextField from "@mui/material/TextField";
 
 import { useForm } from "react-hook-form";
 
+import api_config from "../../Components/config.js";
+
 import {
   TableContainer,
   Table,
@@ -41,7 +43,7 @@ function CoworkersPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5544/workspaces");
+        const response = await fetch(`${api_config.API_HOST}:5544/workspaces`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

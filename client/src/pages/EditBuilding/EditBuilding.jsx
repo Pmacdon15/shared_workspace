@@ -7,12 +7,9 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-//import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
-// import "./EditBuilding.css";
-
-// import "../SignIn/SignIn.css";
+import api_config from "../../Components/config.js";
 
 /**
  * EditBuilding component for editing building information.
@@ -32,7 +29,7 @@ const EditBuilding = () => {
       try {
         const building_name = window.location.pathname.split("/").pop();
         const response = await fetch(
-          `http://localhost:5544/building/${building_name}`
+          `${api_config.API_HOST}:5544/building/${building_name}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -209,7 +206,7 @@ const EditBuilding = () => {
       console.log("Building name:", building_name);
 
       const response = await axios.put(
-        `http://localhost:5544/building/${building_name}`,
+        `${api_config.API_HOST}:5544/building/${building_name}`,
         data
       );
       //console.log("Response from the server:", response.data);
