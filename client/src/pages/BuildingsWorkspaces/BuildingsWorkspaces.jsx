@@ -70,7 +70,7 @@ function BuildingsWorkspaces() {
     };
 
     fetchData();
-  }, [searchTerm]);
+  }, [searchTerm, user_email]);
 
   const onSubmit = async (data) => {
     const searchTerm = data.search;
