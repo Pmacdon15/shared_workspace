@@ -14,7 +14,7 @@ import {
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
-import { Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import api_config from "../../Components/config.js";
@@ -38,7 +38,7 @@ function BuildingsWorkspaces() {
       try {
         const buildingName = window.location.pathname.split("/").pop();
         const response = await fetch(
-          `${api_config.API_HOST}/workspaces/${buildingName}`
+          `${api_config.API_HOST}:5544/workspaces/${buildingName}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -70,8 +70,7 @@ function BuildingsWorkspaces() {
     };
 
     fetchData();
-  }, [searchTerm, user_email]);
-  //Todo check if user email is needed in the dependency array or search term is enough
+  }, [searchTerm]);
 
   const onSubmit = async (data) => {
     const searchTerm = data.search;
@@ -84,7 +83,7 @@ function BuildingsWorkspaces() {
       console.log("Deleting workspace:", workspaceName);
 
       const response = await fetch(
-        `${api_config.API_HOST}:5544/workspace/${workspaceName}`,
+        `http://localhost:5544/workspace/${workspaceName}`,
         {
           method: "DELETE",
           headers: {
