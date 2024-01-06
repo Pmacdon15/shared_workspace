@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 
-// import "./AddWorkspace.css";
+import api_config from "../../Components/config.js";
 
 const AddWorkspace = () => {
   document.title = "Add Workspace";
@@ -138,7 +138,7 @@ const AddWorkspace = () => {
       console.log(building_name);
       console.log(data);
       const response = await axios.post(
-        `http://localhost:5544/workspace/${building_name}`,
+        `${api_config.API_HOST}:5544/workspace/${building_name}`,
         data
       );
 
@@ -265,12 +265,10 @@ const AddWorkspace = () => {
                     type_error ? "Please enter at least 3 characters" : ""
                   }
                 />
-
                 <div className="submit-container">
                   <Button type="submit" variant="contained">
                     Add Workspace
                   </Button>
-
                   <Button variant="contained" onClick={() => navigate(-1)}>
                     Back
                   </Button>

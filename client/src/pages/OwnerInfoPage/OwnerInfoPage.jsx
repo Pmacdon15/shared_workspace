@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import api_config from "../../Components/config.js";
 
 const OwnerInfoPage = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -14,7 +15,7 @@ const OwnerInfoPage = () => {
         const buildingId = window.location.pathname.split("/").pop();
         console.log(buildingId);
         const response = await fetch(
-          `http://localhost:5544/user/${buildingId}`
+          `${api_config.API_HOST}:5544/user/${buildingId}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

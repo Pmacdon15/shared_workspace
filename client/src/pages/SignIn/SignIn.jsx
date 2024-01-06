@@ -8,13 +8,10 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-// import "./SignIn.css";
-
 import api_config from "../../Components/config.js";
 
 const SignIn = () => {
-  document.title = "Sign In";
-  console.log("API URL:", api_config);
+  document.title = "Sign In";  
   const { register, handleSubmit, reset } = useForm(); // Initialize useForm
   const navigate = useNavigate();
 

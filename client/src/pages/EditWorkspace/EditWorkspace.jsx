@@ -10,6 +10,8 @@ import Checkbox from "@mui/material/Checkbox";
 //import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
+import api_config from "../../Components/config.js";
+
 const EditWorkspace = () => {
   const [workspaceToEdit, setWorkspaceToEdit] = useState({});
   const [availableChecked, setAvailableChecked] = useState(false);
@@ -21,7 +23,7 @@ const EditWorkspace = () => {
         const workspace_name = window.location.pathname.split("/").pop();
         console.log(workspace_name);
         const res = await fetch(
-          `http://localhost:5544/workspace/${workspace_name}`
+          `${api_config.API_HOST}:5544/workspace/${workspace_name}`
         );
 
         // if (!res.ok) {
@@ -158,7 +160,7 @@ const EditWorkspace = () => {
       const workspace_name = window.location.pathname.split("/").pop();
 
       const res = await axios.put(
-        `http://localhost:5544/workspace/${workspace_name}`,
+        `${api_config.API_HOST}:5544/workspace/${workspace_name}`,
         data
       );
       if (res.status === 200) {

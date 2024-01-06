@@ -10,6 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 //import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 
+import api_config from "../../Components/config.js";
 
 const AddBuilding = () => {
   document.title = "Add Building";
@@ -160,7 +161,7 @@ const AddBuilding = () => {
       console.log("User Email: ", user_email);
 
       const response = await axios.post(
-        `http://localhost:5544/building/${user_email}`,
+        `${api_config.API_HOST}:5544/building/${user_email}`,
         data
       );
 

@@ -9,6 +9,7 @@ This app Shared Workspaces is made with My Sql and Node.js(Express). The back en
 - [Requirements](#Requirements)
 - [Database](#Database)
 - [Startup](#Startup)
+- [Rasp-Pi](#Rasp-Pi)
 
 ## Installation
 
@@ -80,3 +81,7 @@ npm start
 ```
 
 The server is now running. You can contact the app at localhost:3000/ or using your public Ip address after applying the appropriate port forwarding to your router.
+
+## Rasp-Pi
+
+If you are planning on running this on a Rasp-Pi or linux there is a component in the on the client side called config.js. Change this to your Ip Address and save your self some head ache.
