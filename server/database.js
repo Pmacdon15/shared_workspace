@@ -4,6 +4,7 @@ const path = require("path");
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
+
 const pool = mysql
   .createPool({
     host: process.env.MYSQL_HOST,

@@ -10,16 +10,17 @@ import axios from "axios";
 
 // import "./SignIn.css";
 
+import api_config from "../../Components/config.js";
+
 const SignIn = () => {
   document.title = "Sign In";
+  console.log("API URL:", api_config);
   const { register, handleSubmit, reset } = useForm(); // Initialize useForm
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5544/login", data);
-
-      //console.log("Response from the server:", response.data);
+      const response = await axios.post(`${api_config.API_HOST}:5544/login`, data);
 
       if (response.status === 200) {
         //console.log("Login successful. User data:", response.data);

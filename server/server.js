@@ -32,6 +32,7 @@ app.use(
   })
 );
 
+
 //* Http requests
 //* User requests
 // If any database.js function returns null, send a 400 status code and a message because there was an error
