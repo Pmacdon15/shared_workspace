@@ -129,10 +129,7 @@ const OwnersPage = () => {
               style={{ textDecoration: "none" }}
             >
               <Button variant="contained">Add Building</Button>
-            </Link>            
-            <Link to={`/`}>
-              <Button variant="contained">Logout</Button>
-            </Link>
+            </Link>   
           </div>
           {userBuildings.map((building) => (
             // <div key={building.name} className="display-container">
