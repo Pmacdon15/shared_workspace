@@ -2,14 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-import TextField from "@mui/material/TextField";
-
-import { useForm } from "react-hook-form";
-
-import SearchAppBar from "../../Components/searchBar.jsx";
-
-import api_config from "../../Components/config.js";
 
 import {
   TableContainer,
@@ -21,26 +15,22 @@ import {
   Paper,
 } from "@mui/material";
 
-import Button from "@mui/material/Button";
-
 import { Link } from "react-router-dom";
 
-// import "./CoworkersPage.css";
+import SearchAppBar from "../../Components/searchBar.jsx";
+
+import api_config from "../../Components/config.js";
+
+
+
+
 
 function CoworkersPage() {
   document.title = "Coworkers Page";
-  const { register, handleSubmit } = useForm();
   const [workspaces, setWorkspaces] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState(""); // New state for search term
-  // const [filteredWorkspaces, setFilteredWorkspaces] = useState([]); // New state for filtered workspaces
 
   const boxRef = useRef(null);
-
-  const handleSearchChange = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,12 +66,6 @@ function CoworkersPage() {
 
     fetchData();
   }, [searchTerm]); // The empty dependency array ensures that the effect runs only once on mount
-
-  const onSubmit = async (data) => {
-    const searchTerm = data.search;
-    console.log(searchTerm);
-    setSearchTerm(searchTerm);
-  };
 
   return (
     <React.Fragment>
