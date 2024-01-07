@@ -8,6 +8,11 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -39,7 +44,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
@@ -51,7 +55,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const menuItems = [
+  { label: "Add Building", path: "/addBuilding/" },
+  { label: "Log Out", path: "/" },
+  // Add more items as needed
+];
+
 export default function SearchAppBar({ setSearchTerm }) {
+  const [isDrawerOpen, setDrawerOpen] = React.useState(false);
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -61,6 +83,7 @@ export default function SearchAppBar({ setSearchTerm }) {
             edge="start"
             color="inherit"
             aria-label="open drawer"
+            onClick={toggleDrawer(true)}
             sx={{ mr: 2 }}
           >
             <MenuIcon />
@@ -85,6 +108,17 @@ export default function SearchAppBar({ setSearchTerm }) {
           </Search>
         </Toolbar>
       </AppBar>
+      <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+  <List>
+    {menuItems.map((item) => (
+      <Link to={item.path} key={item.label} style={{ textDecoration: "none" }}>
+        <ListItem button onClick={toggleDrawer(false)}>
+          <ListItemText primary={item.label} />
+        </ListItem>
+      </Link>
+    ))}
+  </List>
+</Drawer>
     </Box>
   );
 }
