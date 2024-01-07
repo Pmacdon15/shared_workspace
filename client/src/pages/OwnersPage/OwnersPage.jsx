@@ -23,16 +23,12 @@ import api_config from "../../Components/config.js";
 
 const OwnersPage = () => {
   // const { register, handleSubmit } = useForm();
-  
+
+  const user_email = window.location.pathname.split("/").pop();
   const [userBuildings, setUserBuildings] = useState([]);
   const boxRef = useRef(null);
 
   const [searchTerm, setSearchTerm] = useState("");
-
-  // const handleSearchChange = (event) => {
-  //   const searchTerm = event.target.value;
-  //   setSearchTerm(searchTerm);
-  // };
 
   useEffect(() => {
     document.title = "Owner's Page";
@@ -76,12 +72,6 @@ const OwnersPage = () => {
     fetchData();
   }, [searchTerm]);
 
-  // const onSubmit = async (data) => {
-  //   const searchTerm = data.search;
-  //   console.log(searchTerm);
-  //   setSearchTerm(searchTerm);
-  // };
-
   const handleDeleteBuilding = async (buildingName) => {
     try {
       const response = await fetch(
@@ -110,8 +100,8 @@ const OwnersPage = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container fixed>  
-        <SearchAppBar setSearchTerm={setSearchTerm} /> 
+      <Container fixed>
+        <SearchAppBar setSearchTerm={setSearchTerm}  user_email={user_email} />
         <Box
           ref={boxRef}
           sx={{
@@ -129,7 +119,7 @@ const OwnersPage = () => {
               style={{ textDecoration: "none" }}
             >
               <Button variant="contained">Add Building</Button>
-            </Link>   
+            </Link>
           </div>
           {userBuildings.map((building) => (
             // <div key={building.name} className="display-container">

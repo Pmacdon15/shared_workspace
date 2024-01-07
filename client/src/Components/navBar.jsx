@@ -55,14 +55,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const menuItems = [
-  { label: "Add Building", path: "/addBuilding/" },
-  { label: "Log Out", path: "/" },
-  // Add more items as needed
-];
 
-export default function SearchAppBar({ setSearchTerm }) {
+export default function SearchAppBar({ setSearchTerm , user_email}) {
   const [isDrawerOpen, setDrawerOpen] = React.useState(false);
+
+  const menuItems = [
+  {
+    label: "Add Building",
+    path: `/addBuilding/${user_email}`,
+  },
+  { label: "Log Out", path: "/" },
+];
 
   const toggleDrawer = (open) => (event) => {
     if (
