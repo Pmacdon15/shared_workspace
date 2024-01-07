@@ -8,6 +8,12 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Button from "@mui/material/Button";
+import { useMediaQuery } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -39,7 +45,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
@@ -51,7 +56,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar({ setSearchTerm }) {
+const SearchAppBar = ({ setSearchTerm }) => {
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -62,6 +78,7 @@ export default function SearchAppBar({ setSearchTerm }) {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={handleDrawerOpen}
           >
             <MenuIcon />
           </IconButton>
@@ -73,19 +90,47 @@ export default function SearchAppBar({ setSearchTerm }) {
           >
             MUI
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              // Use the setSearchTerm prop to update the search term in OwnersPage
-              onChange={(event) => setSearchTerm(event.target.value)}
-            />
-          </Search>
+          {isSmallScreen ? (
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+            </Search>
+          ) : (
+            // Render buttons or links on the nav bar when there is enough room
+            <>
+              <Button color="inherit">Link1</Button>
+              <Button color="inherit">Link2</Button>
+              {/* Add more buttons or links as needed */}
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                />
+              </Search>
+            </>
+          )}
         </Toolbar>
       </AppBar>
+      <Drawer anchor="left" open={openDrawer} onClose={handleDrawerClose}>
+        <List>
+          <ListItem button onClick={handleDrawerClose}>
+            <ListItemText primary="Home" />
+          </ListItem>
+          {/* Add more ListItems for your navigation links */}
+        </List>
+      </Drawer>
     </Box>
   );
-}
+};
+
+export default SearchAppBar;

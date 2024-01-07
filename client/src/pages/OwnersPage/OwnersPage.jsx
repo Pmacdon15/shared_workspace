@@ -22,9 +22,9 @@ import SearchAppBar from "../../Components/navBar.jsx";
 
 import api_config from "../../Components/config.js";
 
-const OwnersPage = () => {
+const OwnersPage = ({ setSearchTerm, searchTerm }) => {
   const { register, handleSubmit } = useForm();
-  const [searchTerm, setSearchTerm] = useState("");
+  
   const [userBuildings, setUserBuildings] = useState([]);
   const boxRef = useRef(null);
 
