@@ -7,6 +7,8 @@ import TextField from "@mui/material/TextField";
 
 import { useForm } from "react-hook-form";
 
+import SearchAppBar from "../../Components/searchBar.jsx";
+
 import api_config from "../../Components/config.js";
 
 import {
@@ -85,15 +87,16 @@ function CoworkersPage() {
     <React.Fragment>
       <CssBaseline />
       <Container fixed>
+        <SearchAppBar setSearchTerm={setSearchTerm} />
         <Box
           ref={boxRef} // Get a reference to the Box element
           sx={{
             bgcolor: "#cfe8fc",
-            height: "90vh",
-            marginTop: " 3%",
+            height: "85vh",
+            marginTop: " 2%",
             borderRadius: "9px",
             padding: "1%",
-            overflowY: "scroll",
+            overflowY: "auto",
             // overflowX: "scroll",
           }}
         >
@@ -111,7 +114,7 @@ function CoworkersPage() {
 
           {workspaces.map((workspace) => (
             <div key={workspace.id} className="display-container">
-              <Container maxWidth="md">
+              <Container maxWidth="lg">
                 <Box
                   sx={{
                     bgcolor: "#90caf9",
