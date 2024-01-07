@@ -17,6 +17,9 @@ import TextField from "@mui/material/TextField";
 
 import { useForm } from "react-hook-form";
 
+// import "../../Components/navBar.jsx";
+import SearchAppBar from "../../Components/navBar.jsx";
+
 import api_config from "../../Components/config.js";
 
 const OwnersPage = () => {
@@ -48,7 +51,11 @@ const OwnersPage = () => {
             const stringValue =
               typeof value === "number" ? value.toString() : value;
 
-            if (key === "smoking" || key === "parking" || key === "public_transport") {
+            if (
+              key === "smoking" ||
+              key === "parking" ||
+              key === "public_transport"
+            ) {
               return (
                 (searchTerm.toLowerCase() === "yes" && value === 1) ||
                 (searchTerm.toLowerCase() === "no" && value === 0)
@@ -58,7 +65,6 @@ const OwnersPage = () => {
             return stringValue.toLowerCase().includes(searchTerm.toLowerCase());
           });
         });
-
 
         setUserBuildings(filteredData);
         boxRef.current.scrollTop = 0; // Set the scroll position to the top
@@ -104,6 +110,8 @@ const OwnersPage = () => {
     <React.Fragment>
       <CssBaseline />
       <Container fixed>
+        <SearchAppBar setSearchTerm={setSearchTerm} />
+
         <Box
           ref={boxRef}
           sx={{
