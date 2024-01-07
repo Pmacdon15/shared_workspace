@@ -21,10 +21,6 @@ import SearchAppBar from "../../Components/searchBar.jsx";
 
 import api_config from "../../Components/config.js";
 
-
-
-
-
 function CoworkersPage() {
   document.title = "Coworkers Page";
   const [workspaces, setWorkspaces] = useState([]);
