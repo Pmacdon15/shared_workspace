@@ -29,7 +29,7 @@ import { Link } from "react-router-dom";
 
 function CoworkersPage() {
   document.title = "Coworkers Page";
-  const { register, handleSubmit} = useForm();
+  const { register, handleSubmit } = useForm();
   const [workspaces, setWorkspaces] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState(""); // New state for search term
@@ -100,18 +100,6 @@ function CoworkersPage() {
             // overflowX: "scroll",
           }}
         >
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="navButtons">
-              <TextField
-                sx={{ width: "30%" }}
-                {...register("search")}
-                label="Search"
-                variant="outlined"
-                onChange={handleSearchChange}
-              />
-            </div>
-          </form>
-
           {workspaces.map((workspace) => (
             <div key={workspace.id} className="display-container">
               <Container maxWidth="lg">
