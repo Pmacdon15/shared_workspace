@@ -110,6 +110,7 @@ const OwnersPage = () => {
             marginTop: " 2%",
             borderRadius: "9px",            
             overflowY: "auto",
+            marginBottom: "2%",
           }}
         >
           {userBuildings.map((building) => (
@@ -121,6 +122,7 @@ const OwnersPage = () => {
                   borderRadius: "9px",
                   paddingBottom: "1%",
                   paddingLeft: "2%",
+                  marginBottom: "2%",
                 }}
               >
                 <h2>{building.name}</h2>
