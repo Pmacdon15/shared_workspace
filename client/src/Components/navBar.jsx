@@ -71,7 +71,7 @@ export default function SearchAppBar({ setSearchTerm }) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            Shared Workspaces
           </Typography>
           <Search>
             <SearchIconWrapper>

@@ -13,26 +13,26 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+// import TextField from "@mui/material/TextField";
 
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 
 import SearchAppBar from "../../Components/navBar.jsx";
 
 import api_config from "../../Components/config.js";
 
 const OwnersPage = () => {
-  const { register, handleSubmit } = useForm();
+  // const { register, handleSubmit } = useForm();
   
   const [userBuildings, setUserBuildings] = useState([]);
   const boxRef = useRef(null);
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearchChange = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-  };
+  // const handleSearchChange = (event) => {
+  //   const searchTerm = event.target.value;
+  //   setSearchTerm(searchTerm);
+  // };
 
   useEffect(() => {
     document.title = "Owner's Page";
@@ -76,11 +76,11 @@ const OwnersPage = () => {
     fetchData();
   }, [searchTerm]);
 
-  const onSubmit = async (data) => {
-    const searchTerm = data.search;
-    console.log(searchTerm);
-    setSearchTerm(searchTerm);
-  };
+  // const onSubmit = async (data) => {
+  //   const searchTerm = data.search;
+  //   console.log(searchTerm);
+  //   setSearchTerm(searchTerm);
+  // };
 
   const handleDeleteBuilding = async (buildingName) => {
     try {
@@ -129,16 +129,7 @@ const OwnersPage = () => {
               style={{ textDecoration: "none" }}
             >
               <Button variant="contained">Add Building</Button>
-            </Link>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <TextField
-                sx={{ width: "100%" }}
-                {...register("search")}
-                label="Search"
-                variant="outlined"
-                onChange={handleSearchChange}
-              />
-            </form>
+            </Link>            
             <Link to={`/`}>
               <Button variant="contained">Logout</Button>
             </Link>
