@@ -108,7 +108,7 @@ const OwnersPage = () => {
             bgcolor: "#cfe8fc",
             height: "85vh",
             marginTop: " 2%",
-            borderRadius: "9px",            
+            borderRadius: "9px",
             overflowY: "auto",
             marginBottom: "2%",
           }}
@@ -117,24 +117,26 @@ const OwnersPage = () => {
             // <div key={building.name} className="display-container">
             <Container maxWidth="lg" key={building.name}>
               <Box
+              className="BoxStyle"
                 sx={{
                   bgcolor: "#90caf9",
                   borderRadius: "9px",
-                  paddingBottom: "1%",
-                  paddingLeft: "2%",
-                  marginBottom: "2%",
+                  paddingBottom: "2%",                   
+                  margin: "2%",
                 }}
               >
                 <h2>{building.name}</h2>
                 <TableContainer
+                className="TableContainerStyle"
                   component={Paper}
                   sx={{
                     overflowY: "auto",
-                    maxWidth: 600,
+                    // maxWidth: "40%",
+                    marginBottom: "1%",
                   }}
                 >
-                  <Table
-                    sx={{ minWidth: 600 }}
+                  <Table                  
+                    // sx={{ maxWidth: 400 }}
                     size="small"
                     aria-label="a dense table"
                   >
@@ -143,9 +145,6 @@ const OwnersPage = () => {
                         <TableCell align="center">Street</TableCell>
                         <TableCell align="center">Street Number</TableCell>
                         <TableCell align="center">City</TableCell>
-                        <TableCell align="center">Province</TableCell>
-                        <TableCell align="center">Postal Code</TableCell>
-                        <TableCell align="center">location</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -157,6 +156,31 @@ const OwnersPage = () => {
                           {building.street_number}
                         </TableCell>
                         <TableCell align="center">{building.city}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <TableContainer
+                className="TableContainerStyle" 
+                  component={Paper}
+                  sx={{
+                    overflowY: "auto",
+                  }}
+                >
+                  <Table
+                    // sx={{ minWidth: 600 }}
+                    size="small"
+                    aria-label="a dense table"
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">Province</TableCell>
+                        <TableCell align="center">Postal Code</TableCell>
+                        <TableCell align="center">location</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
                         <TableCell align="center">
                           {building.province}
                         </TableCell>
@@ -171,11 +195,11 @@ const OwnersPage = () => {
                   </Table>
                 </TableContainer>
                 <TableContainer
+                className="TableContainerStyle"
                   component={Paper}
                   sx={{
                     marginTop: "1%",
-                    overflowY: "auto",
-                    maxWidth: 400,
+                    overflowY: "auto",                   
                   }}
                 >
                   <Table
