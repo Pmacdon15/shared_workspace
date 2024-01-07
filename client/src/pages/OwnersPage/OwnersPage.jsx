@@ -13,22 +13,22 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+// import TextField from "@mui/material/TextField";
 
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
+
+import SearchAppBar from "../../Components/navBar.jsx";
 
 import api_config from "../../Components/config.js";
 
 const OwnersPage = () => {
-  const { register, handleSubmit } = useForm();
-  const [searchTerm, setSearchTerm] = useState("");
+  // const { register, handleSubmit } = useForm();
+
+  const user_email = window.location.pathname.split("/").pop();
   const [userBuildings, setUserBuildings] = useState([]);
   const boxRef = useRef(null);
 
-  const handleSearchChange = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-  };
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     document.title = "Owner's Page";
@@ -48,7 +48,11 @@ const OwnersPage = () => {
             const stringValue =
               typeof value === "number" ? value.toString() : value;
 
-            if (key === "smoking" || key === "parking" || key === "public_transport") {
+            if (
+              key === "smoking" ||
+              key === "parking" ||
+              key === "public_transport"
+            ) {
               return (
                 (searchTerm.toLowerCase() === "yes" && value === 1) ||
                 (searchTerm.toLowerCase() === "no" && value === 0)
@@ -59,7 +63,6 @@ const OwnersPage = () => {
           });
         });
 
-
         setUserBuildings(filteredData);
         boxRef.current.scrollTop = 0; // Set the scroll position to the top
       } catch (error) {
@@ -68,12 +71,6 @@ const OwnersPage = () => {
     };
     fetchData();
   }, [searchTerm]);
-
-  const onSubmit = async (data) => {
-    const searchTerm = data.search;
-    console.log(searchTerm);
-    setSearchTerm(searchTerm);
-  };
 
   const handleDeleteBuilding = async (buildingName) => {
     try {
@@ -104,40 +101,20 @@ const OwnersPage = () => {
     <React.Fragment>
       <CssBaseline />
       <Container fixed>
+        <SearchAppBar setSearchTerm={setSearchTerm} user_email={user_email} />
         <Box
           ref={boxRef}
           sx={{
             bgcolor: "#cfe8fc",
-            height: "90vh",
-            marginTop: " 3%",
-            borderRadius: "9px",
-            paddingTop: "1%",
-            overflowY: "scroll",
+            height: "85vh",
+            marginTop: " 2%",
+            borderRadius: "9px",            
+            overflowY: "auto",
           }}
         >
-          <div className="navButtons">
-            <Link
-              to={`/addBuilding/${window.location.pathname.split("/").pop()}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Button variant="contained">Add Building</Button>
-            </Link>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <TextField
-                sx={{ width: "100%" }}
-                {...register("search")}
-                label="Search"
-                variant="outlined"
-                onChange={handleSearchChange}
-              />
-            </form>
-            <Link to={`/`}>
-              <Button variant="contained">Logout</Button>
-            </Link>
-          </div>
           {userBuildings.map((building) => (
             // <div key={building.name} className="display-container">
-            <Container maxWidth="md" key={building.name}>
+            <Container maxWidth="lg" key={building.name}>
               <Box
                 sx={{
                   bgcolor: "#90caf9",

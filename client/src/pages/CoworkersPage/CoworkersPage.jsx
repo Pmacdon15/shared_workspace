@@ -2,12 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-import TextField from "@mui/material/TextField";
-
-import { useForm } from "react-hook-form";
-
-import api_config from "../../Components/config.js";
 
 import {
   TableContainer,
@@ -19,26 +15,18 @@ import {
   Paper,
 } from "@mui/material";
 
-import Button from "@mui/material/Button";
-
 import { Link } from "react-router-dom";
 
-// import "./CoworkersPage.css";
+import SearchAppBar from "../../Components/searchBar.jsx";
+
+import api_config from "../../Components/config.js";
 
 function CoworkersPage() {
   document.title = "Coworkers Page";
-  const { register, handleSubmit} = useForm();
   const [workspaces, setWorkspaces] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState(""); // New state for search term
-  // const [filteredWorkspaces, setFilteredWorkspaces] = useState([]); // New state for filtered workspaces
 
   const boxRef = useRef(null);
-
-  const handleSearchChange = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,43 +63,26 @@ function CoworkersPage() {
     fetchData();
   }, [searchTerm]); // The empty dependency array ensures that the effect runs only once on mount
 
-  const onSubmit = async (data) => {
-    const searchTerm = data.search;
-    console.log(searchTerm);
-    setSearchTerm(searchTerm);
-  };
-
   return (
     <React.Fragment>
       <CssBaseline />
       <Container fixed>
+        <SearchAppBar setSearchTerm={setSearchTerm} />
         <Box
           ref={boxRef} // Get a reference to the Box element
           sx={{
             bgcolor: "#cfe8fc",
-            height: "90vh",
-            marginTop: " 3%",
+            height: "85vh",
+            marginTop: " 2%",
             borderRadius: "9px",
             padding: "1%",
-            overflowY: "scroll",
+            overflowY: "auto",
             // overflowX: "scroll",
           }}
         >
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="navButtons">
-              <TextField
-                sx={{ width: "30%" }}
-                {...register("search")}
-                label="Search"
-                variant="outlined"
-                onChange={handleSearchChange}
-              />
-            </div>
-          </form>
-
           {workspaces.map((workspace) => (
             <div key={workspace.id} className="display-container">
-              <Container maxWidth="md">
+              <Container maxWidth="lg">
                 <Box
                   sx={{
                     bgcolor: "#90caf9",

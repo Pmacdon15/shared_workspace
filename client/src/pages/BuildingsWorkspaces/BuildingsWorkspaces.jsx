@@ -12,26 +12,20 @@ import {
   Paper,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 
 import {  Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+
+import SearchAppBar from "../../Components/navBar.jsx";
 
 import api_config from "../../Components/config.js";
 
 function BuildingsWorkspaces() {
   const [workspaces, setWorkspaces] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [user_email, setUser_email] = useState(""); 
+  const building_name = window.location.pathname.split("/").pop(); 
 
-  const [user_email, setUser_email] = useState("");//added by me
-
-  const boxRef = useRef(null);
-  const { register, handleSubmit } = useForm();
- 
-  const handleSearchChange = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-  };
+  const boxRef = useRef(null); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,13 +64,7 @@ function BuildingsWorkspaces() {
     };
 
     fetchData();
-  }, [searchTerm, user_email]);
-
-  const onSubmit = async (data) => {
-    const searchTerm = data.search;
-    console.log(searchTerm);
-    setSearchTerm(searchTerm);
-  };
+  }, [searchTerm, user_email]);  
 
   const handleDelete = async (workspaceName) => {
     try {
@@ -111,48 +99,21 @@ function BuildingsWorkspaces() {
     <React.Fragment>
       <CssBaseline />
       <Container fixed>
+        <SearchAppBar setSearchTerm={setSearchTerm} user_email={user_email} building_name={building_name} />
         <Box
           ref={boxRef}
           sx={{
             bgcolor: "#cfe8fc",
-            height: "90vh",
-            marginTop: " 3%",
+            height: "85vh",
+            marginTop: " 2%",
             borderRadius: "9px",
             padding: "1%",
-            overflowY: "scroll",
+            overflowY: "auto",
           }}
-        >
-          <div className="navButtons">
-          <Link
-              to={`/ownerspage/${user_email}`}
-              style={{ textDecoration: "none" }}
-            >
-            <Button variant="contained">
-              Back to Buildings
-            </Button>
-          </Link>
-            <Link
-              to={`/addWorkspace/${window.location.pathname.split("/").pop()}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Button variant="contained">Add Workspace</Button>
-            </Link>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <TextField
-                sx={{ width: "100%" }}
-                {...register("search")}
-                label="Search"
-                variant="outlined"
-                onChange={handleSearchChange}
-              />
-            </form>
-            <Link to={`/`}>
-              <Button variant="contained">Logout</Button>
-            </Link>
-          </div>
+        >          
           {workspaces.map((workspace) => (
             // <div key={workspace.id} className="display-container">
-            <Container maxWidth="md" key={workspace.name}>
+            <Container maxWidth="lg" key={workspace.name}>
               <Box
                 sx={{
                   bgcolor: "#90caf9",
@@ -220,6 +181,14 @@ function BuildingsWorkspaces() {
             </Container>
             // </div>
           ))}
+          <div className="submit-container">
+          <Link
+              to={`/addWorkspace/${window.location.pathname.split("/").pop()}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Button variant="contained">Add Workspace</Button>
+            </Link>
+            </div>
         </Box>
       </Container>
     </React.Fragment>
