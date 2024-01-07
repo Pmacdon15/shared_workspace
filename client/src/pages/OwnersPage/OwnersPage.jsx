@@ -101,29 +101,20 @@ const OwnersPage = () => {
     <React.Fragment>
       <CssBaseline />
       <Container fixed>
-        <SearchAppBar setSearchTerm={setSearchTerm}  user_email={user_email} />
+        <SearchAppBar setSearchTerm={setSearchTerm} user_email={user_email} />
         <Box
           ref={boxRef}
           sx={{
             bgcolor: "#cfe8fc",
-            height: "90vh",
-            marginTop: " 3%",
-            borderRadius: "9px",
-            paddingTop: "1%",
-            overflowY: "scroll",
+            height: "85vh",
+            marginTop: " 2%",
+            borderRadius: "9px",            
+            overflowY: "auto",
           }}
         >
-          <div className="navButtons">
-            <Link
-              to={`/addBuilding/${window.location.pathname.split("/").pop()}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Button variant="contained">Add Building</Button>
-            </Link>
-          </div>
           {userBuildings.map((building) => (
             // <div key={building.name} className="display-container">
-            <Container maxWidth="md" key={building.name}>
+            <Container maxWidth="lg" key={building.name}>
               <Box
                 sx={{
                   bgcolor: "#90caf9",

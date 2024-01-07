@@ -55,17 +55,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
-export default function SearchAppBar({ setSearchTerm , user_email}) {
+export default function SearchAppBar({ setSearchTerm, user_email }) {
   const [isDrawerOpen, setDrawerOpen] = React.useState(false);
 
   const menuItems = [
-  {
-    label: "Add Building",
-    path: `/addBuilding/${user_email}`,
-  },
-  { label: "Log Out", path: "/" },
-];
+    {
+      label: "Add Building",
+      path: `/addBuilding/${user_email}`,
+    },
+    { label: "My Buildings", path: `/ownerspage/${user_email}` },
+    // { label: "Add Workspace", path: `/addWorkspace/${building_name}` },
+    { label: "Log Out", path: "/" },
+  ];
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -112,16 +113,20 @@ export default function SearchAppBar({ setSearchTerm , user_email}) {
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
-  <List>
-    {menuItems.map((item) => (
-      <Link to={item.path} key={item.label} style={{ textDecoration: "none" }}>
-        <ListItem button onClick={toggleDrawer(false)}>
-          <ListItemText primary={item.label} />
-        </ListItem>
-      </Link>
-    ))}
-  </List>
-</Drawer>
+        <List>
+          {menuItems.map((item) => (
+            <Link
+              to={item.path}
+              key={item.label}
+              style={{ textDecoration: "none" }}
+            >
+              <ListItem button onClick={toggleDrawer(false)}>
+                <ListItemText primary={item.label} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      </Drawer>
     </Box>
   );
 }
