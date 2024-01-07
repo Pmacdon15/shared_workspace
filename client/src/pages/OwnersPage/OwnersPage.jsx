@@ -17,16 +17,17 @@ import TextField from "@mui/material/TextField";
 
 import { useForm } from "react-hook-form";
 
-// import "../../Components/navBar.jsx";
 import SearchAppBar from "../../Components/navBar.jsx";
 
 import api_config from "../../Components/config.js";
 
-const OwnersPage = ({ setSearchTerm, searchTerm }) => {
+const OwnersPage = () => {
   const { register, handleSubmit } = useForm();
   
   const [userBuildings, setUserBuildings] = useState([]);
   const boxRef = useRef(null);
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchChange = (event) => {
     const searchTerm = event.target.value;
@@ -109,9 +110,8 @@ const OwnersPage = ({ setSearchTerm, searchTerm }) => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container fixed>
-        <SearchAppBar setSearchTerm={setSearchTerm} />
-
+      <Container fixed>  
+        <SearchAppBar setSearchTerm={setSearchTerm} /> 
         <Box
           ref={boxRef}
           sx={{

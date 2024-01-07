@@ -12,16 +12,14 @@ import OwnerInfoPage from "./pages/OwnerInfoPage/OwnerInfoPage";
 import * as React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-// import SearchAppBar from "./Components/navBar.jsx";
 
 const theme = createTheme();
 
-function App() {
-  const [searchTerm, setSearchTerm] = React.useState("");
 
+
+function App() { 
   return (
-    <ThemeProvider theme={theme}>
-      <OwnersPage setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+    <ThemeProvider theme={theme}>        
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/coworkerspage" element={<CoworkersPage />} />
